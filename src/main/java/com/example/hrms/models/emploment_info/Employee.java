@@ -43,5 +43,15 @@ public class Employee {
 
     private String unit;
 
+//    @ManyToOne
+//    @JoinColumn(referencedColumnName = "designationId", name = "designationId")
+//    private Designation designation;
 
+//    @ManyToOne
+//    @JoinColumn(referencedColumnName = "deignationId", name = "designationId")
+//    private GroupMain groupMain;
+
+    private String employeeEligibleFor;
+
+    private boolean isUnderGratuityAct;
 }
