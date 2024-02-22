@@ -7,11 +7,11 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "department")
-public class Department {
+@Table(name = "group")
+public class GroupMain {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long departmentId;
+    private Long groupId;
 
-    private String departmentName;
+    private String groupName;
 }

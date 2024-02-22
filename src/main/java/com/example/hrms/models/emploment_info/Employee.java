@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.util.Date;
 
+@Entity
 @Getter
 @Setter
 @Table(name = "employee")
@@ -28,7 +29,7 @@ public class Employee {
 
     private Salutation salutation;
     public enum Salutation {
-        MR, MRS, MISS, SHRIMAN, SHRIMATI, DR
+        MR, MRS, MISS, SHRIMAN, SHRIMATI, DR, KUMARI
     }
 
     @ManyToOne
@@ -43,13 +44,13 @@ public class Employee {
 
     private String unit;
 
-//    @ManyToOne
-//    @JoinColumn(referencedColumnName = "designationId", name = "designationId")
-//    private Designation designation;
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "designationId", name = "designationId")
+    private Designation designation;
 
-//    @ManyToOne
-//    @JoinColumn(referencedColumnName = "deignationId", name = "designationId")
-//    private GroupMain groupMain;
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "groupId", name = "groupId")
+    private GroupMain groupMain;
 
     private String employeeEligibleFor;
 
