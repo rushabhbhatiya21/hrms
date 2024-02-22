@@ -31,9 +31,9 @@ public class Employee {
         MR, MRS, MISS, SHRIMAN, SHRIMATI, DR
     }
 
-//    @ManyToOne
-//    @JoinColumn(referencedColumnName = "departmentId", name = "departmentId")
-//    private Department department;
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "departmentId", name = "departmentId")
+    private Department department;
 
     private String firstName;
 
