@@ -16,6 +16,6 @@ public class PlaceOfPosting {
     private String placeOfPostingName;
 
     @ManyToOne
-    @JoinColumn(referencedColumnName = "jobId", name = "jobId")
-    private Job job;
+    @JoinColumn(referencedColumnName = "postingBranchId", name = "postingBranchId")
+    private PostingBranchName postingBranchName;
 }

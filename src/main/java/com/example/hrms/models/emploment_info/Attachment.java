@@ -27,6 +27,10 @@ public class Attachment {
     @Column(length = 400000)
     private byte[] documentPhoto;
 
+    @OneToOne
+    @JoinColumn(referencedColumnName = "employeeId", name = "employeeId")
+    private Employee employee;
+
     public void setDocumentPhoto(MultipartFile documentPhoto) {
         try {
             this.documentPhoto = ImageUtils.compressImage(documentPhoto.getBytes());

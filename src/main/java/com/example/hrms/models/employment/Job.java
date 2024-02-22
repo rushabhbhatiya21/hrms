@@ -18,6 +18,10 @@ public class Job {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long jobId;
 
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "employmentTypeId", name = "employmentTypeId")
+    private EmploymentType employmentType;
+
     private EmploymentSubType employmentSubType;
 
     public enum EmploymentSubType {
@@ -51,6 +55,11 @@ public class Job {
     private Date startGroupEffectiveFrom;
 
     // --------------------------- INITIAL JOINING DETAILS ------------------------- //
+
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "placeOfPostingId", name = "placeOfPostingId")
+    private PlaceOfPosting placeOfPosting;
+
     private String workLocation;
 
     @ManyToOne

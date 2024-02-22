@@ -15,7 +15,7 @@ public class EmploymentCategory {
 
     private String employmentCategoryName;
 
-    @ManyToOne
-    @JoinColumn(referencedColumnName = "employeeTypeId", name = "employeeTypeId")
-    private EmploymentType employeeType;
+//    @ManyToOne
+//    @JoinColumn(referencedColumnName = "employeeTypeId", name = "employeeTypeId")
+//    private EmploymentType employeeType;
 }

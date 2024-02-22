@@ -39,7 +39,7 @@ public class Nominee {
 
     private String nomineeInvalidCondition;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(referencedColumnName = "employeeId", name = "employeeId")
     private Employee employee;
 }

@@ -31,7 +31,7 @@ public class Emergency {
 
     private String address;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(referencedColumnName = "employeeId", name = "employeeId")
     private Employee employee;
 }

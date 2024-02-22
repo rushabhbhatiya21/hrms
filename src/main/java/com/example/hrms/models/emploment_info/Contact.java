@@ -29,10 +29,6 @@ public class Contact {
 
     private String secondaryEmail;
 
-    @ManyToOne
-    @JoinColumn(referencedColumnName = "addressId", name = "addressId")
-    private AddressDetail address;
-
     @OneToOne
     @JoinColumn(referencedColumnName = "employeeId", name = "employeeId")
     private Employee employee;

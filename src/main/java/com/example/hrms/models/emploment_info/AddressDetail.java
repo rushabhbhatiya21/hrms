@@ -31,4 +31,8 @@ public class AddressDetail {
     }
 
     private boolean areAllAddressSame;
+
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "contactId", name = "contactId")
+    private Contact contact;
 }
