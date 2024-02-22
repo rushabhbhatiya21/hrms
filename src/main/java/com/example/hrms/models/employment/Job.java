@@ -59,10 +59,6 @@ public class Job {
 
     private Date dateOfPosting;
 
-    @ManyToOne
-    @JoinColumn(referencedColumnName = "groupId", name = "groupId")
-    private GroupMain groupWhenPosting;
-
     private String postingOrderNumber;
 
     private Date dateOfPostingOrder;
