@@ -16,7 +16,7 @@ public class Employee {
     private Long employeeId;
 
     @Column(unique = true)
-    private Long code;
+    private Long employeeCode;
 
     @Column(unique = true)
     private Long panNumber;
