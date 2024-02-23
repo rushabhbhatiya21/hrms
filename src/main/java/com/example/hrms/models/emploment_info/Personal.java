@@ -60,8 +60,8 @@ public class Personal {
     private String bsrCode;
 
     @ManyToOne
-    @JoinColumn(referencedColumnName = "bankId", name = "bankId")
-    private BankDetail bankDetail;
+    @JoinColumn(referencedColumnName = "bankBranchId", name = "bankBranchId")
+    private BankBranch bankDetail;
 
     private String passportNumber;
 

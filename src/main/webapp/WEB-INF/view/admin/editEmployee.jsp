@@ -23,18 +23,18 @@
                 <label for="gender" class="form-label">Gender<span class="red">*</span> </label>
                 <select class="form-control" id="gender">
                     <option value="" disabled selected>Select Gender</option>
-<%--                    <c:forEach var="group" items="${group}">--%>
-<%--                        <option value=${department.departmentId}>${department.departmentName}</option>--%>
-<%--                    </c:forEach>--%>
+                    <c:forEach var="gender" items="${gender}">
+                        <option value=${gender.name()}>${gender.name()}</option>
+                    </c:forEach>
                 </select>
             </div>
             <div class="col-md-4">
                 <label for="marriageStatus" class="form-label">Marriage status</label>
                 <select class="form-control" id="marriageStatus">
                     <option value="" disabled selected>-- Select Type --</option>
-                    <%--                    <c:forEach var="group" items="${group}">--%>
-                    <%--                        <option value=${department.departmentId}>${department.departmentName}</option>--%>
-                    <%--                    </c:forEach>--%>
+                    <c:forEach var="ms" items="${marriageStatus}">
+                        <option value=${ms.name()}>${ms.name()}</option>
+                    </c:forEach>
                 </select>
             </div>
             <div class="col-md-4">
@@ -53,9 +53,9 @@
                 <label for="communityCategory" class="form-label">Community Category</label>
                 <select class="form-control" id="communityCategory">
                     <option value="" disabled selected>-- Select Type --</option>
-                    <%--                    <c:forEach var="group" items="${group}">--%>
-                    <%--                        <option value=${department.departmentId}>${department.departmentName}</option>--%>
-                    <%--                    </c:forEach>--%>
+                    <c:forEach var="cc" items="${communityCategory}">
+                        <option value=${cc.name()}>${cc.name()}</option>
+                    </c:forEach>
                 </select>
             </div>
 
@@ -128,79 +128,114 @@
             </div>
             <hr>
 
-            <div class="col-md-4">
-                <label for="salutation" class="form-label">Salutation<span class="red">*</span> </label>
-                <select class="form-control" id="salutation">
-                    <option value="MR">Mr.</option>
-                    <%--                    <c:forEach>--%>
-
-                    <%--                    </c:forEach>--%>
-                </select>
-            </div>
 
             <div class="col-md-4">
-                <label for="department" class="form-label">Department<span class="red">*</span> </label>
-                <select class="form-control" id="department">
-                    <option value="" disabled selected>Select a department</option>
-                    <c:forEach var="department" items="${departments}">
-                        <option value=${department.departmentId}>${department.departmentName}</option>
+                <label for="bankDetail" class="form-label">Bank Name</label>
+                <select class="form-control" id="bankDetail">
+                    <option value="" disabled selected>-- Select Type --</option>
+                    <c:forEach var="bank" items="${banks}">
+                        <option value=${bank.bankId}>${bank.bankName}</option>
                     </c:forEach>
                 </select>
             </div>
             <div class="col-md-4">
-                <label for="firstName" class="form-label">First Name<span class="red">*</span> </label>
-                <input type="text" class="form-control" id="firstName">
-            </div>
-            <div class="col-md-4">
-                <label for="middleName" class="form-label">Middle Name</label>
-                <input type="text" class="form-control bg-white" id="middleName">
-            </div>
-            <div class="col-md-4">
-                <label for="lastName" class="form-label">Last Name</label>
-                <input type="text" class="form-control bg-white" id="lastName">
-            </div>
-
-            <div class="col-md-4">
-                <label for="unit" class="form-label">Unit</label>
-                <select class="form-control" id="unit">
-                    <option value="unit1">unit1</option>
-                    <%--                    <c:forEach>--%>
-
-                    <%--                    </c:forEach>--%>
-                </select>
-            </div>
-            <div class="col-md-4">
-                <label for="designation" class="form-label">Designation<span class="red">*</span> </label>
-                <select class="form-control" id="designation">
-                    <option value="" disabled selected>Select a designation</option>
-                    <c:forEach var="designation" items="${designations}">
-                        <option value=${designation.designationId}>${designation.designationName}</option>
+                <label for="bankBranch" class="form-label">Branch Name</label>
+                <select class="form-control" id="bankBranch">
+                    <option value="" disabled selected>-- Select Type --</option>
+                    <c:forEach var="bankBranch" items="${bankBranches}">
+                        <option  class="opts ${bankBranch.bank.bankId}" data="${bankBranch.ifscCode}" value=${bankBranch.bankBranchId}>${bankBranch.bankBranchName}</option>
                     </c:forEach>
                 </select>
             </div>
             <div class="col-md-4">
-                <label for="group" class="form-label">Group<span class="red">*</span> </label>
-                <select class="form-control" id="group">
-                    <option value="" disabled selected>Select a group</option>
-                    <c:forEach var="group" items="${groups}">
-                        <option value=${group.groupId}>${group.groupName}</option>
+                <label for="bankAccountNumber" class="form-label">Bank A/C No.<span class="red">*</span></label>
+                <input type="text" class="form-control bg-white" id="bankAccountNumber">
+            </div>
+            <div class="col-md-4">
+                <label for="ifscCode" class="form-label">IFSC Code<span class="red">*</span></label>
+                <input type="text" class="form-control bg-white" disabled id="ifscCode">
+            </div>
+            <div class="col-md-4">
+                <label for="bsrCode" class="form-label">BSR Code</label>
+                <input type="text" class="form-control bg-white" id="bsrCode">
+            </div>
+
+
+
+
+
+            <hr>
+            <div class="col-md-4">
+                <label for="passportNumber" class="form-label">Passport No.</label>
+                <input type="text" class="form-control bg-white" id="passportNumber">
+            </div>
+            <div class="col-md-4">
+                <label for="passportDateOfExpiry" class="form-label">Date of Expiry </label>
+                <input type="date" class="form-control" id="passportDateOfExpiry">
+            </div>
+            <div class="col-md-4">
+                <label for="visaDetails" class="form-label">Visa Details</label>
+                <input type="text" class="form-control bg-white" id="visaDetails">
+            </div>
+            <div class="col-md-4">
+                <label for="drivingLicenceNumber" class="form-label">Driving licence No.</label>
+                <input type="text" class="form-control bg-white" id="drivingLicenceNumber">
+            </div>
+            <div class="col-md-4">
+                <label for="vehicleType" class="form-label">Driving Vehicle Type<span class="red">*</span> </label>
+                <select class="form-control" id="vehicleType">
+                    <option value="" disabled selected>-- Select Type --</option>
+                    <c:forEach var="vehicle" items="${vehicleType}">
+                        <option value=${vehicle.name()}>${vehicle.name()}</option>
                     </c:forEach>
                 </select>
             </div>
             <div class="col-md-4">
-                <label for="employeeEligibleFor" class="form-label">Employee eligible for<span class="red">*</span> </label>
-                <select class="form-control" id="employeeEligibleFor">
-                    <option value="Elegibility1">Elegibility1</option>
-                    <%--                    <c:forEach>--%>
-
-                    <%--                    </c:forEach>--%>
-                </select>
+                <label for="drivingLicenceValidUpto" class="form-label">Valid upto</label>
+                <input type="date" class="form-control" id="drivingLicenceValidUpto">
             </div>
             <div class="col-md-4">
-                <input type="checkbox" id="underGratuityAct" value="underGratuityAct">
-                <label for="underGratuityAct" class="form-label">Is under Gratuity Act<span class="red"></span></label>
+                <label for="issuedState" class="form-label">Issued State/UT</label>
+                <input type="text" class="form-control" id="issuedState">
+            </div>
+            <div class="col-md-8">
+                <label for="additionalInfo" class="form-label">Additional Info</label>
+                <input type="text" class="form-control" id="additionalInfo">
+            </div>
+            <div class="col-md-4">
+                <input type="checkbox" id="govVehicleProvided" value="govVehicleProvided">
+                <label for="govVehicleProvided" class="form-label">Government vehicle Provided?</label>
             </div>
 
+            <div class="col-md-4">
+                <input type="checkbox" id="residentOfCountry" value="residentOfCountry">
+                <label for="residentOfCountry" class="form-label">is Resident of other Country?</label>
+            </div>
+            <div class="col-md-4">
+                <input type="checkbox" id="isAnyProceedings" value="residentOfCountry">
+                <label for="isAnyProceedings" class="form-label">Is Any Disciplinary Proceeding?</label>
+            </div>
+
+
+
+            <div class="col-md-4 gvp">
+                <input type="checkbox" id="govVehicleUsedOnDuty" value="govVehicleUsedOnDuty">
+                <label for="govVehicleUsedOnDuty" class="form-label">Government vehicle Used On Duty?</label>
+            </div>
+            <div class="col-md-8 gvp"></div>
+
+            <div class="col-md-4 iroc">
+                <label for="migrationDate" class="form-label">Migration Date</label>
+                <input type="date" class="form-control" id="migrationDate">
+            </div>
+            <div class="col-md-4 iroc">
+                <label for="country" class="form-label">Country</label>
+                <input type="text" class="form-control" id="country">
+            </div>
+            <div class="col-md-4 iroc">
+                <label for="countryAddress" class="form-label">Other Country Address</label>
+                <input type="text" class="form-control" id="countryAddress">
+            </div>
             <div class="col-12">
                 <button type="submit" class="btn btn-primary">Sign in</button>
             </div>
@@ -213,16 +248,13 @@
         // Function to serialize form data into a JSON object
         function serializeForm() {
             const formData = {};
-            $('.addemployee input, .addemployee select').each(function () {
+            $('.addPersonal input, .addPersonal select').each(function () {
                 let value;
                 const id = $(this).attr('id');
 
                 if ($(this).is('select')) {
-                    if (id === 'department' || id === 'designation' || id === 'group') {
-                        var str = id+"Id";
-                        value = {}
-                        value[str]=parseInt($(this).val(),10);
-                        console.log(value);
+                    if (id === 'bankDetail' || id === 'bankBranch' || id === 'ifscCode' ) {
+                        return;
                     } else {
                         value = $(this).val();
                     }
@@ -240,24 +272,24 @@
             return formData;
         }
 
-        $('.addemployee').submit(function (event) {
+        $('.addPersonal').submit(function (event) {
             event.preventDefault();
 
-            // Serialize form data into a JSON object
             const formData = serializeForm();
 
-            // AJAX request to submit data
+            formData["bankDetail"] = {"bankBranchId":parseInt($('#bankBranch').val()),}
+
+            console.log(formData);
+
             $.ajax({
                 type: 'POST',
                 contentType: 'application/json',
-                url: '/admin/submitEmployeeData',
+                url: '/admin/submitPersonal',
                 data: JSON.stringify(formData),
                 success: function (response) {
-                    // Handle success response
                     console.log(response);
                 },
                 error: function (error) {
-                    // Handle error response
                     console.error(error);
                 }
             });

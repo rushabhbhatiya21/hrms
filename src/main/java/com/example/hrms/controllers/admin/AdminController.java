@@ -105,12 +105,11 @@ public class AdminController {
     @PostMapping("submitPersonal")
     @ResponseBody
     public ResponseEntity<String> submitPersonalDetails(@RequestBody Personal personal) {
-        Long bankId = personal.getBankDetail().getBankId();
-        BankDetail bank = bankService.findBankById(bankId).get();
+        Long bankBranchId = personal.getBankDetail().getBankBranchId();
+        BankBranch bankbranch = bankBranchService.findBankBranchById(bankBranchId).get();
 
-        personal.setBankDetail(bank);
 
-        System.out.println(personal.getBankDetail().getBankName());
+        System.out.println(bankbranch.getBankBranchName());
 
 //        personalService.savePersonal(personal);
         return ResponseEntity.ok("Personal details saved!");
