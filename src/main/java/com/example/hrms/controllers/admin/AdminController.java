@@ -54,8 +54,7 @@ public class AdminController {
 //        newEmployee.setEmployeeEligibleFor((employeeJson.get("employeeEligibleFor")));
 //        newEmployee.setUnderGratuityAct(Boolean.parseBoolean((employeeJson.get("isUnderGratuityAct"))));
 //        System.out.println(employee.getFirstName());
-        System.out.println(employee.getDepartment().getDepartmentName());
-        System.out.println(employee.getDepartment().getDepartmentId());
+            System.out.println(employee.getDepartment().getDepartmentId());
 //        System.out.println(employee.isUnderGratuityAct());
 //        System.out.println(employee.getDateOfAppointment());
 

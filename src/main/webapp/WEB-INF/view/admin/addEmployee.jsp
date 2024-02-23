@@ -56,8 +56,8 @@
             </div>
 
             <div class="col-md-4">
-                <label for="department.departmentId" class="form-label">Department<span class="red">*</span> </label>
-                <select class="form-control" id="department.departmentId">
+                <label for="department" class="form-label">Department<span class="red">*</span> </label>
+                <select class="form-control" id="department">
                     <option value="" disabled selected>Select a department</option>
                     <c:forEach var="department" items="${departments}">
                         <option value=${department.departmentId}>${department.departmentName}</option>
@@ -87,8 +87,8 @@
                 </select>
             </div>
             <div class="col-md-4">
-                <label for="designationId" class="form-label">Designation<span class="red">*</span> </label>
-                <select class="form-control" id="designationId">
+                <label for="designation" class="form-label">Designation<span class="red">*</span> </label>
+                <select class="form-control" id="designation">
                     <option value="" disabled selected>Select a designation</option>
                     <c:forEach var="designation" items="${designations}">
                         <option value=${designation.designationId}>${designation.designationName}</option>
@@ -96,8 +96,8 @@
                 </select>
             </div>
             <div class="col-md-4">
-                <label for="groupId" class="form-label">Group<span class="red">*</span> </label>
-                <select class="form-control" id="groupId">
+                <label for="group" class="form-label">Group<span class="red">*</span> </label>
+                <select class="form-control" id="group">
                     <option value="" disabled selected>Select a group</option>
                     <c:forEach var="group" items="${groups}">
                         <option value=${group.groupId}>${group.groupName}</option>
@@ -129,37 +129,33 @@
         // Function to serialize form data into a JSON object
         function serializeForm() {
             const formData = {};
-            // $('.addemployee input, .addemployee select').each(function () {
-            //     let value;
-            //     const id = $(this).attr('id');
-            //
-            //     if ($(this).is('select')) {
-            //         // Parse values for select elements
-            //         if (id === 'department.departmentId' || id === 'designationId' || id === 'groupId') {
-            //             value = parseInt($(this).val(), 10);
-            //             console.log(typeof(value));
-            //             console.log(value);
-            //         } else {
-            //             value = $(this).val();
-            //         }
-            //     }
-            //     else if ($(this).is(':checkbox')) {
-            //         // Handle checkbox directly as boolean
-            //         value = !!$(this).prop('checked');
-            //         console.log(!!$(this).prop('checked'));
-            //         console.log(typeof(value));
-            //     } else {
-            //         value = $(this).val();
-            //     }
+            $('.addemployee input, .addemployee select').each(function () {
+                let value;
+                const id = $(this).attr('id');
 
-                // formData[id] = value;
-            // });
-            formData["department"] = {departmentId:3};
+                if ($(this).is('select')) {
+                    if (id === 'department' || id === 'designation' || id === 'group') {
+                        var str = id+"Id";
+                        value = {}
+                        value[str]=parseInt($(this).val(),10);
+                        console.log(value);
+                    } else {
+                        value = $(this).val();
+                    }
+                }
+                else if ($(this).is(':checkbox')) {
+                    value = !!$(this).prop('checked');
+                    console.log(!!$(this).prop('checked'));
+                    console.log(typeof(value));
+                } else {
+                    value = $(this).val();
+                }
+                formData[id] = value;
+            });
 
             return formData;
         }
 
-        // Function to handle form submission
         $('.addemployee').submit(function (event) {
             event.preventDefault();
 
