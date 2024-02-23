@@ -14,14 +14,4 @@ public class BankDetail {
     private Long bankId;
 
     private String bankName;
-
-    private String bankAccountNumber;
-
-    private String ifscCode;
-
-    private String bsrCode;
-
-    @ManyToOne
-    @JoinColumn(referencedColumnName = "bankBranchId", name = "bankBranchId")
-    private BankBranch bankBranch;
 }

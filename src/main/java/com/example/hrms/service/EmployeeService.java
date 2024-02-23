@@ -25,7 +25,7 @@ public class EmployeeService {
         return employeeRepository.save(employee);
     }
 
-    public Optional<Employee> findById(Long employeeId) {
+    public Optional<Employee> findEmployeeById(Long employeeId) {
         return employeeRepository.findById(employeeId);
     }
 

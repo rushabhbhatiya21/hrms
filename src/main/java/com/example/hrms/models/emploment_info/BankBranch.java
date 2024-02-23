@@ -14,4 +14,10 @@ public class BankBranch {
     private Long bankBranchId;
 
     private String bankBranchName;
+
+    private String ifscCode;
+
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "bankId", name = "bankId")
+    private BankDetail bank;
 }

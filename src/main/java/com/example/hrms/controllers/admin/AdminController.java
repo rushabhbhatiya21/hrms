@@ -1,12 +1,8 @@
 package com.example.hrms.controllers.admin;
 
 import com.example.hrms.models.emploment_info.*;
-import com.example.hrms.service.DepartmentService;
-import com.example.hrms.service.DesignationService;
-import com.example.hrms.service.EmployeeService;
-import com.example.hrms.service.GroupService;
+import com.example.hrms.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,13 +19,19 @@ public class AdminController {
     private final DesignationService designationService;
     private final DepartmentService departmentService;
     private final GroupService groupService;
+    private final BankService bankService;
+    private final BankBranchService bankBranchService;
+    private final PersonalService personalService;
 
     @Autowired
-    public AdminController(EmployeeService employeeService, DesignationService designationService, DepartmentService departmentService, GroupService groupService) {
+    public AdminController(EmployeeService employeeService, DesignationService designationService, DepartmentService departmentService, GroupService groupService, BankService bankService, BankBranchService bankBranchService, PersonalService personalService) {
         this.employeeService = employeeService;
         this.designationService = designationService;
         this.departmentService = departmentService;
         this.groupService = groupService;
+        this.bankService = bankService;
+        this.bankBranchService = bankBranchService;
+        this.personalService = personalService;
     }
 
     @GetMapping("")
@@ -80,7 +82,7 @@ public class AdminController {
     public String addEmp(Model model){
 //        System.out.println(employeeService.getNextEmployeeCode());
         model.addAttribute("employeeCode", employeeService.getNextEmployeeCode());
-        setdate(model);
+        setDate(model);
         model.addAttribute("designations", designationService.findAllDesignations());
         model.addAttribute("departments", departmentService.findALlDepartments());
         model.addAttribute("groups", groupService.findAllGroups());
@@ -89,17 +91,32 @@ public class AdminController {
 
     @GetMapping("/editEmployee/{employeeId}")
     public String editEmployeePage(@PathVariable String employeeId, Model model) {
-        setdate(model);
+        setDate(model);
+        model.addAttribute("gender", Personal.Gender.values());
+        model.addAttribute("marriageStatus", Personal.MarriageStatus.values());
+        model.addAttribute("communityCategory", Personal.CommunityCategory.values());
+        model.addAttribute("vehicleType", Personal.VehicleType.values());
+        model.addAttribute("banks", bankService.findAllBanks());
+        model.addAttribute("bankBranches", bankBranchService.findAllBankBranches());
+
         return "admin/editEmployee";
     }
 
     @PostMapping("submitPersonal")
     @ResponseBody
     public ResponseEntity<String> submitPersonalDetails(@RequestBody Personal personal) {
-        return null;
+        Long bankId = personal.getBankDetail().getBankId();
+        BankDetail bank = bankService.findBankById(bankId).get();
+
+        personal.setBankDetail(bank);
+
+        System.out.println(personal.getBankDetail().getBankName());
+
+//        personalService.savePersonal(personal);
+        return ResponseEntity.ok("Personal details saved!");
     }
 
-    public void setdate(Model model){
+    public void setDate(Model model){
         LocalDate date = LocalDate.now();
         model.addAttribute("day", date.getDayOfWeek());
         model.addAttribute("date", date.getDayOfMonth());

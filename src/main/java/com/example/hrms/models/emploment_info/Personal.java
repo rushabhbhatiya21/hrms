@@ -55,6 +55,10 @@ public class Personal {
 
     private String hobbies;
 
+    private String bankAccountNumber;
+
+    private String bsrCode;
+
     @ManyToOne
     @JoinColumn(referencedColumnName = "bankId", name = "bankId")
     private BankDetail bankDetail;
