@@ -1,14 +1,12 @@
 package com.example.hrms.controllers.admin;
 
-import com.example.hrms.models.emploment_info.Department;
-import com.example.hrms.models.emploment_info.Designation;
-import com.example.hrms.models.emploment_info.Employee;
-import com.example.hrms.models.emploment_info.GroupMain;
+import com.example.hrms.models.emploment_info.*;
 import com.example.hrms.service.DepartmentService;
 import com.example.hrms.service.DesignationService;
 import com.example.hrms.service.EmployeeService;
 import com.example.hrms.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -58,18 +56,23 @@ public class AdminController {
 //        newEmployee.setEmployeeEligibleFor((employeeJson.get("employeeEligibleFor")));
 //        newEmployee.setUnderGratuityAct(Boolean.parseBoolean((employeeJson.get("isUnderGratuityAct"))));
 //        System.out.println(employee.getFirstName());
-        Department department = departmentService.findDepartmentById(employee.getDepartment().getDepartmentId()).get();
-        employee.setDepartment(department);
+        try {
+            Department department = departmentService.findDepartmentById(employee.getDepartment().getDepartmentId()).get();
+            employee.setDepartment(department);
 
-        Designation designation = designationService.findDesignationById(employee.getDesignation().getDesignationId()).get();
-        employee.setDesignation(designation);
+            Designation designation = designationService.findDesignationById(employee.getDesignation().getDesignationId()).get();
+            employee.setDesignation(designation);
 
-        GroupMain group = groupService.findGroupById(employee.getGroupMain().getGroupId()).get();
-        employee.setGroupMain(group);
+            GroupMain group = groupService.findGroupById(employee.getGroupMain().getGroupMainId()).get();
+            employee.setGroupMain(group);
 
-//        employeeService.saveEmployee(employee);
+            employeeService.saveEmployee(employee);
 
-        return ResponseEntity.ok("Employee details saved.");
+            return ResponseEntity.ok("Employee details saved.");
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @GetMapping("/addEmployee")
@@ -81,5 +84,16 @@ public class AdminController {
         model.addAttribute("departments", departmentService.findALlDepartments());
         model.addAttribute("groups", groupService.findAllGroups());
         return "admin/addEmployee";
+    }
+
+    @GetMapping("/editEmployee/{employeeId}")
+    public String editEmployeePage(@PathVariable String employeeId) {
+        return "admin/editEmployee";
+    }
+
+    @PostMapping("submitPersonal")
+    @ResponseBody
+    public ResponseEntity<String> submitPersonalDetails(@RequestBody Personal personal) {
+        return null;
     }
 }

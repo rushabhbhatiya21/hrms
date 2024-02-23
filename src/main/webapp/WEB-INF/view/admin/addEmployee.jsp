@@ -96,11 +96,11 @@
                 </select>
             </div>
             <div class="col-md-4">
-                <label for="group" class="form-label">Group<span class="red">*</span> </label>
-                <select class="form-control" id="group">
+                <label for="groupMain" class="form-label">Group<span class="red">*</span> </label>
+                <select class="form-control" id="groupMain">
                     <option value="" disabled selected>Select a group</option>
                     <c:forEach var="group" items="${groups}">
-                        <option value=${group.groupId}>${group.groupName}</option>
+                        <option value=${group.groupMainId}>${group.groupName}</option>
                     </c:forEach>
                 </select>
             </div>
@@ -134,7 +134,7 @@
                 const id = $(this).attr('id');
 
                 if ($(this).is('select')) {
-                    if (id === 'department' || id === 'designation' || id === 'group') {
+                    if (id === 'department' || id === 'designation' || id === 'groupMain') {
                         var str = id+"Id";
                         value = {}
                         value[str]=parseInt($(this).val(),10);

@@ -49,7 +49,7 @@ public class Job {
     private String dutiesAndResponsibility;
 
     @ManyToOne
-    @JoinColumn(referencedColumnName = "groupId", name = "groupId")
+    @JoinColumn(referencedColumnName = "groupMainId", name = "groupMainId")
     private GroupMain insuranceStartGroup;
 
     private Date startGroupEffectiveFrom;

@@ -50,7 +50,7 @@ public class Employee {
     private Designation designation;
 
     @ManyToOne
-    @JoinColumn(referencedColumnName = "groupId", name = "groupId")
+    @JoinColumn(referencedColumnName = "groupMainId", name = "groupMainId")
     private GroupMain groupMain;
 
     private String employeeEligibleFor;
