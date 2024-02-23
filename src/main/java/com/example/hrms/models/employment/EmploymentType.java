@@ -11,9 +11,9 @@ import lombok.Setter;
 public class EmploymentType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long employeeTypeId;
+    private Long employmentTypeId;
 
-    private String employeeTypeName;
+    private String employmentTypeName;
 
     @ManyToOne
     @JoinColumn(referencedColumnName = "employmentCategoryId", name = "employmentCategoryId")

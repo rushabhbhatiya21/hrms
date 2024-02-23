@@ -33,6 +33,6 @@ public class ReportingOfficer {
     private String note;
 
     @ManyToOne
-    @JoinColumn(referencedColumnName = "employeeTypeId", name = "employeeTypeId")
+    @JoinColumn(referencedColumnName = "employmentTypeId", name = "employmentTypeId")
     private EmploymentType employeeType;
 }

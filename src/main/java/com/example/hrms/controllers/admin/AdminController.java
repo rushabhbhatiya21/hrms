@@ -20,4 +20,9 @@ public class AdminController {
     public ResponseEntity<String> submitEmpData() {
         return null;
     }
+
+    @GetMapping("/addEmployee")
+    public String addEmp(){
+        return "admin/addEmployee";
+    }
 }
