@@ -56,8 +56,8 @@
             </div>
 
             <div class="col-md-4">
-                <label for="departmentId" class="form-label">Department<span class="red">*</span> </label>
-                <select class="form-control" id="departmentId">
+                <label for="department.departmentId" class="form-label">Department<span class="red">*</span> </label>
+                <select class="form-control" id="department.departmentId">
                     <option value="" disabled selected>Select a department</option>
                     <c:forEach var="department" items="${departments}">
                         <option value=${department.departmentId}>${department.departmentName}</option>
@@ -114,8 +114,8 @@
                 </select>
             </div>
             <div class="col-md-4">
-                <input type="checkbox" id="isUnderGratuityAct" value="isUnderGratuityAct">
-                <label for="isUnderGratuityAct" class="form-label">Is under Gratuity Act<span class="red"></span></label>
+                <input type="checkbox" id="underGratuityAct" value="underGratuityAct">
+                <label for="underGratuityAct" class="form-label">Is under Gratuity Act<span class="red"></span></label>
             </div>
 
             <div class="col-12">
@@ -129,27 +129,33 @@
         // Function to serialize form data into a JSON object
         function serializeForm() {
             const formData = {};
-            $('.addemployee input, .addemployee select').each(function () {
-                let value;
-                const id = $(this).attr('id');
+            // $('.addemployee input, .addemployee select').each(function () {
+            //     let value;
+            //     const id = $(this).attr('id');
+            //
+            //     if ($(this).is('select')) {
+            //         // Parse values for select elements
+            //         if (id === 'department.departmentId' || id === 'designationId' || id === 'groupId') {
+            //             value = parseInt($(this).val(), 10);
+            //             console.log(typeof(value));
+            //             console.log(value);
+            //         } else {
+            //             value = $(this).val();
+            //         }
+            //     }
+            //     else if ($(this).is(':checkbox')) {
+            //         // Handle checkbox directly as boolean
+            //         value = !!$(this).prop('checked');
+            //         console.log(!!$(this).prop('checked'));
+            //         console.log(typeof(value));
+            //     } else {
+            //         value = $(this).val();
+            //     }
 
-                if ($(this).is('select')) {
-                    // Parse values for select elements
-                    if (id === 'departmentId' || id === 'designationId' || id === 'groupMainId') {
-                        value = parseFloat($(this).val());
-                    } else {
-                        value = $(this).val();
-                    }
-                }
-                else if ($(this).is(':checkbox')) {
-                    // Handle checkbox directly as boolean
-                    value = $(this).prop('checked');
-                } else {
-                    value = $(this).val();
-                }
+                // formData[id] = value;
+            // });
+            formData["department"] = {departmentId:3};
 
-                formData[id] = value;
-            });
             return formData;
         }
 
@@ -158,7 +164,7 @@
             event.preventDefault();
 
             // Serialize form data into a JSON object
-            var formData = serializeForm();
+            const formData = serializeForm();
 
             // AJAX request to submit data
             $.ajax({
