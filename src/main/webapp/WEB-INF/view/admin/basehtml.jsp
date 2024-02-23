@@ -43,8 +43,8 @@
             <div>{Role}</div>
         </div>
         <div class="navcont">
-            <div>{day},{date} {month}</div>
-            <div>{year}</div>
+            <div>${date.day}, ${date.date}/${date.month}</div>
+            <div>${date.year}</div>
         </div>
     </div>
     <div class="rightnav">

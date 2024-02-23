@@ -1,6 +1,9 @@
 package com.example.hrms.controllers.admin;
 
+import com.example.hrms.models.emploment_info.Department;
+import com.example.hrms.models.emploment_info.Designation;
 import com.example.hrms.models.emploment_info.Employee;
+import com.example.hrms.models.emploment_info.GroupMain;
 import com.example.hrms.service.DepartmentService;
 import com.example.hrms.service.DesignationService;
 import com.example.hrms.service.EmployeeService;
@@ -31,7 +34,8 @@ public class AdminController {
     }
 
     @GetMapping("")
-    public String admin(){
+    public String admin(Model model){
+        model.addAttribute("date", new Date());
         return "admin/basehtml";
     }
 
@@ -54,10 +58,16 @@ public class AdminController {
 //        newEmployee.setEmployeeEligibleFor((employeeJson.get("employeeEligibleFor")));
 //        newEmployee.setUnderGratuityAct(Boolean.parseBoolean((employeeJson.get("isUnderGratuityAct"))));
 //        System.out.println(employee.getFirstName());
-            System.out.println(employee.getDepartment().getDepartmentId());
-//        System.out.println(employee.isUnderGratuityAct());
-//        System.out.println(employee.getDateOfAppointment());
+        Department department = departmentService.findDepartmentById(employee.getDepartment().getDepartmentId()).get();
+        employee.setDepartment(department);
 
+        Designation designation = designationService.findDesignationById(employee.getDesignation().getDesignationId()).get();
+        employee.setDesignation(designation);
+
+        GroupMain group = groupService.findGroupById(employee.getGroupMain().getGroupId()).get();
+        employee.setGroupMain(group);
+
+//        employeeService.saveEmployee(employee);
 
         return ResponseEntity.ok("Employee details saved.");
     }
