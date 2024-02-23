@@ -27,10 +27,11 @@ public class Employee {
 
     private String bioMetricId;
 
-    private Salutation salutation;
-    public enum Salutation {
-        MR, MRS, MISS, SHRIMAN, SHRIMATI, DR, KUMARI
-    }
+    private String salutation;
+
+//    public enum Salutation {
+//        MR, MRS, MISS, SHRIMAN, SHRIMATI, DR, KUMARI
+//    }
 
     @ManyToOne
     @JoinColumn(referencedColumnName = "departmentId", name = "departmentId")
