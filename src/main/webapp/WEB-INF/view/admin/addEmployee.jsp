@@ -24,11 +24,11 @@
             </div>
             <div class="col-md-3">
                 <label for="employeeCode" class="form-label">Code<span class="red">*</span></label>
-                <input type="text" class="form-control bg-white" value="{value}" disabled id="employeeCode">
+                <input type="text" class="form-control bg-white" value="${employeeCode}" disabled id="employeeCode">
             </div>
             <div class="col-md-4">
                 <label for="panNumber" class="form-label">Pan Number<span class="red">*</span></label>
-                <input type="password" class="form-control bg-white" id="panNumber">
+                <input type="text" class="form-control bg-white" id="panNumber">
             </div>
             <div class="col-md-4">
                 <label for="oldEmployeeCode" class="form-label">Old Employee Code</label>
@@ -56,12 +56,12 @@
             </div>
 
             <div class="col-md-4">
-                <label for="department" class="form-label">Department<span class="red">*</span> </label>
-                <select class="form-control" id="department">
-                    <option value="1">Java</option>
-                    <%--                    <c:forEach>--%>
-
-                    <%--                    </c:forEach>--%>
+                <label for="departmentId" class="form-label">Department<span class="red">*</span> </label>
+                <select class="form-control" id="departmentId">
+                    <option value="" disabled selected>Select a department</option>
+                    <c:forEach var="department" items="${departments}">
+                        <option value=${department.departmentId}>${department.departmentName}</option>
+                    </c:forEach>
                 </select>
             </div>
             <div class="col-md-4">
@@ -87,21 +87,21 @@
                 </select>
             </div>
             <div class="col-md-4">
-                <label for="designation" class="form-label">Designation<span class="red">*</span> </label>
-                <select class="form-control" id="designation">
-                    <option value="1">Designation1</option>
-                    <%--                    <c:forEach>--%>
-
-                    <%--                    </c:forEach>--%>
+                <label for="designationId" class="form-label">Designation<span class="red">*</span> </label>
+                <select class="form-control" id="designationId">
+                    <option value="" disabled selected>Select a designation</option>
+                    <c:forEach var="designation" items="${designations}">
+                        <option value=${designation.designationId}>${designation.designationName}</option>
+                    </c:forEach>
                 </select>
             </div>
             <div class="col-md-4">
-                <label for="groupMain" class="form-label">Group<span class="red">*</span> </label>
-                <select class="form-control" id="groupMain">
-                    <option value="1">Group1</option>
-                    <%--                    <c:forEach>--%>
-
-                    <%--                    </c:forEach>--%>
+                <label for="groupId" class="form-label">Group<span class="red">*</span> </label>
+                <select class="form-control" id="groupId">
+                    <option value="" disabled selected>Select a group</option>
+                    <c:forEach var="group" items="${groups}">
+                        <option value=${group.groupId}>${group.groupName}</option>
+                    </c:forEach>
                 </select>
             </div>
             <div class="col-md-4">
@@ -128,9 +128,27 @@
     $(document).ready(function () {
         // Function to serialize form data into a JSON object
         function serializeForm() {
-            var formData = {};
+            const formData = {};
             $('.addemployee input, .addemployee select').each(function () {
-                formData[$(this).attr('id')] = $(this).val();
+                let value;
+                const id = $(this).attr('id');
+
+                if ($(this).is('select')) {
+                    // Parse values for select elements
+                    if (id === 'departmentId' || id === 'designationId' || id === 'groupMainId') {
+                        value = parseFloat($(this).val());
+                    } else {
+                        value = $(this).val();
+                    }
+                }
+                else if ($(this).is(':checkbox')) {
+                    // Handle checkbox directly as boolean
+                    value = $(this).prop('checked');
+                } else {
+                    value = $(this).val();
+                }
+
+                formData[id] = value;
             });
             return formData;
         }

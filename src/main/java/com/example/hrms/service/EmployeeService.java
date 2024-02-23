@@ -30,7 +30,10 @@ public class EmployeeService {
     }
 
     public Long getNextEmployeeCode() {
-        Optional<Long> maxEmployeeCode = employeeRepository.getNextEmployeeCode().describeConstable();
-        return maxEmployeeCode.map(code -> code + 1).orElse(1L);
+        Long maxEmployeeCode = employeeRepository.getNextEmployeeCode();
+        if (maxEmployeeCode == null) {
+            return 1L;
+        }
+        return maxEmployeeCode + 1;
     }
 }

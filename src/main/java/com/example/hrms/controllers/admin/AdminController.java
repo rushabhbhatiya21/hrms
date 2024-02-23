@@ -5,7 +5,6 @@ import com.example.hrms.service.DepartmentService;
 import com.example.hrms.service.DesignationService;
 import com.example.hrms.service.EmployeeService;
 import com.example.hrms.service.GroupService;
-import com.example.hrms.utils.ConvertUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/admin")
@@ -56,13 +54,14 @@ public class AdminController {
 //        newEmployee.setEmployeeEligibleFor((employeeJson.get("employeeEligibleFor")));
 //        newEmployee.setUnderGratuityAct(Boolean.parseBoolean((employeeJson.get("isUnderGratuityAct"))));
         System.out.println(employee.getFirstName());
-        System.out.println(employee.getDepartment());
+
 
         return ResponseEntity.ok("Employee details saved.");
     }
 
     @GetMapping("/addEmployee")
     public String addEmp(Model model){
+        System.out.println(employeeService.getNextEmployeeCode());
         model.addAttribute("employeeCode", employeeService.getNextEmployeeCode());
         model.addAttribute("date", new Date());
         model.addAttribute("designations", designationService.findAllDesignations());
