@@ -15,6 +15,7 @@ nav{
     background-color: white;
     display: flex;
     top: 0;
+    z-index: 1;
     align-items: center;
     width: 100vw;
     height: 9vh;
@@ -117,7 +118,6 @@ nav img{
 
 .whiterightside{
     width: 73%;
-    background: bisque;
     padding: 10px;
 }
 
@@ -142,4 +142,12 @@ input:disabled {
 
 .red{
     color: red;
+}
+
+.form-control{
+    border-radius: 1rem;
+}
+
+label{
+    color: gray;
 }

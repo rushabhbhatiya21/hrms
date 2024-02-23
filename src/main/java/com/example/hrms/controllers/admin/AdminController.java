@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Controller
@@ -79,7 +80,7 @@ public class AdminController {
     public String addEmp(Model model){
 //        System.out.println(employeeService.getNextEmployeeCode());
         model.addAttribute("employeeCode", employeeService.getNextEmployeeCode());
-        model.addAttribute("date", new Date());
+        setdate(model);
         model.addAttribute("designations", designationService.findAllDesignations());
         model.addAttribute("departments", departmentService.findALlDepartments());
         model.addAttribute("groups", groupService.findAllGroups());
@@ -87,7 +88,8 @@ public class AdminController {
     }
 
     @GetMapping("/editEmployee/{employeeId}")
-    public String editEmployeePage(@PathVariable String employeeId) {
+    public String editEmployeePage(@PathVariable String employeeId, Model model) {
+        setdate(model);
         return "admin/editEmployee";
     }
 
@@ -95,5 +97,13 @@ public class AdminController {
     @ResponseBody
     public ResponseEntity<String> submitPersonalDetails(@RequestBody Personal personal) {
         return null;
+    }
+
+    public void setdate(Model model){
+        LocalDate date = LocalDate.now();
+        model.addAttribute("day", date.getDayOfWeek());
+        model.addAttribute("date", date.getDayOfMonth());
+        model.addAttribute("month", date.getMonth());
+        model.addAttribute("year", date.getYear());
     }
 }
