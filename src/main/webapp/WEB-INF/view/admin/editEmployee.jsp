@@ -13,7 +13,10 @@
 <hr>
 <div class="whitcont">
     <div class="whiteleftside">
-        menu
+        <span id="employeeInfoMenu" class="menu">Employee Information</span>
+        <hr>
+        <div id="personalMenu" class="menu-option" onclick="toggleMenuOption('personal');">Personal</div>
+        <div id="contactMenu" class="menu-option" onclick="toggleMenuOption('contact');">Contact</div>
     </div>
     <div class="whiterightside">
         <div id="personal">
@@ -241,45 +244,144 @@
             </div>
         </form>
         </div>
+        <div id="contact">
+            <span class="contlabel">Contact</span>
+            <form class="row g-3 addContact mt10">
+                <div class="col-md-3">
+                    <label for="workPhone" class="form-label">Work Phone</label>
+                    <input type="tel" id="workPhone" name="workPhone" class="form-control" required>
+                </div>
+                <div class="col-md-1">
+                    <label for="extension" class="form-label">Extension</label>
+                    <input type="text" id="extension" name="extension" class="form-control">
+                </div>
+                <div class="col-md-4">
+                    <label for="homeMobile" class="form-label">Home Mobile:</label>
+                    <input type="tel" id="homeMobile" name="homeMobile" class="form-control" required>
+                </div>
+                <div class="col-md-4">
+                    <label for="workMobile" class="form-label">Work Mobile:</label>
+                    <input type="tel" id="workMobile" name="workMobile" class="form-control">
+                </div>
+                <div class="col-md-4">
+                    <label for="homePhone" class="form-label">Home Phone</label>
+                    <input type="tel" id="homePhone" name="homePhone" class="form-control">
+                </div>
+                <div class="col-md-4">
+                    <label for="corporateEmail" class="form-label">Corporate Email<span class="red">*</span></label>
+                    <input type="email" id="corporateEmail" name="corporateEmail" class="form-control">
+                </div>
+                <div class="col-md-4">
+                    <label for="personalEmail" class="form-label">Personal Email</label>
+                    <input type="email" id="personalEmail" name="personalEmail" class="form-control">
+                </div>
+                <div class="col-md-4">
+                    <label for="secondaryEmail" class="form-label">Secondary Email</label>
+                    <input type="email" id="secondaryEmail" name="secondaryEmail" class="form-control">
+                </div>
+                <hr>
+            </form>
+            <div class="address-card-container">
+                <div class="address-card">
+                    <h2 class="address-card-title">Add New Address</h2>
+                    <form>
+                        <div class="form-row">
+                            <label for="addressType">Address Type:</label>
+                            <select id="addressType">
+                                <option value="permanent">Permanent</option>
+                                <option value="temporary">Temporary</option>
+                            </select>
+                        </div>
+                        <div class="form-row">
+                            <label for="address-country">Country:</label>
+                            <select id="address-country">
+                                <option value="india">India</option>
+                                <option value="usa">USA</option>
+                                <option value="canada">Canada</option>
+                            </select>
+                        </div>
+                        <div class="form-row">
+                            <label for="district">District:</label>
+                            <select id="district">
+                                <option value="--select--">--Select--</option>
+                                <!-- Add more district options here -->
+                            </select>
+                        </div>
+                        <div class="form-row">
+                            <label for="pincode">Pincode:</label>
+                            <input type="text" id="pincode" />
+                        </div>
+                        <div class="form-row">
+                            <label for="propertyType">Property Type:</label>
+                            <select id="propertyType">
+                                <option value="owner">Owner</option>
+                                <option value="tenant">Tenant</option>
+                            </select>
+                        </div>
+                        <div class="form-row">
+                            <button type="submit">Add</button>
+                            <button type="button" class="cancel">Cancel</button>
+                        </div>
+                        <div class="form-row">
+                            <label for="address">Address:</label>
+                            <textarea id="address"></textarea>
+                        </div>
+                        <div class="form-row">
+                            <label for="state">State:</label>
+                            <select id="state">
+                                <option value="--select--">--Select--</option>
+                                <!-- Add more state options here -->
+                            </select>
+                        </div>
+                        <div class="form-row">
+                            <label for="city">City:</label>
+                            <select id="city">
+                                <option value="--select--">--Select--</option>
+                                <!-- Add more city options here -->
+                            </select>
+                        </div>
+                        <div class="form-row">
+                            <label for="same">
+                                <input type="checkbox" id="same" /> All Addresses are same
+                            </label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="btn btn-primary col-md-2">Add address</div>
+        </div>
     </div>
 </div>
 <script>
+    function toggleMenuOption(menuOptionId) {
+        $('.whiterightside > div').not('#' + menuOptionId).hide();
+        $('#' + menuOptionId).show();
+    }
+
     $(document).ready(function () {
-        // Function to serialize form data into a JSON object
-        function serializeForm() {
+        $('#employeeInfoMenu').click(function () {
+            $('.menu-option').toggle();
+        });
+
+        $('.addPersonal').submit(function (event) {
+            event.preventDefault();
+
             const formData = {};
             $('.addPersonal input, .addPersonal select').each(function () {
                 let value;
                 const id = $(this).attr('id');
-
-                if ($(this).is('select')) {
-                    if (id === 'bankDetail' || id === 'bankBranch' || id === 'ifscCode' ) {
-                        return;
-                    } else {
-                        value = $(this).val();
-                    }
+                if (id === 'bankDetail' || id === 'bankBranch' || id === 'ifscCode' ) {
+                    return;
                 }
                 else if ($(this).is(':checkbox')) {
                     value = !!$(this).prop('checked');
-                    console.log(!!$(this).prop('checked'));
-                    console.log(typeof(value));
                 } else {
                     value = $(this).val();
                 }
                 formData[id] = value;
             });
 
-            return formData;
-        }
-
-        $('.addPersonal').submit(function (event) {
-            event.preventDefault();
-
-            const formData = serializeForm();
-
-            formData["bankDetail"] = {"bankBranchId":parseInt($('#bankBranch').val()),}
-
-            console.log(formData);
+            formData["bankDetail"] = {"bankBranchId":parseInt($('#bankBranch').val())};
 
             $.ajax({
                 type: 'POST',

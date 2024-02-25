@@ -89,8 +89,10 @@ public class AdminController {
         return "admin/addEmployee";
     }
 
-    @GetMapping("/editEmployee/{employeeId}")
-    public String editEmployeePage(@PathVariable String employeeId, Model model) {
+    @GetMapping("/editEmployee")
+    public String editEmployeePage(
+//            @PathVariable String employeeId,
+            Model model) {
         setDate(model);
         model.addAttribute("gender", Personal.Gender.values());
         model.addAttribute("marriageStatus", Personal.MarriageStatus.values());
