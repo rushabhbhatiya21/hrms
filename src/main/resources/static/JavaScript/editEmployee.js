@@ -72,6 +72,58 @@ $(document).ready(function () {
         });
     });
 
+    $('.addFamily').submit(function (event){
+        event.preventDefault();
+        const formData = {};
+        $('.addFamily input, .addFamily select, .addFamily textarea').each(function () {
+            const id = $(this).attr('id');
+            let value;
+
+            if ($(this).is(':checkbox')) {
+                value = $(this).prop('checked');
+            } else {
+                value = $(this).val();
+            }
+
+            formData[id] = value;
+        });
+
+        const familyData = {
+            // Add other properties as needed
+            firstName: formData.firstName,
+            middleName: formData.middleName,
+            lastName: formData.lastName,
+            relation: formData.relation,
+            dateOfBirth: formData.familydateOfBirth,
+            gender: formData.familygender,
+            isNominee: formData.isNominee,
+            isDependant: formData.isDependent,
+            maritalStatus: formData.maritalStatus,
+            occupation: formData.occupancy,
+            canContactInEmergency: formData.isEmergencyContact,
+            isDisabled: formData.isDisabled,
+            nationality: formData.familynationality,
+            isResidingWith: formData.isResidingWith,
+            contactDetail: formData.contectDetails,
+            address: formData.familyaddress
+        };
+
+        console.log(familyData);
+
+        // $.ajax({
+        //     type: 'POST',
+        //     contentType: 'application/json',
+        //     url: '/admin/submitFamily'+employeeId,
+        //     data: JSON.stringify(formData),
+        //     success: function (response) {
+        //         console.log(response);
+        //     },
+        //     error: function (error) {
+        //         console.error(error);
+        //     }
+        // });
+    });
+
     $('.addPersonal').submit(function (event) {
         event.preventDefault();
         const formData = {};

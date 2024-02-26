@@ -15,8 +15,9 @@
     <div class="whiteleftside">
         <span id="employeeInfoMenu" class="menu">Employee Information</span>
         <hr>
-        <div id="personalMenu" class="menu-option" onclick="toggleMenuOption('personal');">Personal</div>
-        <div id="contactMenu" class="menu-option" onclick="toggleMenuOption('contact');">Contact</div>
+        <div class="menu-option" onclick="toggleMenuOption('personal');">Personal</div>
+        <div class="menu-option" onclick="toggleMenuOption('contact');">Contact</div>
+        <div class="menu-option" onclick="toggleMenuOption('family');">Family</div>
         <div id="emergencyMenu" class="menu-option" onclick="toggleMenuOption('emergency');">Emergency</div>
     </div>
     <div class="whiterightside">
@@ -345,7 +346,118 @@
             <div class="btn btn-warning col-md-4" id="submitContact">Save & Continue</div>
 
         </div>
-        <div id="family"></div>
+        <div id="family">
+            <span class="contlabel">Family</span>
+            <form class="row g-3 addFamily mt10">
+                <div class="col-md-4">
+                    <label for="firstName" class="form-label">First Name<span class="red">*</span> </label>
+                    <input type="text" class="form-control bg-white" id="firstName">
+                </div>
+                <div class="col-md-4">
+                    <label for="middleName" class="form-label">Middle Name<span class="red">*</span> </label>
+                    <input type="text" class="form-control bg-white" id="middleName">
+                </div>
+                <div class="col-md-4">
+                    <label for="lastName" class="form-label">Last Name<span class="red">*</span> </label>
+                    <input type="text" class="form-control bg-white" id="lastName">
+                </div>
+                <div class="col-md-4">
+                    <label for="relation" class="form-label">Relation<span class="red">*</span></label>
+                    <select class="form-control" id="relation">
+                        <option value="" disabled selected>-- Select Relation --</option>
+                        <option value="father">Father</option>
+                        <option value="mother">Mother</option>
+                        <option value="brother">Brother</option>
+                        <option value="sister">Sister</option>
+                        <option value="friend">Friend</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="familydateOfBirth" class="form-label">Date of Birth<span class="red">*</span> </label>
+                    <input type="date" class="form-control" id="familydateOfBirth">
+                </div>
+                <div class="col-md-4">
+                    <label for="familygender" class="form-label">Gender<span class="red">*</span> </label>
+                    <select class="form-control" id="familygender">
+                        <option value="" disabled selected>--Select Type--</option>
+                        <c:forEach var="gender" items="${gender}">
+                            <option value=${gender.name()}>${gender.name()}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <input type="checkbox" id="isNominee" value="isNominee">
+                    <label for="isNominee" class="form-label">is Nominee?</label>
+                </div>
+
+                <div class="col-md-4">
+                    <label for="maritalStatus" class="form-label">Marital Status<span class="red">*</span> </label>
+                    <select class="form-control" id="maritalStatus">
+                        <option value="" disabled selected>--Select Marital Status--</option>
+                        <c:forEach var="ms" items="${marriageStatus}">
+                            <option value=${ms.name()}>${ms.name()}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <label for="occupancy" class="form-label">Occupancy</label>
+                    <input type="text" class="form-control bg-white" id="occupancy">
+                </div>
+
+                <div class="col-md-4">
+                    <input type="checkbox" id="isDependent" value="isNominee">
+                    <label for="isDependent" class="form-label">is Dependent?</label>
+                </div>
+
+                <div class="col-md-4">
+                    <label for="contectDetails" class="form-label">Contact Details</label>
+                    <input type="text" class="form-control bg-white" id="contectDetails">
+                </div>
+                <div class="col-md-4">
+                    <label for="familynationality" class="form-label">Nationality</label>
+                    <select class="form-control" id="familynationality">
+                        <option value="" disabled selected>-- Select Type --</option>
+                        <option value="Indian">Indian</option>
+                        <option value="American">American</option>
+                        <option value="British">British</option>
+                        <option value="Chinese">Chinese</option>
+                        <option value="Japanese">Japanese</option>
+                        <option value="Russian">Russian</option>
+                        <option value="Brazilian">Brazilian</option>
+                        <option value="Australian">Australian</option>
+                        <option value="South African">South African</option>
+                        <option value="Canadian">Canadian</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <input type="checkbox" id="isResidingWith" value="isResidingWith">
+                    <label for="isResidingWith" class="form-label">is Residing with?</label>
+                </div>
+                <div class="col-md-4">
+                    <input type="checkbox" id="isEmergencyContact" value="isEmergencyContact">
+                    <label for="isEmergencyContact" class="form-label">Can be contact in Emergency?</label>
+                </div>
+                <div class="col-md-4">
+                    <input type="checkbox" id="isDisabled" value="isDisabled">
+                    <label for="isDisabled" class="form-label">Is Physically Disabled?</label>
+                </div>
+
+
+                <div class="col-md-4">
+                    <label for="familyaddress">Address</label>
+                    <textarea class="form-control" id="familyaddress" rows="3"></textarea>
+                </div>
+
+                <div class="form-row">
+                    <button type="reset" class="btn btn-secondary">Reset</button>
+                    <button type="submit" class="btn btn-primary">Add Record</button>
+                    <button type="button" class="btn btn-warning">Continue</button>
+                </div>
+            </form>
+        </div>
         <div id="emergency">
             <span class="contlabel">Emergency</span>
             <form class="row g-3 addPersonal mt10">
