@@ -507,8 +507,8 @@
                 </div>
                 <div>
                     <button type="reset" class="btn btn-secondary">Reset</button>
-                    <button type="submit" class="btn btn-primary">Add Record</button>
-                    <button type="button" class="btn btn-warning">Save & Continue</button>
+                    <button type="button" onclick="addEmergencyrecord();" class="btn btn-primary">Add Record</button>
+                    <button type="submit" class="btn btn-warning">Save & Continue</button>
                 </div>
             </form>
         </div>

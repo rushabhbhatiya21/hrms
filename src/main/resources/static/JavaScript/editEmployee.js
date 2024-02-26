@@ -4,7 +4,6 @@ function toggleMenuOption(menuOptionId) {
 }
 var addressList = [];
 const employeeId = window.location.href.split('/').pop();
-console.log(employeeId);
 
 
 function addAddress(e) {
@@ -63,22 +62,24 @@ function addFamilyRecord(){
         relation: formData.familyrelation,
         dateOfBirth: formData.familydateOfBirth,
         gender: formData.familygender,
-        isNominee: formData.isNominee,
-        isDependant: formData.isDependent,
+        nominee: formData.isNominee,
+        dependant: formData.isDependent,
         maritalStatus: formData.maritalStatus,
         occupation: formData.occupancy,
         canContactInEmergency: formData.isEmergencyContact,
-        isDisabled: formData.isDisabled,
+        disabled: formData.isDisabled,
         nationality: formData.familynationality,
-        isResidingWith: formData.isResidingWith,
+        residingWith: formData.isResidingWith,
         contactDetail: formData.contectDetails,
         address: formData.familyaddress
     };
 
     console.log(familyData);
     familylist.push(familyData);
-    // document.querySelector('.addFamily').reset();
+    document.querySelector('.addFamily').reset();
 }
+
+
 
 
 $(document).ready(function () {
@@ -163,5 +164,12 @@ $(document).ready(function () {
                 console.error(error);
             }
         });
+    });
+
+    $('.addEmergency').submit(function (event) {
+        event.preventDefault();
+
+
+
     });
 });
