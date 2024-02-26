@@ -31,14 +31,16 @@ $(document).ready(function () {
         $('.'+$(this).val()).show();
     });
 
-    function serializeForm() {
+
+    $('.addemployee').submit(function (event) {
+        event.preventDefault();
         const formData = {};
         $('.addemployee input, .addemployee select').each(function () {
             let value;
             const id = $(this).attr('id');
 
             if ($(this).is('select')) {
-                if (id === 'department' || id === 'designation' || id === 'group') {
+                if (id === 'department' || id === 'designation' || id === 'groupMain') {
                     var str = id+"Id";
                     value = {}
                     value[str]=parseInt($(this).val(),10);
@@ -57,27 +59,15 @@ $(document).ready(function () {
             formData[id] = value;
         });
 
-        return formData;
-    }
-
-    $('.addemployee').submit(function (event) {
-        event.preventDefault();
-
-        // Serialize form data into a JSON object
-        const formData = serializeForm();
-
-        // AJAX request to submit data
         $.ajax({
             type: 'POST',
             contentType: 'application/json',
             url: '/admin/submitEmployeeData',
             data: JSON.stringify(formData),
             success: function (response) {
-                // Handle success response
-                console.log(response);
+                window.location.href = 'http://localhost:8080/admin/editEmployee/'+response;
             },
             error: function (error) {
-                // Handle error response
                 console.error(error);
             }
         });

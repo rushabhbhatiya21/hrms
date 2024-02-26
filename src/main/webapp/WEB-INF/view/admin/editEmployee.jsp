@@ -341,93 +341,9 @@
                     </form>
                 </div>
             </div>
-<%--            <div class="btn btn-primary col-md-2">Add address</div>--%>
-            <div class="btn btn-primary col-md-4" id="submitContact">Save & Continue</div>
+            <div class="btn btn-warning col-md-4" id="submitContact">Save & Continue</div>
 
         </div>
         <div id="family"></div>
     </div>
 </div>
-<script>
-    function toggleMenuOption(menuOptionId) {
-        $('.whiterightside > div').not('#' + menuOptionId).hide();
-        $('#' + menuOptionId).show();
-    }
-
-    function addAddress(e) {
-        e.preventDefault();
-        const addressType = document.getElementById("addressType").value;
-        const country = document.getElementById("address-country").value;
-        const district = document.getElementById("district").value;
-        const pincode = document.getElementById("pincode").value;
-        const propertyType = document.getElementById("propertyType").value;
-        const address = document.getElementById("address").value;
-        const state = document.getElementById("state").value;
-        const city = document.getElementById("city").value;
-        const areAllAddressSame = document.getElementById("areAllAddressSame").checked;
-
-        let submittedData = '<div class="addcard"><table><tbody><tr><td><strong>All Addresses Same:</strong></td><td>'+(areAllAddressSame ? 'Yes' : "No")+'</td><td>'+(areAllAddressSame ? '' : addressType)+"</td></tr><tr><td colspan='2'>"+address+ " ,"+ city +" ,"+ district +"</td></tr><tr><td>" + state + " ,"+ pincode +"</td><td>owner</td></tr></tbody></table></div>";
-        document.getElementById("submitted").innerHTML += submittedData;
-        $('.address-card-container').hide();
-        document.querySelector('.addAddress').reset();
-
-    }
-
-    $(document).ready(function () {
-        $('#submitContact').click(function () {
-            $.ajax({
-                type: "POST",
-                url: "http://localhost:8080/admin/submitContact/1",
-                contentType: "application/json",
-                data: JSON.stringify(contactData),
-                success: function (response) {
-                    console.log(response);
-                },
-                error: function (error) {
-                    console.log(error);
-                }
-            });
-        });
-
-        $('#employeeInfoMenu').click(function () {
-            $('.menu-option').toggle();
-        });
-
-        $('.address-card-container').hide();
-        toggleMenuOption('personal');
-
-        $('.addPersonal').submit(function (event) {
-            event.preventDefault();
-
-            const formData = {};
-            $('.addPersonal input, .addPersonal select').each(function () {
-                let value;
-                const id = $(this).attr('id');
-                if (id === 'bankDetail' || id === 'bankBranch' || id === 'ifscCode' ) {
-                    return;
-                }
-                else if ($(this).is(':checkbox')) {
-                    value = !!$(this).prop('checked');
-                } else {
-                    value = $(this).val();
-                }
-                formData[id] = value;
-            });
-
-            formData["bankDetail"] = {"bankBranchId":parseInt($('#bankBranch').val())};
-
-                $.ajax({
-                    type: 'POST',
-                    contentType: 'application/json',
-                    url: '/admin/submitPersonal',
-                    data: JSON.stringify(formData),
-                    success: function (response) {
-                        console.log(response);
-                    },
-                    error: function (error) {
-                        console.error(error);
-                    }
-                });
-                });
-    });
-</script>

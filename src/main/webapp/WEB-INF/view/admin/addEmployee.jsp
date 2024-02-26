@@ -108,9 +108,8 @@
                 <label for="employeeEligibleFor" class="form-label">Employee eligible for<span class="red">*</span> </label>
                 <select class="form-control" id="employeeEligibleFor">
                     <option value="Elegibility1">Elegibility1</option>
-                    <%--                    <c:forEach>--%>
-
-                    <%--                    </c:forEach>--%>
+                    <option value="Elegibility2">Elegibility2</option>
+                    <option value="Elegibility3">Elegibility3</option>
                 </select>
             </div>
             <div class="col-md-4">
@@ -124,59 +123,3 @@
         </form>
     </div>
 </div>
-<script>
-    $(document).ready(function () {
-        // Function to serialize form data into a JSON object
-        function serializeForm() {
-            const formData = {};
-            $('.addemployee input, .addemployee select').each(function () {
-                let value;
-                const id = $(this).attr('id');
-
-                if ($(this).is('select')) {
-                    if (id === 'department' || id === 'designation' || id === 'groupMain') {
-                        var str = id+"Id";
-                        value = {}
-                        value[str]=parseInt($(this).val(),10);
-                        console.log(value);
-                    } else {
-                        value = $(this).val();
-                    }
-                }
-                else if ($(this).is(':checkbox')) {
-                    value = !!$(this).prop('checked');
-                    console.log(!!$(this).prop('checked'));
-                    console.log(typeof(value));
-                } else {
-                    value = $(this).val();
-                }
-                formData[id] = value;
-            });
-
-            return formData;
-        }
-
-        $('.addemployee').submit(function (event) {
-            event.preventDefault();
-
-            // Serialize form data into a JSON object
-            const formData = serializeForm();
-
-            // AJAX request to submit data
-            $.ajax({
-                type: 'POST',
-                contentType: 'application/json',
-                url: '/admin/submitEmployeeData',
-                data: JSON.stringify(formData),
-                success: function (response) {
-                    // Handle success response
-                    console.log(response);
-                },
-                error: function (error) {
-                    // Handle error response
-                    console.error(error);
-                }
-            });
-        });
-    });
-</script>
