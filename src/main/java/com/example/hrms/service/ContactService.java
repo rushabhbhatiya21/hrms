@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ContactService {
@@ -31,5 +32,9 @@ public class ContactService {
 
         addressRepository.saveAll(addresses);
         contactRepository.save(contact);
+    }
+
+    public Optional<Contact> findContactByEmpId(Long empId) {
+        return contactRepository.findContactByEmployeeEmployeeId(empId);
     }
 }

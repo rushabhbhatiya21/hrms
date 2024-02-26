@@ -105,25 +105,34 @@ public class AdminController {
     @PostMapping("/submitPersonal/{employeeId}")
     @ResponseBody
     public ResponseEntity<String> submitPersonalDetails(@RequestBody Personal personal, @PathVariable String employeeId) {
-        Long bankBranchId = personal.getBankDetail().getBankBranchId();
-        BankBranch bankbranch = bankBranchService.findBankBranchById(bankBranchId).get();
+        try {
+            Long bankBranchId = personal.getBankDetail().getBankBranchId();
+            BankBranch bankbranch = bankBranchService.findBankBranchById(bankBranchId).get();
 
+            System.out.println(bankbranch.getBankBranchName());
 
-        System.out.println(bankbranch.getBankBranchName());
-
-        personalService.savePersonal(personal);
-        return ResponseEntity.ok("Personal details saved!");
+            personalService.savePersonal(personal);
+            return ResponseEntity.ok("Personal details saved!");
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error occurred while saving personal details!", HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping("/submitContact/{employeeId}")
     @ResponseBody
     public ResponseEntity<String> submitContactDetails(@RequestBody Contact contact, @PathVariable String employeeId) {
         try {
-            Optional<Employee> employee = employeeService.findEmployeeById(Long.valueOf(employeeId));
-            employee.ifPresent(contact::setEmployee);
-            contactService.saveContact(contact);
+            Optional<Contact> contactNew = contactService.findContactByEmpId(Long.valueOf(employeeId));
+            if (contactNew.isPresent()) {
+                return new ResponseEntity<>("Contact already exists!", HttpStatus.BAD_REQUEST);
+            }
+            else {
+                Optional<Employee> employee = employeeService.findEmployeeById(Long.valueOf(employeeId));
+                employee.ifPresent(contact::setEmployee);
+                contactService.saveContact(contact);
+                return ResponseEntity.ok("Contact saved successfully");
+            }
 
-            return ResponseEntity.ok("Contact saved successfully");
         } catch (Exception e) {
             return new ResponseEntity<>("Error occurred while saving contact!", HttpStatus.BAD_REQUEST);
         }
@@ -134,10 +143,9 @@ public class AdminController {
         try {
             Optional<Employee> employee = employeeService.findEmployeeById(Long.valueOf(employeeId));
             families.forEach(family -> family.setEmployee(employee.get()));
-
             familyService.saveFamilies(families);
 
-            return ResponseEntity.ok("Family saved successfully");
+            return ResponseEntity.ok("Family contacts saved successfully");
         } catch (Exception e) {
             return new ResponseEntity<>("Error occurred while saving family!", HttpStatus.BAD_REQUEST);
         }
@@ -150,6 +158,7 @@ public class AdminController {
             Optional<Employee> employee = employeeService.findEmployeeById(Long.valueOf(employeeId));
             emergencyList.forEach(emergency -> emergency.setEmployee(employee.get()));
             emergencyService.saveEmergencyContacts(emergencyList);
+
             return ResponseEntity.ok("Emergency contacts saved successfully");
         } catch (Exception e) {
             return new ResponseEntity<>("Error occurred while saving emergency!", HttpStatus.BAD_REQUEST);

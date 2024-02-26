@@ -20,6 +20,9 @@
         <div class="menu-option" onclick="toggleMenuOption('family');">Family</div>
         <div class="menu-option" onclick="toggleMenuOption('emergency');">Emergency</div>
         <div class="menu-option" onclick="toggleMenuOption('nominee');">Nominee</div>
+        <div class="menu-option" onclick="toggleMenuOption('emergency');">Emergency</div>
+        <div class="menu-option" onclick="toggleMenuOption('health');">Health</div>
+        <div class="menu-option" onclick="toggleMenuOption('photo');">Photo</div>
     </div>
     <div class="whiterightside">
         <div id="personal">
@@ -602,6 +605,76 @@
                     <button type="button" onclick="addNomineerecord();" class="btn btn-primary">Add Record</button>
                     <button type="submit" class="btn btn-warning">Save & Continue</button>
                 </div>
+            </form>
+        </div>
+        <div id="health">
+            <span class="contlabel">Emergency</span>
+            <form class="row g-3 addHealth mt10">
+                <div class="col-md-4">
+                    <label for="height" class="form-label">Height(cms)<span class="red">*</span></label>
+                    <input type="number" class="form-control" id="height">
+                </div>
+                <div class="col-md-4">
+                    <label for="weight" class="form-label">Weight(kgs)</label>
+                    <input type="number" class="form-control" id="weight">
+                </div>
+                <div class="col-md-4">
+                    <label for="bloodGroup" class="form-label">Blood Group</label>
+                    <input type="text" class="form-control" id="bloodGroup">
+                </div>
+                <div class="col-md-4">
+                    <label for="idMark1" class="form-label">Identification Mark-1</label>
+                    <input type="text" class="form-control" id="idMark1">
+                </div>
+                <div class="col-md-4">
+                    <label for="idMark2" class="form-label">Identification Mark-2</label>
+                    <input type="text" class="form-control bg-white" id="idMark2">
+                </div>
+                <div class="col-md-4">
+                    <input type="checkbox" id="handicapped" value="handicapped">
+                    <label for="handicapped" class="form-label">Physically Handicapped</label>
+                </div>
+                <div>
+                    <button type="reset" class="btn btn-secondary">Reset</button>
+                    <button type="button" class="btn btn-warning">Save & Continue</button>
+                </div>
+            </form>
+        </div>
+        <div id="photo">
+            <span class="contlabel">Photo</span>
+            <form id="photoForm">
+                <div class="image-card">
+                    <div class="outside-preview">
+                        <span class="preview-text">No Image</span>
+                    </div>
+                    <div class="preview-next">
+                        <div class="image-input">
+                            <label for="employeePhoto" class="form-label">Employee Photo<span class="red">*</span></label>
+                            <input type="file" id="employeePhoto" class="form-control bg-white" size="50px" disabled>
+                            <button id="browsePhoto" class="btn btn-secondary btn-browse" type="button" value="Browse" onclick="browseAndPreview('employeePhoto', 'browsePhoto')">Browse</button>
+                            <button id="uploadPhoto" class="btn btn-outline-warning btn-upload" type="button" onclick="uploadPhoto('employeePhoto')">Upload</button>
+                        </div>
+                        <span>only jpg/png/jpeg are allowed</span>
+                    </div>
+                </div>
+                <div class="image-card">
+                    <div class="outside-preview">
+                        <span class="preview-text">No Image</span>
+                    </div>
+                    <div class="preview-next">
+                        <div class="image-input">
+                            <label for="employeeSign" class="form-label">Employee Sign<span class="red">*</span></label>
+                            <input id="employeeSign" class="form-control bg-white" size="50px" disabled>
+                            <button id="browseSign" class="btn btn-secondary btn-browse" type="button" value="Browse" onclick="browsePhoto()">Browse</button>
+                            <button id="uploadSign" class="btn btn-outline-warning btn-upload" type="button" value="Upload" onclick="uploadPhoto()">Upload</button>
+                        </div>
+                        <span>only jpg/png/jpeg are allowed</span>
+
+                    </div>
+                </div>
+
+<%--                <!-- Upload Button -->--%>
+<%--                <input type="button" value="Upload" onclick="uploadPhoto()">--%>
             </form>
         </div>
     </div>

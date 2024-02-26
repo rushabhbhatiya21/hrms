@@ -188,3 +188,62 @@ label{
 .addcard td{
     vertical-align: middle;
 }
+
+/*.checkbox-custom {*/
+/*    margin-top: 10px;*/
+/*    display: flex;*/
+/*    justify-content: space-evenly;*/
+/*    align-items: center;*/
+/*    font-size: 22px;*/
+/*}*/
+
+/*!* Increase the size of checkboxes with a specific class *!*/
+/*.checkbox-custom-size {*/
+/*    width: 22px;*/
+/*    height: 22px;*/
+/*}*/
+
+/*!* Optional: Increase the size of the checkmark inside the checkbox *!*/
+/*.checkbox-custom-size:checked {*/
+/*    transform: scale(1.5);*/
+/*}*/
+
+.image-card {
+    display: flex;
+    max-width: 100%;
+    padding-top: 20px;
+}
+
+.outside-preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dotted #aaa;
+    width: 130px;
+    height: 130px;
+}
+
+.preview-next {
+    margin-left: 20px;
+}
+
+.preview-text {
+    color: #aaaaaa;
+}
+
+.image-input {
+    position: relative;
+}
+
+.btn-browse {
+    position: absolute;
+    right: 15px;
+    top: 69%;
+    transform: translateY(-50%);
+}
+
+.btn-upload {
+    position: absolute;
+    left: 470px;
+    bottom: 6px;
+}

@@ -8,17 +8,17 @@ const employeeId = window.location.href.split('/').pop();
 
 function addAddress(e) {
     e.preventDefault();
-    var addressType = document.getElementById("addressType").value;
-    var country = document.getElementById("address-country").value;
-    var district = document.getElementById("district").value;
-    var pincode = document.getElementById("pincode").value;
-    var propertyType = document.getElementById("propertyType").value;
-    var address = document.getElementById("address").value;
-    var state = document.getElementById("state").value;
-    var city = document.getElementById("city").value;
-    var areAllAddressSame = document.getElementById("areAllAddressSame").checked;
+    const addressType = document.getElementById("addressType").value;
+    const country = document.getElementById("address-country").value;
+    const district = document.getElementById("district").value;
+    const pincode = document.getElementById("pincode").value;
+    const propertyType = document.getElementById("propertyType").value;
+    const address = document.getElementById("address").value;
+    const state = document.getElementById("state").value;
+    const city = document.getElementById("city").value;
+    const areAllAddressSame = document.getElementById("areAllAddressSame").checked;
 
-    var newAddress = {
+    let newAddress = {
         addressType: addressType,
         country: country,
         district: district,
@@ -38,7 +38,7 @@ function addAddress(e) {
     document.querySelector('.addAddress').reset();
 
 }
-const familylist =[];
+const familyList =[];
 function addFamilyRecord(){
     const formData = {};
     $('.addFamily input, .addFamily select, .addFamily textarea').each(function () {
@@ -75,7 +75,7 @@ function addFamilyRecord(){
     };
 
     console.log(familyData);
-    familylist.push(familyData);
+    familyList.push(familyData);
     document.querySelector('.addFamily').reset();
 }
 
@@ -169,7 +169,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
-            url: "http://localhost:8080/admin/submitContact/"+employeeId,
+            url: "http://localhost:8080/admin/submitContact/" + employeeId,
             contentType: "application/json",
             data: JSON.stringify(formData),
             success: function (response) {
@@ -190,7 +190,7 @@ $(document).ready(function () {
             type: 'POST',
             contentType: 'application/json',
             url: '/admin/submitFamily/'+employeeId,
-            data: JSON.stringify(familylist),
+            data: JSON.stringify(familyList),
             success: function (response) {
                 console.log(response);
             },
@@ -222,7 +222,7 @@ $(document).ready(function () {
         $.ajax({
             type: 'POST',
             contentType: 'application/json',
-            url: '/admin/submitPersonal'+employeeId,
+            url: '/admin/submitPersonal' + employeeId,
             data: JSON.stringify(formData),
             success: function (response) {
                 console.log(response);
