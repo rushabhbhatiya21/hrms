@@ -453,14 +453,14 @@
 
                 <div class="form-row">
                     <button type="reset" class="btn btn-secondary">Reset</button>
-                    <button type="submit" class="btn btn-primary">Add Record</button>
-                    <button type="button" class="btn btn-warning">Continue</button>
+                    <button type="button" onclick="addFamilyRecord();" class="btn btn-primary">Add Record</button>
+                    <button type="submit" class="btn btn-warning">Continue</button>
                 </div>
             </form>
         </div>
         <div id="emergency">
             <span class="contlabel">Emergency</span>
-            <form class="row g-3 addPersonal mt10">
+            <form class="row g-3 addEmergency mt10">
                 <div class="col-md-4">
                     <label for="marriageStatus" class="form-label">Marriage status</label>
                     <label for="firstName" class="form-label">First Name<span class="red">*</span></label>
