@@ -351,19 +351,19 @@
             <form class="row g-3 addFamily mt10">
                 <div class="col-md-4">
                     <label for="firstName" class="form-label">First Name<span class="red">*</span> </label>
-                    <input type="text" class="form-control bg-white" id="firstName">
+                    <input type="text" class="form-control bg-white" id="familyfirstName">
                 </div>
                 <div class="col-md-4">
                     <label for="middleName" class="form-label">Middle Name<span class="red">*</span> </label>
-                    <input type="text" class="form-control bg-white" id="middleName">
+                    <input type="text" class="form-control bg-white" id="familymiddleName">
                 </div>
                 <div class="col-md-4">
                     <label for="lastName" class="form-label">Last Name<span class="red">*</span> </label>
-                    <input type="text" class="form-control bg-white" id="lastName">
+                    <input type="text" class="form-control bg-white" id="familylastName">
                 </div>
                 <div class="col-md-4">
-                    <label for="relation" class="form-label">Relation<span class="red">*</span></label>
-                    <select class="form-control" id="relation">
+                    <label for="familyrelation" class="form-label">Relation<span class="red">*</span></label>
+                    <select class="form-control" id="familyrelation">
                         <option value="" disabled selected>-- Select Relation --</option>
                         <option value="father">Father</option>
                         <option value="mother">Mother</option>

@@ -17,6 +17,7 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <%--    <script src="https://cdn.tailwindcss.com"></script>--%>
     <script src="/JavaScript/mainjs.js"></script>
+    <script src="/JavaScript/editEmployee.js"></script>
     <link href="/css/basecss.css" rel="stylesheet">
 </head>
 <body>

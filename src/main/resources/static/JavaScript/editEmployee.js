@@ -90,10 +90,10 @@ $(document).ready(function () {
 
         const familyData = {
             // Add other properties as needed
-            firstName: formData.firstName,
-            middleName: formData.middleName,
-            lastName: formData.lastName,
-            relation: formData.relation,
+            firstName: formData.familyfirstName,
+            middleName: formData.familymiddleName,
+            lastName: formData.familylastName,
+            relation: formData.familyrelation,
             dateOfBirth: formData.familydateOfBirth,
             gender: formData.familygender,
             isNominee: formData.isNominee,
@@ -110,18 +110,18 @@ $(document).ready(function () {
 
         console.log(familyData);
 
-        // $.ajax({
-        //     type: 'POST',
-        //     contentType: 'application/json',
-        //     url: '/admin/submitFamily'+employeeId,
-        //     data: JSON.stringify(formData),
-        //     success: function (response) {
-        //         console.log(response);
-        //     },
-        //     error: function (error) {
-        //         console.error(error);
-        //     }
-        // });
+        $.ajax({
+            type: 'POST',
+            contentType: 'application/json',
+            url: '/admin/submitFamily'+employeeId,
+            data: JSON.stringify(formData),
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (error) {
+                console.error(error);
+            }
+        });
     });
 
     $('.addPersonal').submit(function (event) {

@@ -46,7 +46,7 @@ public class AdminController {
     @GetMapping("")
     public String admin(Model model){
         model.addAttribute("date", new Date());
-        return "admin/baseHtml";
+        return "admin/basehtml";
     }
 
     @PostMapping("/submitEmployeeData")
