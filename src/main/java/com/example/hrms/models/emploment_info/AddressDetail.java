@@ -32,7 +32,11 @@ public class AddressDetail {
 
     private boolean areAllAddressSame;
 
+//    @ManyToOne
+//    @JoinColumn(referencedColumnName = "employeeId", name = "employeeId")
+//    private Employee employee;
+
     @ManyToOne
-    @JoinColumn(referencedColumnName = "contactId", name = "contactId")
+    @JoinColumn(name = "contactId")
     private Contact contact;
 }

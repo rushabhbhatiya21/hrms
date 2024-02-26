@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
@@ -22,9 +25,11 @@ public class AdminController {
     private final BankService bankService;
     private final BankBranchService bankBranchService;
     private final PersonalService personalService;
+    private final AddressService addressService;
+    private final ContactService contactService;
 
     @Autowired
-    public AdminController(EmployeeService employeeService, DesignationService designationService, DepartmentService departmentService, GroupService groupService, BankService bankService, BankBranchService bankBranchService, PersonalService personalService) {
+    public AdminController(EmployeeService employeeService, DesignationService designationService, DepartmentService departmentService, GroupService groupService, BankService bankService, BankBranchService bankBranchService, PersonalService personalService, AddressService addressService, ContactService contactService) {
         this.employeeService = employeeService;
         this.designationService = designationService;
         this.departmentService = departmentService;
@@ -32,6 +37,8 @@ public class AdminController {
         this.bankService = bankService;
         this.bankBranchService = bankBranchService;
         this.personalService = personalService;
+        this.addressService = addressService;
+        this.contactService = contactService;
     }
 
     @GetMapping("")
@@ -89,10 +96,10 @@ public class AdminController {
         return "admin/addEmployee";
     }
 
-    @GetMapping("/editEmployee")
+    @GetMapping("/editEmployee/{employeeId}")
     public String editEmployeePage(
 //            @PathVariable String employeeId,
-            Model model) {
+            Model model, @PathVariable String employeeId) {
         setDate(model);
         model.addAttribute("gender", Personal.Gender.values());
         model.addAttribute("marriageStatus", Personal.MarriageStatus.values());
@@ -104,9 +111,9 @@ public class AdminController {
         return "admin/editEmployee";
     }
 
-    @PostMapping("submitPersonal")
+    @PostMapping("/submitPersonal/{employeeId}")
     @ResponseBody
-    public ResponseEntity<String> submitPersonalDetails(@RequestBody Personal personal) {
+    public ResponseEntity<String> submitPersonalDetails(@RequestBody Personal personal, @PathVariable String employeeId) {
         Long bankBranchId = personal.getBankDetail().getBankBranchId();
         BankBranch bankbranch = bankBranchService.findBankBranchById(bankBranchId).get();
 
@@ -115,6 +122,30 @@ public class AdminController {
 
 //        personalService.savePersonal(personal);
         return ResponseEntity.ok("Personal details saved!");
+    }
+
+    @PostMapping("/submitContact/{employeeId}")
+    @ResponseBody
+    public ResponseEntity<String> submitContactDetails(@RequestBody Contact contact, @PathVariable String employeeId) {
+        System.out.println(contact.getPersonalEmail());
+
+        List<AddressDetail> addresses = contact.getAddresses();
+
+        for (AddressDetail address : addresses) {
+//            address.setContact(contact);
+            System.out.println(address.getAddress());
+            System.out.println(address.getCity());
+        }
+
+        Optional<Employee> employee = employeeService.findEmployeeById(Long.valueOf(employeeId));
+        employee.ifPresent(contact::setEmployee);
+
+        System.out.println(employee.get().getEmployeeId());
+
+//        addressService.saveAddresses(addresses);
+        contactService.saveContact(contact);
+
+        return ResponseEntity.ok("Contact saved successfully");
     }
 
     public void setDate(Model model){

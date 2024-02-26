@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -28,6 +31,9 @@ public class Contact {
     private String personalEmail;
 
     private String secondaryEmail;
+
+    @OneToMany(mappedBy = "contact", cascade = CascadeType.ALL)
+    private List<AddressDetail> addresses = new ArrayList<>();
 
     @OneToOne
     @JoinColumn(referencedColumnName = "employeeId", name = "employeeId")
