@@ -24,7 +24,7 @@ public class Personal {
     private MarriageStatus marriageStatus;
 
     public enum MarriageStatus {
-        SINGLE, MARRIED, DIVORCED, SEPARATED, WINDOWED
+        SINGLE, MARRIED, DIVORCED, SEPARATED, WIDOWED
     }
 
     private Date dateOfBirth;

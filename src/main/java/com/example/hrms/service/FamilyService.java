@@ -19,4 +19,8 @@ public class FamilyService {
     public void saveFamilies(List<Family> families) {
         familyRepository.saveAll(families);
     }
+
+    public List<Family> findAllFamiliesByNominee(Long empId) {
+        return familyRepository.findAllFamiliesWithNomineeAndEmployeeId(empId);
+    }
 }

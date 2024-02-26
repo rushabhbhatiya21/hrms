@@ -91,6 +91,11 @@ public class AdminController {
         model.addAttribute("vehicleType", Personal.VehicleType.values());
         model.addAttribute("banks", bankService.findAllBanks());
         model.addAttribute("bankBranches", bankBranchService.findAllBankBranches());
+        model.addAttribute("familiesByNominee", familyService.findAllFamiliesByNominee(Long.valueOf(employeeId)));
+//        List<Family> families = familyService.findAllFamiliesByNominee(Long.valueOf(employeeId));
+//        for (Family family : families) {
+//            System.out.println(family.getFirstName());
+//        }
 
         return "admin/editEmployee";
     }
@@ -127,7 +132,12 @@ public class AdminController {
         try {
             Optional<Employee> employee = employeeService.findEmployeeById(Long.valueOf(employeeId));
             families.forEach(family -> family.setEmployee(employee.get()));
-            familyService.saveFamilies(families);
+
+            for (Family family : families) {
+
+            }
+
+//            familyService.saveFamilies(families);
 
             return ResponseEntity.ok("Family saved successfully");
         } catch (Exception e) {
