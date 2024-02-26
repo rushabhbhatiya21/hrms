@@ -79,7 +79,74 @@ function addFamilyRecord(){
     document.querySelector('.addFamily').reset();
 }
 
+const emergencyList = [];
+function addEmergencyrecord(){
+    const formData = {};
+    $('.addEmergency input, .addEmergency select, .addEmergency textarea').each(function () {
+        const id = $(this).attr('id');
+        let value;
 
+        if ($(this).is(':checkbox')) {
+            value = $(this).prop('checked');
+        } else {
+            value = $(this).val();
+        }
+
+        formData[id] = value;
+    });
+
+    // Construct the Emergency object
+    const emergencyData = {
+        priority: formData.priority,
+        firstName: formData.firstName,
+        middleName: formData.middleName,
+        lastName: formData.lastName,
+        relation: formData.relation,
+        phoneNumber: formData.phoneNumber,
+        mobileNumber: formData.mobileNumber,
+        email: formData.email,
+        address: formData.emergencyAddress
+    };
+
+    console.log(emergencyData);
+    emergencyList.push(emergencyData);
+    $('.addEmergency').reset();
+}
+
+function formatToYYYYMMDD(dateString) {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
+function populatenominee(fname,dateofbirth,relation,gender){
+    $('.familycontainer').hide();
+    $('#nomineefirstName').val(fname);
+    $('#nomineedateOfBirth').val(formatToYYYYMMDD(dateofbirth));
+    $('#nomineerelation').val(relation);
+    $('#nomineegender').val(gender);
+}
+
+var nomineeList = [];
+function addNomineerecord() {
+    var nomineeData = {
+        "priority": $("#nomineepriority").val(),
+        "firstName": $("#nomineefirstName").val(),
+        "middleName": $("#nomineemiddleName").val(),
+        "lastName": $("#nomineelastName").val(),
+        "relation": $("#nomineerelation").val(),
+        "gender": $("#nomineegender").val(),
+        "dateOfBirth": $("#nomineedateOfBirth").val(),
+        "uidNumber": $("#nomineeuidNumber").val(),
+        "panNumber": $("#nomineePAN").val(),
+        "contactNumber": $("#nomineeContact").val(),
+        "nomineeInvalidCondition": $("#nomineeInvalidCondition").val()
+    };
+    console.log(nomineeData);
+    nomineeList.push(nomineeData);
+    $('.addNominee').reset();
+}
 
 
 $(document).ready(function () {
@@ -168,8 +235,34 @@ $(document).ready(function () {
 
     $('.addEmergency').submit(function (event) {
         event.preventDefault();
+        $.ajax({
+            type: 'POST',
+            contentType: 'application/json',
+            url: '/admin/submitEmergency/'+employeeId,
+            data: JSON.stringify(emergencyList),
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (error) {
+                console.error(error);
+            }
+        });
+    });
 
-
-
+    $('.addNominee').submit(function (event) {
+        event.preventDefault();
+        console.log(nomineeList);
+        // $.ajax({
+        //     type: 'POST',
+        //     contentType: 'application/json',
+        //     url: '/admin/submitNominee/'+employeeId,
+        //     data: JSON.stringify(nomineeList),
+        //     success: function (response) {
+        //         console.log(response);
+        //     },
+        //     error: function (error) {
+        //         console.error(error);
+        //     }
+        // });
     });
 });

@@ -18,7 +18,8 @@
         <div class="menu-option" onclick="toggleMenuOption('personal');">Personal</div>
         <div class="menu-option" onclick="toggleMenuOption('contact');">Contact</div>
         <div class="menu-option" onclick="toggleMenuOption('family');">Family</div>
-        <div id="emergencyMenu" class="menu-option" onclick="toggleMenuOption('emergency');">Emergency</div>
+        <div class="menu-option" onclick="toggleMenuOption('emergency');">Emergency</div>
+        <div class="menu-option" onclick="toggleMenuOption('nominee');">Nominee</div>
     </div>
     <div class="whiterightside">
         <div id="personal">
@@ -213,8 +214,8 @@
                 <label for="residentOfCountry" class="form-label">is Resident of other Country?</label>
             </div>
             <div class="col-md-4">
-                <input type="checkbox" id="isAnyProceedings" value="residentOfCountry">
-                <label for="isAnyProceedings" class="form-label">Is Any Disciplinary Proceeding?</label>
+                <input type="checkbox" id="anyProceedings" value="residentOfCountry">
+                <label for="anyProceedings" class="form-label">Is Any Disciplinary Proceeding?</label>
             </div>
 
 
@@ -282,7 +283,7 @@
             <div class="container" id="submitted">
             </div>
             <div class="btn btn-primary col-md-2" onclick="$('.address-card-container').show();">Add address</div>
-            <div class="address-card-container">
+            <div class="address-card-container" style="display: none">
                 <div class="address-card">
                     <h2 class="address-card-title">Add New Address</h2>
                     <form class="row g-3 addAddress mt10">
@@ -444,13 +445,10 @@
                     <input type="checkbox" id="isDisabled" value="isDisabled">
                     <label for="isDisabled" class="form-label">Is Physically Disabled?</label>
                 </div>
-
-
                 <div class="col-md-4">
                     <label for="familyaddress">Address</label>
                     <textarea class="form-control" id="familyaddress" rows="3"></textarea>
                 </div>
-
                 <div class="form-row">
                     <button type="reset" class="btn btn-secondary">Reset</button>
                     <button type="button" onclick="addFamilyRecord();" class="btn btn-primary">Add Record</button>
@@ -508,6 +506,100 @@
                 <div>
                     <button type="reset" class="btn btn-secondary">Reset</button>
                     <button type="button" onclick="addEmergencyrecord();" class="btn btn-primary">Add Record</button>
+                    <button type="submit" class="btn btn-warning">Save & Continue</button>
+                </div>
+            </form>
+
+        </div>
+        <div id="nominee">
+            <span class="contlabel">Nominee</span>
+            <br>
+            <a onclick="$('.familycontainer').show();">Import from family</a>
+            <div class="familycontainer" style="display: none">
+                <div class="familycontainer-card">
+                    <table class="table table-bordered table-striped" style="width: 100%;">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th>First Name</th>
+                            <th>D.O.B</th>
+                            <th>Relation</th>
+                            <th>Gender</th>
+                        </tr>
+                        </thead>
+                        <c:forEach var="fam" items="${familiesByNominee}">
+                            <tr onclick="populatenominee('${fam.firstName}','${fam.dateOfBirth}','${fam.relation}','${fam.gender}')">
+                                <td>${fam.firstName}</td>
+                                <td>${fam.dateOfBirth.toLocaleString().split(',')[0]}</td>
+                                <td>${fam.relation}</td>
+                                <td>${fam.gender}</td>
+                            </tr>
+                        </c:forEach>
+                    </table>
+                    <button class="btn btn-danger" onclick="$('.familycontainer').hide();">Close</button>
+                </div>
+            </div>
+            <form class="row g-3 addNominee mt10">
+                <div class="col-md-4">
+                    <label for="nomineepriority" class="form-label">Priority<span class="red">*</span></label>
+                    <input type="text" class="form-control" id="nomineepriority">
+                </div>
+                <div class="col-md-8"></div>
+                <div class="col-md-4">
+                    <label for="nomineefirstName" class="form-label">First Name<span class="red">*</span></label>
+                    <input type="text" class="form-control" id="nomineefirstName">
+                </div>
+                <div class="col-md-4">
+                    <label for="nomineemiddleName" class="form-label">Middle Name</label>
+                    <input type="text" class="form-control" id="nomineemiddleName">
+                </div>
+                <div class="col-md-4">
+                    <label for="nomineelastName" class="form-label">Last Name</label>
+                    <input type="text" class="form-control" id="nomineelastName">
+                </div>
+                <div class="col-md-4">
+                    <label for="nomineerelation" class="form-label">Relation<span class="red">*</span></label>
+                    <select class="form-control" id="nomineerelation">
+                        <option value="" disabled selected>-- Select Type --</option>
+                        <option value="father">Father</option>
+                        <option value="mother">Mother</option>
+                        <option value="brother">Brother</option>
+                        <option value="sister">Sister</option>
+                        <option value="friend">Friend</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="nomineegender" class="form-label">Gender<span class="red">*</span> </label>
+                    <select class="form-control" id="nomineegender">
+                        <option value="" disabled selected>Select Gender</option>
+                        <c:forEach var="gender" items="${gender}">
+                            <option value=${gender.name()}>${gender.name()}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="nomineedateOfBirth" class="form-label">Date of Birth<span class="red">*</span> </label>
+                    <input type="date" class="form-control" id="nomineedateOfBirth">
+                </div>
+                <div class="col-md-4">
+                    <label for="nomineeuidNumber" class="form-label">UID Number</label>
+                    <input type="text" class="form-control" id="nomineeuidNumber">
+                </div>
+                <div class="col-md-4">
+                    <label for="nomineePAN" class="form-label">PAN Number</label>
+                    <input type="text" class="form-control" id="nomineePAN">
+                </div>
+                <div class="col-md-4">
+                    <label for="nomineeContact" class="form-label">Contact Number</label>
+                    <input type="text" class="form-control" id="nomineeContact">
+                </div>
+
+                <div class="col-md-12">
+                    <label for="nomineeInvalidCondition" class="form-label">Nominee Invalid Condition</label>
+                    <textarea class="form-control bg-white" rows="3" id="nomineeInvalidCondition"></textarea>
+                </div>
+                <div>
+                    <button type="reset" class="btn btn-secondary">Reset</button>
+                    <button type="button" onclick="addNomineerecord();" class="btn btn-primary">Add Record</button>
                     <button type="submit" class="btn btn-warning">Save & Continue</button>
                 </div>
             </form>

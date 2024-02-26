@@ -28,9 +28,10 @@ public class AdminController {
     private final AddressService addressService;
     private final ContactService contactService;
     private final FamilyService familyService;
+    private final EmergencyService emergencyService;
 
     @Autowired
-    public AdminController(EmployeeService employeeService, DesignationService designationService, DepartmentService departmentService, GroupService groupService, BankService bankService, BankBranchService bankBranchService, PersonalService personalService, AddressService addressService, ContactService contactService, FamilyService familyService) {
+    public AdminController(EmployeeService employeeService, DesignationService designationService, DepartmentService departmentService, GroupService groupService, BankService bankService, BankBranchService bankBranchService, PersonalService personalService, AddressService addressService, ContactService contactService, FamilyService familyService, EmergencyService emergencyService) {
         this.employeeService = employeeService;
         this.designationService = designationService;
         this.departmentService = departmentService;
@@ -41,6 +42,7 @@ public class AdminController {
         this.addressService = addressService;
         this.contactService = contactService;
         this.familyService = familyService;
+        this.emergencyService = emergencyService;
     }
 
     @GetMapping("")
@@ -133,11 +135,7 @@ public class AdminController {
             Optional<Employee> employee = employeeService.findEmployeeById(Long.valueOf(employeeId));
             families.forEach(family -> family.setEmployee(employee.get()));
 
-            for (Family family : families) {
-
-            }
-
-//            familyService.saveFamilies(families);
+            familyService.saveFamilies(families);
 
             return ResponseEntity.ok("Family saved successfully");
         } catch (Exception e) {
@@ -151,7 +149,7 @@ public class AdminController {
         try {
             Optional<Employee> employee = employeeService.findEmployeeById(Long.valueOf(employeeId));
             emergencyList.forEach(emergency -> emergency.setEmployee(employee.get()));
-
+            emergencyService.saveEmergencyContacts(emergencyList);
             return ResponseEntity.ok("Emergency contacts saved successfully");
         } catch (Exception e) {
             return new ResponseEntity<>("Error occurred while saving emergency!", HttpStatus.BAD_REQUEST);
