@@ -151,3 +151,40 @@ input:disabled {
 label{
     color: gray;
 }
+
+
+.address-card-container{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 9vh;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(128, 128, 128, 0.45);
+}
+
+.address-card{
+    width: 60%;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.addcard{
+    margin: 5px;
+    padding: 5px;
+    border-radius: 7px;
+    box-shadow: 0 0 10px #00000024;
+}
+
+.container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.addcard td{
+    vertical-align: middle;
+}

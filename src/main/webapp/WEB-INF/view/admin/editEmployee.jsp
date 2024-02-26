@@ -163,10 +163,6 @@
                 <input type="text" class="form-control bg-white" id="bsrCode">
             </div>
 
-
-
-
-
             <hr>
             <div class="col-md-4">
                 <label for="passportNumber" class="form-label">Passport No.</label>
@@ -281,75 +277,72 @@
                 </div>
                 <hr>
             </form>
+            <div class="container" id="submitted">
+            </div>
+            <div class="btn btn-primary col-md-2" onclick="$('.address-card-container').show();">Add address</div>
             <div class="address-card-container">
                 <div class="address-card">
                     <h2 class="address-card-title">Add New Address</h2>
-                    <form>
-                        <div class="form-row">
+                    <form class="row g-3 addAddress mt10">
+                        <div class="col-md-6">
                             <label for="addressType">Address Type:</label>
-                            <select id="addressType">
+                            <select id="addressType" class="form-control">
+                                <option value="" selected disabled>-- Select --</option>
                                 <option value="permanent">Permanent</option>
                                 <option value="temporary">Temporary</option>
                             </select>
                         </div>
-                        <div class="form-row">
-                            <label for="address-country">Country:</label>
-                            <select id="address-country">
-                                <option value="india">India</option>
-                                <option value="usa">USA</option>
-                                <option value="canada">Canada</option>
-                            </select>
-                        </div>
-                        <div class="form-row">
-                            <label for="district">District:</label>
-                            <select id="district">
-                                <option value="--select--">--Select--</option>
-                                <!-- Add more district options here -->
-                            </select>
-                        </div>
-                        <div class="form-row">
-                            <label for="pincode">Pincode:</label>
-                            <input type="text" id="pincode" />
-                        </div>
-                        <div class="form-row">
+                        <div class="col-md-6">
                             <label for="propertyType">Property Type:</label>
-                            <select id="propertyType">
+                            <select id="propertyType" class="form-control">
+                                <option value="" selected disabled>-- Select --</option>
                                 <option value="owner">Owner</option>
                                 <option value="tenant">Tenant</option>
                             </select>
                         </div>
-                        <div class="form-row">
-                            <button type="submit">Add</button>
-                            <button type="button" class="cancel">Cancel</button>
+                        <div class="col-md-6">
+                            <label for="address">Address</label>
+                            <input type="text" id="address" class="form-control">
                         </div>
-                        <div class="form-row">
-                            <label for="address">Address:</label>
-                            <textarea id="address"></textarea>
-                        </div>
-                        <div class="form-row">
-                            <label for="state">State:</label>
-                            <select id="state">
-                                <option value="--select--">--Select--</option>
-                                <!-- Add more state options here -->
-                            </select>
-                        </div>
-                        <div class="form-row">
+                        <div class="col-md-6">
                             <label for="city">City:</label>
-                            <select id="city">
-                                <option value="--select--">--Select--</option>
-                                <!-- Add more city options here -->
-                            </select>
+                            <input type="text" id="city" class="form-control"/>
                         </div>
-                        <div class="form-row">
-                            <label for="same">
-                                <input type="checkbox" id="same" /> All Addresses are same
-                            </label>
+                        <div class="col-md-6">
+                            <label for="district">District:</label>
+                            <input id="district" class="form-control" type="text">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="state">State</label>
+                            <input type="text" id="state" class="form-control"/>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="address-country">Country:</label>
+                            <input id="address-country" class="form-control" type="text">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="pincode">Pincode:</label>
+                            <input type="text" id="pincode" class="form-control"/>
+                        </div>
+
+
+                        <div class="col-md-6">
+                            <label for="areAllAddressSame">All Addresses are same</label>
+                            <input type="checkbox" id="areAllAddressSame"/>
+                        </div>
+                        <div class="col-md-6"></div>
+                        <div class="col-md-6"></div>
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-primary" onclick="addAddress(event);">Add</button>
+                            <button type="button" class="btn btn-danger" onclick="$('.address-card-container').hide(); document.querySelector('.addAddress').reset();">
+                                Cancel
+                            </button>
                         </div>
                     </form>
                 </div>
             </div>
-            <div class="btn btn-primary col-md-2">Add address</div>
         </div>
+        <div id=""
     </div>
 </div>
 <script>
@@ -358,7 +351,28 @@
         $('#' + menuOptionId).show();
     }
 
+    function addAddress(e) {
+        e.preventDefault();
+        var addressType = document.getElementById("addressType").value;
+        var country = document.getElementById("address-country").value;
+        var district = document.getElementById("district").value;
+        var pincode = document.getElementById("pincode").value;
+        var propertyType = document.getElementById("propertyType").value;
+        var address = document.getElementById("address").value;
+        var state = document.getElementById("state").value;
+        var city = document.getElementById("city").value;
+        var areAllAddressSame = document.getElementById("areAllAddressSame").checked;
+
+        var submittedData = '<div class="addcard"><table><tbody><tr><td><strong>All Addresses Same:</strong></td><td>'+(areAllAddressSame ? 'Yes' : "No")+'</td><td>'+(areAllAddressSame ? '' : addressType)+"</td></tr><tr><td colspan='2'>"+address+ " ,"+ city +" ,"+ district +"</td></tr><tr><td>" + state + " ,"+ pincode +"</td><td>owner</td></tr></tbody></table></div>";
+        document.getElementById("submitted").innerHTML += submittedData;
+        $('.address-card-container').hide();
+        document.querySelector('.addAddress').reset();
+
+    }
+
     $(document).ready(function () {
+        $('.address-card-container').hide();
+        toggleMenuOption('personal');
         $('#employeeInfoMenu').click(function () {
             $('.menu-option').toggle();
         });
