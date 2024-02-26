@@ -17,6 +17,7 @@
         <hr>
         <div id="personalMenu" class="menu-option" onclick="toggleMenuOption('personal');">Personal</div>
         <div id="contactMenu" class="menu-option" onclick="toggleMenuOption('contact');">Contact</div>
+        <div id="emergencyMenu" class="menu-option" onclick="toggleMenuOption('emergency');">Emergency</div>
     </div>
     <div class="whiterightside">
         <div id="personal">
@@ -345,5 +346,59 @@
 
         </div>
         <div id="family"></div>
+        <div id="emergency">
+            <span class="contlabel">Emergency</span>
+            <form class="row g-3 addPersonal mt10">
+                <div class="col-md-4">
+                    <label for="marriageStatus" class="form-label">Marriage status</label>
+                    <label for="firstName" class="form-label">First Name<span class="red">*</span></label>
+                    <input type="text" class="form-control" id="firstName">
+                </div>
+                <div class="col-md-4">
+                    <label for="middleName" class="form-label">Middle Name</label>
+                    <input type="text" class="form-control" id="middleName">
+                </div>
+                <div class="col-md-4">
+                    <label for="lastName" class="form-label">Last Name</label>
+                    <input type="text" class="form-control" id="lastName">
+                </div>
+                <div class="col-md-4">
+                    <label for="priority" class="form-label">Priority</label>
+                    <input type="text" class="form-control" id="priority">
+                </div>
+                <div class="col-md-4">
+                    <label for="phoneNumber" class="form-label">Phone No.</label>
+                    <input type="number" class="form-control bg-white" id="phoneNumber">
+                </div>
+                <div class="col-md-4">
+                    <label for="mobileNumber" class="form-label">Mobile No.<span class="red">*</span></label>
+                    <input type="number" class="form-control bg-white" id="mobileNumber">
+                </div>
+                <div class="col-md-4">
+                    <label for="relation" class="form-label">Relation</label>
+                    <select class="form-control" id="relation">
+                        <option value="" disabled selected>-- Select Type --</option>
+                        <option value="father">Father</option>
+                        <option value="mother">Mother</option>
+                        <option value="brother">Brother</option>
+                        <option value="sister">Sister</option>
+                        <option value="friend">Friend</option>
+                    </select>
+                </div>
+                <div class="col-md-8">
+                    <label for="email" class="form-label">EmergencyEmail</label>
+                    <input type="email" class="form-control bg-white" id="email">
+                </div>
+                <div class="col-md-12">
+                    <label for="emergencyAddress" class="form-label">Address</label>
+                    <textarea class="form-control bg-white" rows="3" id="emergencyAddress"></textarea>
+                </div>
+                <div>
+                    <button type="reset" class="btn btn-secondary">Reset</button>
+                    <button type="submit" class="btn btn-primary">Add Record</button>
+                    <button type="button" class="btn btn-warning">Save & Continue</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>

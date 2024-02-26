@@ -3,6 +3,7 @@ package com.example.hrms.controllers.admin;
 import com.example.hrms.models.emploment_info.*;
 import com.example.hrms.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -27,9 +27,10 @@ public class AdminController {
     private final PersonalService personalService;
     private final AddressService addressService;
     private final ContactService contactService;
+    private final FamilyService familyService;
 
     @Autowired
-    public AdminController(EmployeeService employeeService, DesignationService designationService, DepartmentService departmentService, GroupService groupService, BankService bankService, BankBranchService bankBranchService, PersonalService personalService, AddressService addressService, ContactService contactService) {
+    public AdminController(EmployeeService employeeService, DesignationService designationService, DepartmentService departmentService, GroupService groupService, BankService bankService, BankBranchService bankBranchService, PersonalService personalService, AddressService addressService, ContactService contactService, FamilyService familyService) {
         this.employeeService = employeeService;
         this.designationService = designationService;
         this.departmentService = departmentService;
@@ -39,33 +40,18 @@ public class AdminController {
         this.personalService = personalService;
         this.addressService = addressService;
         this.contactService = contactService;
+        this.familyService = familyService;
     }
 
     @GetMapping("")
     public String admin(Model model){
         model.addAttribute("date", new Date());
-        return "admin/basehtml";
+        return "admin/baseHtml";
     }
 
     @PostMapping("/submitEmployeeData")
     @ResponseBody
-    public ResponseEntity<String> submitEmpData(
-//            @RequestBody Map<String, String> employeeJson
-            @RequestBody Employee employee
-    ) {
-//        Employee newEmployee = new Employee();
-//        newEmployee.setEmployeeCode(Long.valueOf(employeeJson.get("employeeCode")));
-//        newEmployee.setPanNumber(Long.valueOf(employeeJson.get("panNumber")));
-//        newEmployee.setOldEmployeeCode(Long.valueOf(employeeJson.get("oldEmployeeCode")));
-//        newEmployee.setDateOfAppointment(ConvertUtils.convertStringToDate(employeeJson.get("dateOfAppointment")));
-//        newEmployee.setBioMetricId((employeeJson.get("bioMetricId")));
-//        newEmployee.setFirstName((employeeJson.get("firstName")));
-//        newEmployee.setMiddleName((employeeJson.get("middleName")));
-//        newEmployee.setLastName((employeeJson.get("lastName")));
-//        newEmployee.setUnit((employeeJson.get("unit")));
-//        newEmployee.setEmployeeEligibleFor((employeeJson.get("employeeEligibleFor")));
-//        newEmployee.setUnderGratuityAct(Boolean.parseBoolean((employeeJson.get("isUnderGratuityAct"))));
-//        System.out.println(employee.getFirstName());
+    public ResponseEntity<String> submitEmpData(@RequestBody Employee employee) {
         try {
             Department department = departmentService.findDepartmentById(employee.getDepartment().getDepartmentId()).get();
             employee.setDepartment(department);
@@ -76,9 +62,9 @@ public class AdminController {
             GroupMain group = groupService.findGroupById(employee.getGroupMain().getGroupMainId()).get();
             employee.setGroupMain(group);
 
-            employeeService.saveEmployee(employee);
+            employee = employeeService.saveEmployee(employee);
 
-            return ResponseEntity.ok("Employee details saved.");
+            return ResponseEntity.ok(employee.getEmployeeId().toString());
 
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -97,9 +83,7 @@ public class AdminController {
     }
 
     @GetMapping("/editEmployee/{employeeId}")
-    public String editEmployeePage(
-//            @PathVariable String employeeId,
-            Model model, @PathVariable String employeeId) {
+    public String editEmployeePage(Model model, @PathVariable String employeeId) {
         setDate(model);
         model.addAttribute("gender", Personal.Gender.values());
         model.addAttribute("marriageStatus", Personal.MarriageStatus.values());
@@ -120,33 +104,50 @@ public class AdminController {
 
         System.out.println(bankbranch.getBankBranchName());
 
-//        personalService.savePersonal(personal);
+        personalService.savePersonal(personal);
         return ResponseEntity.ok("Personal details saved!");
     }
 
     @PostMapping("/submitContact/{employeeId}")
     @ResponseBody
     public ResponseEntity<String> submitContactDetails(@RequestBody Contact contact, @PathVariable String employeeId) {
-        System.out.println(contact.getPersonalEmail());
+        try {
+            Optional<Employee> employee = employeeService.findEmployeeById(Long.valueOf(employeeId));
+            employee.ifPresent(contact::setEmployee);
+            contactService.saveContact(contact);
 
-        List<AddressDetail> addresses = contact.getAddresses();
-
-        for (AddressDetail address : addresses) {
-//            address.setContact(contact);
-            System.out.println(address.getAddress());
-            System.out.println(address.getCity());
+            return ResponseEntity.ok("Contact saved successfully");
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error occurred while saving contact!", HttpStatus.BAD_REQUEST);
         }
-
-        Optional<Employee> employee = employeeService.findEmployeeById(Long.valueOf(employeeId));
-        employee.ifPresent(contact::setEmployee);
-
-        System.out.println(employee.get().getEmployeeId());
-
-//        addressService.saveAddresses(addresses);
-        contactService.saveContact(contact);
-
-        return ResponseEntity.ok("Contact saved successfully");
     }
+    @PostMapping("/submitFamily/{employeeId}")
+    @ResponseBody
+    public ResponseEntity<String> submitFamilyDetails(@RequestBody List<Family> families, @PathVariable String employeeId) {
+        try {
+            Optional<Employee> employee = employeeService.findEmployeeById(Long.valueOf(employeeId));
+            families.forEach(family -> family.setEmployee(employee.get()));
+            familyService.saveFamilies(families);
+
+            return ResponseEntity.ok("Family saved successfully");
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error occurred while saving family!", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/submitEmergency/{employeeId}")
+    @ResponseBody
+    public ResponseEntity<String> submitEmergencyDetails(@RequestBody List<Emergency> emergencyList, @PathVariable String employeeId) {
+        try {
+            Optional<Employee> employee = employeeService.findEmployeeById(Long.valueOf(employeeId));
+            emergencyList.forEach(emergency -> emergency.setEmployee(employee.get()));
+
+            return ResponseEntity.ok("Emergency contacts saved successfully");
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error occurred while saving emergency!", HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
     public void setDate(Model model){
         LocalDate date = LocalDate.now();
