@@ -659,7 +659,7 @@
                 </div>
                 <div>
                     <button type="reset" class="btn btn-secondary">Reset</button>
-                    <button type="button" class="btn btn-warning">Save & Continue</button>
+                    <button type="submit" class="btn btn-warning">Save & Continue</button>
                 </div>
             </form>
         </div>
@@ -746,6 +746,61 @@
                     <button class="btn btn-secondary" type="reset" >Reset</button>
                     <button class="btn btn-warning" type="submit">Add record</button>
                 </div>
+            </form>
+        </div>
+        <div id="job">
+            <span class="contlabel">Contact</span>
+            <form class="row g-3 addJob mt10">
+                <div class="col-md-3">
+                    <label for="employmentType" class="form-label">Employment Type</label>
+                    <select id="employmentType" class="form-control" required>
+                        <option value="" selected disabled>-- Select --</option>
+                        <c:forEach var="employmentType" items="${employmentTypes}">
+                            <option value=${employmentType.employmentTypeId}>${employmentType.employmentTypeName}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+               <div class="col-md-3">
+                    <label for="employmentCategory" class="form-label">Employment Category</label>
+                    <select id="employmentCategory" class="form-control" required>
+                        <option value="" selected disabled>-- Select --</option>
+                        <c:forEach var="employmentCategory" items="${employmentCategories}">
+                            <option value=${employmentCategory.employmentCategoryId}>${employmentCategory.employmentCategoryName}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="employmentStatus" class="form-label">Employment Status</label>
+                    <select id="employmentStatus" class="form-control" required>
+                        <option value="" selected disabled>-- Select --</option>
+                        <c:forEach var="employmentStatus" items="${employmentStatus}">
+                            <option value=${employmentStatus.name()}>${employmentStatus.name()}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <label for="noticePeriod" class="form-label">Notice Period</label>
+                    <input type="number" id="noticePeriod" name="extension" class="form-control">
+                </div>
+                <div class="col-md-4">
+                    <label for="employeeGrade" class="form-label">Employee Grade</label>
+                    <select id="employeeGrade" class="form-control" required>
+                        <option value="" selected disabled>-- Select --</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="dateOfRetirement" class="form-label">Date Of Retirement</label>
+                    <input type="date" id="dateOfRetirement" name="workMobile" class="form-control">
+                </div>
+                <div class="col-md-4">
+                    <label for="dutiesAndResponsibility" class="form-label">Duties And Responsibility</label>
+                    <textarea rows="3" id="dutiesAndResponsibility" name="dutiesAndResponsibility" class="form-control"></textarea>
+                </div>
+                <hr>
             </form>
         </div>
     </div>

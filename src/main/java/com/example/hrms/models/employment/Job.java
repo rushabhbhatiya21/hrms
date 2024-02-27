@@ -1,8 +1,8 @@
 package com.example.hrms.models.employment;
 
-import com.example.hrms.models.emploment_info.Designation;
-import com.example.hrms.models.emploment_info.Employee;
-import com.example.hrms.models.emploment_info.GroupMain;
+import com.example.hrms.models.employment_info.Designation;
+import com.example.hrms.models.employment_info.Employee;
+import com.example.hrms.models.employment_info.GroupMain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -37,6 +37,8 @@ public class Job {
     private Integer noticePeriod;
 
     private String employeeGrade;
+
+    private Date dateOfRetirement;
 
     private String probationDuration;
 

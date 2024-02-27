@@ -1,6 +1,6 @@
 package com.example.hrms.models.qualification;
 
-import com.example.hrms.models.emploment_info.Employee;
+import com.example.hrms.models.employment_info.Employee;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

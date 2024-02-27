@@ -22,10 +22,10 @@ $(document).ready(function () {
             contentType: "application/json",
             data: JSON.stringify(formData),
             success: function (response) {
-                console.log(response);
+                toastr.success(response);
             },
             error: function (error) {
-                console.log(error);
+                toastr.error(error);
             }
         });
     });
@@ -44,10 +44,10 @@ $(document).ready(function () {
             url: '/admin/submitFamily/'+employeeId,
             data: JSON.stringify(familyList),
             success: function (response) {
-                console.log(response);
+                toastr.success(response);
             },
             error: function (error) {
-                console.error(error);
+                toastr.error(error);
             }
         });
     });
@@ -81,7 +81,7 @@ $(document).ready(function () {
             url: '/admin/submitPersonal/' + employeeId,
             data: JSON.stringify(formData),
             success: function (response) {
-                toastr.success("")
+                toastr.success(response);
             },
             error: function (error) {
                 console.error(error);
@@ -104,10 +104,10 @@ $(document).ready(function () {
             url: '/admin/submitEmergency/'+employeeId,
             data: JSON.stringify(emergencyList),
             success: function (response) {
-                console.log(response);
+                toastr.success(response);
             },
             error: function (error) {
-                console.error(error);
+                toastr.error(error);
             }
         });
     });
@@ -121,10 +121,34 @@ $(document).ready(function () {
             url: '/admin/submitNominee/'+employeeId,
             data: JSON.stringify(nomineeList),
             success: function (response) {
-                console.log(response);
+                toastr.success(response);
             },
             error: function (error) {
-                console.error(error);
+                toastr.error(error);
+            }
+        });
+    });
+
+    $('.addHealth').submit(function (event) {
+        event.preventDefault();
+        const healthData = {
+            "height": $("#height").val(),
+            "weight": $("#weight").val(),
+            "bloodGroup": $("#bloodGroup").val(),
+            "idMark1": $("#idMark1").val(),
+            "idMark2": $("#idMark2").val(),
+            "physicallyHandicapped": $("#handicapped").val(),
+        };
+        $.ajax({
+            type: 'POST',
+            contentType: 'application/json',
+            url: '/admin/submitHealth/'+ employeeId,
+            data: JSON.stringify(healthData),
+            success: function (response) {
+                toastr.success(response);
+            },
+            error: function (error) {
+                toastr.error(error);
             }
         });
     });
@@ -151,10 +175,10 @@ $(document).ready(function () {
             processData: false, // Prevent jQuery from processing the data
 
             success: function (data) {
-                console.log('Upload successful:', data);
+                toastr.success('Upload successful:', data);
             },
             error: function (error) {
-                console.error('Error during upload:', error);
+                toastr.error('Error during upload:', error);
             }
         });
     })

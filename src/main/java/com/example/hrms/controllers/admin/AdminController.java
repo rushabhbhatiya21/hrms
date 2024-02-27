@@ -1,7 +1,14 @@
 package com.example.hrms.controllers.admin;
 
-import com.example.hrms.models.emploment_info.*;
-import com.example.hrms.service.*;
+import com.example.hrms.dto.RegisterDTO;
+import com.example.hrms.models.User;
+import com.example.hrms.models.employment_info.*;
+import com.example.hrms.models.employment.Job;
+import com.example.hrms.service.employment.EmploymentCategoryService;
+import com.example.hrms.service.employment.EmploymentTypeService;
+import com.example.hrms.service.employment_info.*;
+import com.example.hrms.service.user.UserService;
+import com.oracle.wls.shaded.org.apache.xpath.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +17,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +31,6 @@ public class AdminController {
     private final BankService bankService;
     private final BankBranchService bankBranchService;
     private final PersonalService personalService;
-    private final AddressService addressService;
     private final ContactService contactService;
     private final FamilyService familyService;
     private final EmergencyService emergencyService;
@@ -33,9 +38,12 @@ public class AdminController {
     private final AttachmentService attachmentService;
     private final NomineeService nomineeService;
     private final HealthService healthService;
+    private final EmploymentTypeService employmentTypeService;
+    private final EmploymentCategoryService employmentCategoryService;
+    private final UserService userService;
 
     @Autowired
-    public AdminController(EmployeeService employeeService, DesignationService designationService, DepartmentService departmentService, GroupService groupService, BankService bankService, BankBranchService bankBranchService, PersonalService personalService, AddressService addressService, ContactService contactService, FamilyService familyService, EmergencyService emergencyService, PhotographService photographService, AttachmentService attachmentService, NomineeService nomineeService, HealthService healthService) {
+    public AdminController(EmployeeService employeeService, DesignationService designationService, DepartmentService departmentService, GroupService groupService, BankService bankService, BankBranchService bankBranchService, PersonalService personalService, ContactService contactService, FamilyService familyService, EmergencyService emergencyService, PhotographService photographService, AttachmentService attachmentService, NomineeService nomineeService, HealthService healthService, EmploymentTypeService employmentTypeService, EmploymentCategoryService employmentCategoryService, UserService userService) {
         this.employeeService = employeeService;
         this.designationService = designationService;
         this.departmentService = departmentService;
@@ -43,7 +51,6 @@ public class AdminController {
         this.bankService = bankService;
         this.bankBranchService = bankBranchService;
         this.personalService = personalService;
-        this.addressService = addressService;
         this.contactService = contactService;
         this.familyService = familyService;
         this.emergencyService = emergencyService;
@@ -51,12 +58,20 @@ public class AdminController {
         this.attachmentService = attachmentService;
         this.nomineeService = nomineeService;
         this.healthService = healthService;
+        this.employmentTypeService = employmentTypeService;
+        this.employmentCategoryService = employmentCategoryService;
+        this.userService = userService;
     }
 
     @GetMapping("")
     public String admin(Model model){
         model.addAttribute("date", new Date());
         return "admin/basehtml";
+    }
+
+    @GetMapping("/sample")
+    public String sample(Model model) {
+        return "admin/sample";
     }
 
     @PostMapping("/submitEmployeeData")
@@ -111,6 +126,10 @@ public class AdminController {
         model.addAttribute("health", healthService.findHealthByEmpId(empId));
         model.addAttribute("photograph", photographService.findPhotographByEmpId(empId));
         model.addAttribute("attachment", attachmentService.findAttachmentByEmpId(empId));
+
+        model.addAttribute("employmentStatus", Job.EmploymentStatus.values());
+        model.addAttribute("employmentTypes", employmentTypeService.findAllEmploymentTypes());
+        model.addAttribute("employmentCategories", employmentCategoryService.findAllEmploymentCategories());
 
         return "admin/editEmployee";
     }
@@ -179,6 +198,32 @@ public class AdminController {
             return new ResponseEntity<>("Error occurred while saving emergency!", HttpStatus.BAD_REQUEST);
         }
     }
+    @PostMapping("/submitNominee/{employeeId}")
+    @ResponseBody
+    public ResponseEntity<String> submitNomineeDetails(@RequestBody List<Nominee> nominees, @PathVariable String employeeId) {
+        try {
+            Optional<Employee> employee = employeeService.findEmployeeById(Long.valueOf(employeeId));
+            nominees.forEach(emergency -> emergency.setEmployee(employee.get()));
+            nomineeService.saveNominees(nominees);
+
+            return ResponseEntity.ok("Nominees saved successfully");
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error occurred while saving nominee!", HttpStatus.BAD_REQUEST);
+        }
+    }
+    @PostMapping("/submitHealth/{employeeId}")
+    @ResponseBody
+    public ResponseEntity<String> submitHealthDetails(@RequestBody Health health, @PathVariable String employeeId) {
+        try {
+            Optional<Employee> employee = employeeService.findEmployeeById(Long.valueOf(employeeId));
+            health.setEmployee(employee.get());
+            healthService.saveHealth(health);
+
+            return ResponseEntity.ok("Emergency contacts saved successfully");
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error occurred while saving emergency!", HttpStatus.BAD_REQUEST);
+        }
+    }
 
     @PostMapping("/submitPhoto/{employeeId}")
     @ResponseBody
@@ -215,6 +260,38 @@ public class AdminController {
         } catch (Exception e) {
             return new ResponseEntity<>("Error occurred while saving attachment!", HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @PostMapping("/registerUser")
+    @ResponseBody
+    public ResponseEntity<String> registerNewUser(@RequestBody RegisterDTO registerDTO) {
+        try {
+            if (registerDTO.getUsername() != null && registerDTO.getPassword() != null) {
+                User user = new User();
+                user.setUsername(registerDTO.getUsername());
+                user.setPassword(registerDTO.getPassword());
+                Optional<Employee> employee = employeeService.findEmployeeById(registerDTO.getEmployeeId());
+                if (employee.isPresent()) {
+                    user.setEmployee(employee.get());
+                    userService.saveUser(user);
+                    return ResponseEntity.ok("User registered successfully.");
+                }
+                else {
+                    return new ResponseEntity<>("Employee null.", HttpStatus.BAD_REQUEST);
+                }
+            }
+            else {
+                return new ResponseEntity<>("Username or password null.", HttpStatus.BAD_REQUEST);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>("Something went wrong while creating a user!", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/searchEmployees")
+    @ResponseBody
+    public List<Employee> searchEmployees(@RequestParam String searchTerm) {
+        return employeeService.searchEmployeesByFirstName(searchTerm);
     }
 
 

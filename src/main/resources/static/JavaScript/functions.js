@@ -151,7 +151,6 @@ function addNomineeRecord() {
     nomineeList.push(nomineeData);
     $('.addNominee').reset();
 }
-
 function browseAndPreview(inputId, browseButtonId) {
     const fileInput = document.getElementById(inputId);
     const browseButton = document.getElementById(browseButtonId);
@@ -217,10 +216,10 @@ function uploadcustomphoto(inputId) {
             // },
 
             success: function (data) {
-                console.log('Upload successful:', data);
+                toastr.success('Upload successful:', data);
             },
             error: function (error) {
-                console.error('Error during upload:', error);
+                toastr.error('Error during upload:', error);
             }
         });
     } else {
