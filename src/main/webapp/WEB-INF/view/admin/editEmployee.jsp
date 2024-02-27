@@ -20,7 +20,6 @@
         <div class="menu-option" onclick="toggleMenuOption('family');">Family</div>
         <div class="menu-option" onclick="toggleMenuOption('emergency');">Emergency</div>
         <div class="menu-option" onclick="toggleMenuOption('nominee');">Nominee</div>
-        <div class="menu-option" onclick="toggleMenuOption('emergency');">Emergency</div>
         <div class="menu-option" onclick="toggleMenuOption('health');">Health</div>
         <div class="menu-option" onclick="toggleMenuOption('photo');">Photo</div>
         <div class="menu-option" onclick="toggleMenuOption('attachment');">Attachment</div>
@@ -459,6 +458,30 @@
                     <button type="submit" class="btn btn-warning">Continue</button>
                 </div>
             </form>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>no.</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Relation</th>
+                        <th>D.O.B.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach var="fam" items="${families}">
+                        <tr>
+                            <td>${1}</td>
+                            <td>${fam.firstName}</td>
+                            <td>${fam.lastName}</td>
+                            <td>${fam.relation}</td>
+                            <td>${fam.dateOfBirth}</td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+
         </div>
         <div id="emergency">
             <span class="contlabel">Emergency</span>
