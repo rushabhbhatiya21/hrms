@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="basehtml.jsp"%>
 
-<span>Add Employee</span>
+<span class="contlabel" > Add Employee</span>
 <hr>
 <div class="whitcont">
     <div class="whiteleftside">
@@ -57,10 +57,12 @@
             <div class="col-md-4">
                 <label for="salutation" class="form-label">Salutation<span class="red">*</span> </label>
                 <select class="form-control" id="salutation">
+                    <option value="" selected disabled>Select salutation</option>
                     <option value="MR">Mr.</option>
-<%--                    <c:forEach>--%>
-
-<%--                    </c:forEach>--%>
+                    <option value="MRS">Mrs.</option>
+                    <option value="MISS">Miss</option>
+                    <option value="MS">Ms.</option>
+                    <option value="DR">Dr.</option>
                 </select>
             </div>
 
@@ -89,10 +91,11 @@
             <div class="col-md-4">
                 <label for="unit" class="form-label">Unit</label>
                 <select class="form-control" id="unit">
+                    <option value="" selected disabled>Select unit</option>
                     <option value="unit1">unit1</option>
-                    <%--                    <c:forEach>--%>
-
-                    <%--                    </c:forEach>--%>
+                    <option value="unit2">unit2</option>
+                    <option value="unit3">unit3</option>
+                    <option value="unit4">unit4</option>
                 </select>
             </div>
             <div class="col-md-4">
@@ -116,9 +119,10 @@
             <div class="col-md-4">
                 <label for="employeeEligibleFor" class="form-label">Employee eligible for<span class="red">*</span> </label>
                 <select class="form-control" id="employeeEligibleFor">
-                    <option value="Elegibility1">Elegibility1</option>
-                    <option value="Elegibility2">Elegibility2</option>
-                    <option value="Elegibility3">Elegibility3</option>
+                    <option value="" selected disabled>Select Eligibility</option>
+                    <option value="Eligibility1">Eligibility1</option>
+                    <option value="Eligibility2">Eligibility2</option>
+                    <option value="Eligibility3">Eligibility3</option>
                 </select>
             </div>
             <div class="col-md-4">
@@ -127,7 +131,7 @@
             </div>
 
             <div class="col-12">
-                <button type="submit" class="btn btn-primary">Sign in</button>
+                <button type="submit" class="btn btn-primary">Add User</button>
             </div>
         </form>
     </div>

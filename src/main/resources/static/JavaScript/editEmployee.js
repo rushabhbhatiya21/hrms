@@ -147,4 +147,10 @@ $(document).ready(function () {
             }
         });
     })
+
+    $('.menu-option').click(function () {
+        if($(this).attr('ydata')<=$('#somevalue').val()){
+            toggleMenuOption($(this).attr('xdata'));
+        }
+    });
 });

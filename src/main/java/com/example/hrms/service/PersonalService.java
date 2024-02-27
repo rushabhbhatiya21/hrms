@@ -21,7 +21,8 @@ public class PersonalService {
         personalRepository.save(personal);
     }
 
-    public Optional<Personal> findPersonalByEmpId(Long empId) {
-        return personalRepository.findPersonalByEmployeeEmployeeId(empId);
+    public Personal findPersonalByEmpId(Long empId) {
+        Optional<Personal> p= personalRepository.findPersonalByEmployeeEmployeeId(empId);
+        return p.orElse(null);
     }
 }

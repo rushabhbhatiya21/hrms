@@ -15,14 +15,14 @@
     <div class="whiteleftside">
         <span id="employeeInfoMenu" class="menu">Employee Information</span>
         <hr>
-        <div class="menu-option" onclick="toggleMenuOption('personal');">Personal</div>
-        <div class="menu-option" onclick="toggleMenuOption('contact');">Contact</div>
-        <div class="menu-option" onclick="toggleMenuOption('family');">Family</div>
-        <div class="menu-option" onclick="toggleMenuOption('emergency');">Emergency</div>
-        <div class="menu-option" onclick="toggleMenuOption('nominee');">Nominee</div>
-        <div class="menu-option" onclick="toggleMenuOption('health');">Health</div>
-        <div class="menu-option" onclick="toggleMenuOption('photo');">Photo</div>
-        <div class="menu-option" onclick="toggleMenuOption('attachment');">Attachment</div>
+        <div class="menu-option" ydata="0" xdata="personal">Personal</div>
+        <div class="menu-option" ydata="1" xdata="contact">Contact</div>
+        <div class="menu-option" ydata="2" xdata="family">Family</div>
+        <div class="menu-option" ydata="3" xdata="emergency">Emergency</div>
+        <div class="menu-option" ydata="4" xdata="nominee">Nominee</div>
+        <div class="menu-option" ydata="5" xdata="health">Health</div>
+        <div class="menu-option" ydata="6" xdata="photo">Photo</div>
+        <div class="menu-option" ydata="7" xdata="attachment">Attachment</div>
     </div>
     <div class="whiterightside">
         <div id="personal">
@@ -630,7 +630,7 @@
             </form>
         </div>
         <div id="health">
-            <span class="contlabel">Emergency</span>
+            <span class="contlabel">Health</span>
             <form class="row g-3 addHealth mt10">
                 <div class="col-md-4">
                     <label for="height" class="form-label">Height(cms)<span class="red">*</span></label>
@@ -748,4 +748,8 @@
             </form>
         </div>
     </div>
+    <c:if test="${personal eq null}">
+        <c:set var="somevar" value="-1"></c:set>
+    </c:if>
+    <input id="somevalue" value="" style="display: none">
 </div>

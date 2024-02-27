@@ -1,4 +1,10 @@
 $(document).ready(function () {
+    var notificationMessage = localStorage.getItem('notificationMessage');
+    if (notificationMessage) {
+        toastr.success(notificationMessage);
+        localStorage.removeItem('notificationMessage');
+    }
+
     $('.iroc').hide();
     $('.gvp').hide();
     $('.opts').hide();
@@ -38,6 +44,13 @@ $(document).ready(function () {
             toastr.error("all * fields are require");
             return;
         }
+        let regex = new RegExp(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/);
+        if (!regex.test($('#panNumber').val())) {
+            $('#panNumber').focus();
+            toastr.error("invalid pan");
+            return;
+        }
+
         const formData = {};
         $('.addemployee input, .addemployee select').each(function () {
             let value;
@@ -66,9 +79,12 @@ $(document).ready(function () {
             url: '/admin/submitEmployeeData',
             data: JSON.stringify(formData),
             success: function (response) {
+                localStorage.setItem('notificationMessage', 'Employee added successfully');
                 window.location.href = 'http://localhost:8080/admin/editEmployee/'+response;
+
             },
             error: function (error) {
+                toastr.error(error.responseText);
                 console.error(error);
             }
         });

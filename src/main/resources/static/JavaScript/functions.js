@@ -231,19 +231,16 @@ function uploadcustomphoto(inputId) {
 function validateFormbyclass(formclass){
     let isValid = true;
 
-    // Check required fields marked with *
     $(`.${formclass} .red`).closest('div').find('input, select').each(function () {
         const value = $(this).val();
         const inputElement = $(this);
         if (!value || value.trim() === '') {
-            // Add error styling or handle the error as needed
             $(this).addClass('is-invalid');
             setTimeout(function () {
                 inputElement.removeClass('is-invalid');
             }, 5000);
             isValid = false;
         } else {
-            // Remove error styling
             $(this).removeClass('is-invalid');
         }
     });

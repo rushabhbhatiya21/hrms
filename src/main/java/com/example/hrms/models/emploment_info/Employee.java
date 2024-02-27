@@ -19,7 +19,7 @@ public class Employee {
     private Long employeeCode;
 
     @Column(unique = true)
-    private Long panNumber;
+    private String panNumber;
 
     private Long oldEmployeeCode;
 

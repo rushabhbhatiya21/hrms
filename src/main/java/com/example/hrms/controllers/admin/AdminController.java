@@ -77,7 +77,7 @@ public class AdminController {
             return ResponseEntity.ok(employee.getEmployeeId().toString());
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            return new ResponseEntity<>("something went wrong", HttpStatus.CONFLICT);
         }
     }
 
