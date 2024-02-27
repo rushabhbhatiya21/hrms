@@ -3,6 +3,7 @@ package com.example.hrms.controllers.admin;
 import com.example.hrms.models.emploment_info.*;
 import com.example.hrms.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.jdbc.XADataSourceAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -29,9 +30,10 @@ public class AdminController {
     private final ContactService contactService;
     private final FamilyService familyService;
     private final EmergencyService emergencyService;
+    private final PhotographService photographService;
 
     @Autowired
-    public AdminController(EmployeeService employeeService, DesignationService designationService, DepartmentService departmentService, GroupService groupService, BankService bankService, BankBranchService bankBranchService, PersonalService personalService, AddressService addressService, ContactService contactService, FamilyService familyService, EmergencyService emergencyService) {
+    public AdminController(EmployeeService employeeService, DesignationService designationService, DepartmentService departmentService, GroupService groupService, BankService bankService, BankBranchService bankBranchService, PersonalService personalService, AddressService addressService, ContactService contactService, FamilyService familyService, EmergencyService emergencyService, XADataSourceAutoConfiguration XADataSourceAutoConfiguration, PhotographService photographService) {
         this.employeeService = employeeService;
         this.designationService = designationService;
         this.departmentService = departmentService;
@@ -43,6 +45,7 @@ public class AdminController {
         this.contactService = contactService;
         this.familyService = familyService;
         this.emergencyService = emergencyService;
+        this.photographService = photographService;
     }
 
     @GetMapping("")
@@ -162,6 +165,19 @@ public class AdminController {
             return ResponseEntity.ok("Emergency contacts saved successfully");
         } catch (Exception e) {
             return new ResponseEntity<>("Error occurred while saving emergency!", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/submitPhoto/{employeeId}")
+    @ResponseBody
+    public ResponseEntity<String> submitPhotos(@RequestBody Photograph photo, @PathVariable String employeeId) {
+        try {
+            Optional<Employee> employee = employeeService.findEmployeeById(Long.valueOf(employeeId));
+            photo.setEmployee(employee.get());
+            photographService.savePhotograph(photo);
+            return ResponseEntity.ok("Photos saved successfully");
+        } catch (NumberFormatException e) {
+            return new ResponseEntity<>("Error occurred while saving photo!", HttpStatus.BAD_REQUEST);
         }
     }
 
