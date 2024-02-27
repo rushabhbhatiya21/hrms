@@ -32,9 +32,10 @@ public class AdminController {
     private final EmergencyService emergencyService;
     private final PhotographService photographService;
     private final AttachmentService attachmentService;
+    private final NomineeService nomineeService;
 
     @Autowired
-    public AdminController(EmployeeService employeeService, DesignationService designationService, DepartmentService departmentService, GroupService groupService, BankService bankService, BankBranchService bankBranchService, PersonalService personalService, AddressService addressService, ContactService contactService, FamilyService familyService, EmergencyService emergencyService, PhotographService photographService, AttachmentService attachmentService) {
+    public AdminController(EmployeeService employeeService, DesignationService designationService, DepartmentService departmentService, GroupService groupService, BankService bankService, BankBranchService bankBranchService, PersonalService personalService, AddressService addressService, ContactService contactService, FamilyService familyService, EmergencyService emergencyService, PhotographService photographService, AttachmentService attachmentService, NomineeService nomineeService) {
         this.employeeService = employeeService;
         this.designationService = designationService;
         this.departmentService = departmentService;
@@ -48,6 +49,7 @@ public class AdminController {
         this.emergencyService = emergencyService;
         this.photographService = photographService;
         this.attachmentService = attachmentService;
+        this.nomineeService = nomineeService;
     }
 
     @GetMapping("")
@@ -101,10 +103,7 @@ public class AdminController {
         model.addAttribute("familiesByNominee", familyService.findAllFamiliesByNominee(Long.valueOf(employeeId)));
         model.addAttribute("families", familyService.findFamiliesById(Long.valueOf(employeeId)));
         model.addAttribute("emergency", emergencyService.findAllById(Long.valueOf(employeeId)));
-//        List<Family> families = familyService.findAllFamiliesByNominee(Long.valueOf(employeeId));
-//        for (Family family : families) {
-//            System.out.println(family.getFirstName());
-//        }
+        model.addAttribute("nominees", nomineeService.findNomineesByEmpId(Long.valueOf(employeeId)));
 
         return "admin/editEmployee";
     }
