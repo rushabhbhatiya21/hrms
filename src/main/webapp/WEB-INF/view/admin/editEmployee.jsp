@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="basehtml.jsp"%>
 
-<span>Add Employee</span>
+<span class="contlabel" > Add Employee</span>
 <hr>
 <div class="whitcont">
     <div class="whiteleftside">
@@ -23,6 +23,7 @@
         <div class="menu-option" onclick="toggleMenuOption('emergency');">Emergency</div>
         <div class="menu-option" onclick="toggleMenuOption('health');">Health</div>
         <div class="menu-option" onclick="toggleMenuOption('photo');">Photo</div>
+        <div class="menu-option" onclick="toggleMenuOption('attachment');">Attachment</div>
     </div>
     <div class="whiterightside">
         <div id="personal">
@@ -650,12 +651,14 @@
                     <div class="preview-next">
                         <div class="image-input">
                             <label for="employeePhoto" class="form-label">Employee Photo<span class="red">*</span></label>
-                            <input type="file" id="employeePhoto" class="form-control bg-white" style="display: none">
+                            <input type="file" accept=".jpg, .jpeg, .png" id="employeePhoto" class="form-control bg-white" style="display: none">
                             <input type="text" class="form-control bg-white" disabled>
                             <button id="browsePhoto" class="btn btn-secondary btn-browse" type="button" value="Browse" onclick="browseAndPreview('employeePhoto', 'browsePhoto')">Browse</button>
-                            <button id="uploadPhoto" class="btn btn-outline-warning btn-upload" type="button" value="Upload" onclick="uploadEmployeePhoto('employeePhoto')">Upload</button>
                         </div>
                         <span>only jpg/png/jpeg are allowed</span>
+                    </div>
+                    <div class="btn-upload">
+                        <button id="uploadPhoto" class="btn btn-outline-warning" type="button" onclick="uploadcustomphoto('employeePhoto')">Upload</button>
                     </div>
                 </div>
                 <div class="image-card">
@@ -665,14 +668,61 @@
                     <div class="preview-next">
                         <div class="image-input">
                             <label for="employeeSign" class="form-label">Employee Sign<span class="red">*</span></label>
-                            <input type="file" id="employeeSign" class="form-control bg-white" style="display: none">
+                            <input type="file" accept=".jpg, .jpeg, .png" id="employeeSign" class="form-control bg-white" style="display: none">
                             <input type="text" class="form-control bg-white" disabled>
                             <button id="browseSign" class="btn btn-secondary btn-browse" type="button" value="Browse" onclick="browseAndPreview('employeeSign','browseSign')">Browse</button>
-                            <button id="uploadSign" class="btn btn-outline-warning btn-upload" type="button" value="Upload" onclick="uploadEmployeePhoto('employeeSign')">Upload</button>
                         </div>
                         <span>only jpg/png/jpeg are allowed</span>
-
                     </div>
+                    <div class="btn-upload">
+                        <button id="uploadSign" class="btn btn-outline-warning" type="button" value="Upload" onclick="uploadcustomphoto('employeeSign')">Upload</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div id="attachment">
+            <span class="contlabel">Attachment</span>
+            <form id="addAttachment" class="row g-3 mt10">
+                <div class="col-md-6">
+                    <label for="documentCategory" class="form-label">Document Category<span class="red">*</span></label>
+                    <select class="form-control" id="documentCategory">
+                        <option value="" disabled selected>-- Select type --</option>
+                        <option value="aadharCard">Aadhar Card</option>
+                        <option value="voterID">Voter ID</option>
+                        <option value="passport">Passport</option>
+                        <option value="drivingLicense">Driving License</option>
+                        <option value="rationCard">Ration Card</option>
+                        <option value="bankStatement">Bank Statement</option>
+                        <option value="utilityBill">Utility Bill</option>
+                        <option value="incomeCertificate">Income Certificate</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="titleOfDocument" class="form-label">Title of document<span class="red">*</span></label>
+                    <input type="text" class="form-control" id="titleOfDocument">
+                </div>
+                <div class="col-md-12">
+                    <label for="documentDescription">Document Description</label>
+                    <textarea class="form-control" id="documentDescription" rows="3"></textarea>
+                </div>
+                <div class="image-card">
+                    <div class="outside-preview">
+                        <span class="preview-text">No Image</span>
+                    </div>
+                    <div class="preview-next">
+                        <div class="image-input">
+                            <label for="documentPhoto" class="form-label">Document Photo<span class="red">*</span></label>
+                            <input type="file" accept=".jpg, .jpeg, .png" id="documentPhoto" class="form-control bg-white" style="display: none">
+                            <input type="text" class="form-control bg-white" disabled>
+                            <button id="browseDocumentPhoto" class="btn btn-secondary btn-browse" type="button" value="Browse" onclick="browseAndPreview('documentPhoto', 'browseDocumentPhoto')">Browse</button>
+                        </div>
+                        <span>only jpg/png/jpeg are allowed</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-secondary" type="reset" >Reset</button>
+                    <button class="btn btn-warning" type="submit">Add record</button>
                 </div>
             </form>
         </div>

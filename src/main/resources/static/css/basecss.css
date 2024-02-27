@@ -233,7 +233,6 @@ label{
 
 .image-input {
     position: relative;
-    width: 25vw;
 }
 
 .btn-browse {
@@ -243,8 +242,13 @@ label{
     transform: translateY(-50%);
 }
 
-.btn-upload {
-    position: absolute;
-    left: 470px;
-    bottom: 6px;
+.btn-upload{
+    display: flex;
+    align-items: center;
+    padding-bottom: 18px;
+    padding-left: 25px;
+}
+
+.preview-next{
+    width: 50%;
 }
