@@ -110,6 +110,8 @@ public class AdminController {
         model.addAttribute("emergency", emergencyService.findAllById(empId));
         model.addAttribute("nominees", nomineeService.findNomineesByEmpId(empId));
         model.addAttribute("health", healthService.findHealthByEmpId(empId));
+        model.addAttribute("photograph", photographService.findPhotographByEmpId(empId));
+        model.addAttribute("attachment", attachmentService.findAttachmentByEmpId(empId));
 
         return "admin/editEmployee";
     }
