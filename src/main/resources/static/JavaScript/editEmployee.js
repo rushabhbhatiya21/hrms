@@ -329,17 +329,47 @@ $(document).ready(function () {
     $('.addNominee').submit(function (event) {
         event.preventDefault();
         console.log(nomineeList);
-        // $.ajax({
-        //     type: 'POST',
-        //     contentType: 'application/json',
-        //     url: '/admin/submitNominee/'+employeeId,
-        //     data: JSON.stringify(nomineeList),
-        //     success: function (response) {
-        //         console.log(response);
-        //     },
-        //     error: function (error) {
-        //         console.error(error);
-        //     }
-        // });
+        $.ajax({
+            type: 'POST',
+            contentType: 'application/json',
+            url: '/admin/submitNominee/'+employeeId,
+            data: JSON.stringify(nomineeList),
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (error) {
+                console.error(error);
+            }
+        });
     });
+
+    $('#addAttachment').submit(function (event) {
+        event.preventDefault();
+
+        const formData = new FormData();
+        formData.append('documentCategory',$('#documentCategory').val());
+        formData.append('titleOfDocument', $('#titleOfDocument').val());
+        formData.append('documentDescription', $('#documentDescription').val());
+
+        // Append file data (assuming you have an input with ID 'documentPhoto')
+        const fileInput = document.getElementById('documentPhoto');
+        if (fileInput.files.length > 0) {
+            formData.append('documentPhoto', fileInput.files[0]);
+        }
+
+        $.ajax({
+            url: 'http://localhost:8080/admin/submitAttachment/' + employeeId,
+            type: 'POST',
+            data: formData,
+            contentType: false, // Let jQuery handle the contentType
+            processData: false, // Prevent jQuery from processing the data
+
+            success: function (data) {
+                console.log('Upload successful:', data);
+            },
+            error: function (error) {
+                console.error('Error during upload:', error);
+            }
+        });
+    })
 });

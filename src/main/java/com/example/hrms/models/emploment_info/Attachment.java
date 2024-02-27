@@ -39,13 +39,13 @@ public class Attachment {
         }
     }
 
-    public void setDocumentPhoto(byte[] documentPhoto) {
-        try {
-            this.documentPhoto = documentPhoto;
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
-    }
+//    public void setDocumentPhoto(byte[] documentPhoto) {
+//        try {
+//            this.documentPhoto = documentPhoto;
+//        } catch (Exception e) {
+//            throw new RuntimeException(e.getMessage());
+//        }
+//    }
 
     public String getDocumentPhotoString() {
         return Base64.getEncoder().encodeToString(ImageUtils.decompressImage(documentPhoto));
