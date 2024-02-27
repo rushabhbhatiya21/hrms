@@ -27,13 +27,21 @@ public class Attachment {
     @Column(length = 400000)
     private byte[] documentPhoto;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(referencedColumnName = "employeeId", name = "employeeId")
     private Employee employee;
 
     public void setDocumentPhoto(MultipartFile documentPhoto) {
         try {
             this.documentPhoto = ImageUtils.compressImage(documentPhoto.getBytes());
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public void setDocumentPhoto(byte[] documentPhoto) {
+        try {
+            this.documentPhoto = documentPhoto;
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }

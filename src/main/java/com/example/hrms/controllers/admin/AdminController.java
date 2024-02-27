@@ -31,9 +31,10 @@ public class AdminController {
     private final FamilyService familyService;
     private final EmergencyService emergencyService;
     private final PhotographService photographService;
+    private final AttachmentService attachmentService;
 
     @Autowired
-    public AdminController(EmployeeService employeeService, DesignationService designationService, DepartmentService departmentService, GroupService groupService, BankService bankService, BankBranchService bankBranchService, PersonalService personalService, AddressService addressService, ContactService contactService, FamilyService familyService, EmergencyService emergencyService, PhotographService photographService) {
+    public AdminController(EmployeeService employeeService, DesignationService designationService, DepartmentService departmentService, GroupService groupService, BankService bankService, BankBranchService bankBranchService, PersonalService personalService, AddressService addressService, ContactService contactService, FamilyService familyService, EmergencyService emergencyService, PhotographService photographService, AttachmentService attachmentService) {
         this.employeeService = employeeService;
         this.designationService = designationService;
         this.departmentService = departmentService;
@@ -46,6 +47,7 @@ public class AdminController {
         this.familyService = familyService;
         this.emergencyService = emergencyService;
         this.photographService = photographService;
+        this.attachmentService = attachmentService;
     }
 
     @GetMapping("")
@@ -191,6 +193,19 @@ public class AdminController {
             return ResponseEntity.ok("Photos saved successfully");
         } catch (NumberFormatException e) {
             return new ResponseEntity<>("Error occurred while saving photo!", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/submitAttachment/{employeeId}")
+    @ResponseBody
+    public ResponseEntity<String> submitAttachments(@ModelAttribute Attachment attachment ,@PathVariable String employeeId) {
+        try {
+            Optional<Employee> employee = employeeService.findEmployeeById(Long.valueOf(employeeId));
+            attachment.setEmployee(employee.get());
+            attachmentService.saveAttachment(attachment);
+            return ResponseEntity.ok("Attachment details saved successfully");
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error occurred while saving attachment!", HttpStatus.BAD_REQUEST);
         }
     }
 
