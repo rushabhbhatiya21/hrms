@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.Objects;
 
@@ -38,10 +39,27 @@ public class Photograph {
             throw new RuntimeException(e);
         }
     }
+
+    public void setEmployeePhotoBytes(byte[] empPhoto) {
+        try {
+            this.employeePhoto = empPhoto;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void setEmployeeSign(MultipartFile empSign) {
         try {
-            this.employeePhoto = ImageUtils.compressImage(empSign.getBytes());
+            this.employeeSign = ImageUtils.compressImage(empSign.getBytes());
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void setEmployeeSignBytes(byte[] empSign) {
+        try {
+            this.employeeSign = empSign;
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

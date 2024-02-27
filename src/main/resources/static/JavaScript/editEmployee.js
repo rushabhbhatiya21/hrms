@@ -128,8 +128,9 @@ function populatenominee(fname,dateofbirth,relation,gender){
     $('#nomineegender').val(gender);
 }
 
-var nomineeList = [];
-function addNomineerecord() {
+const nomineeList = [];
+
+function addNomineeRecord() {
     var nomineeData = {
         "priority": $("#nomineepriority").val(),
         "firstName": $("#nomineefirstName").val(),
@@ -147,8 +148,6 @@ function addNomineerecord() {
     nomineeList.push(nomineeData);
     $('.addNominee').reset();
 }
-
-
 
 function browseAndPreview(inputId, browseButtonId) {
     const fileInput = document.getElementById(inputId);
@@ -192,21 +191,36 @@ function browseAndPreview(inputId, browseButtonId) {
     });
 }
 
-function uploadPhoto(inputId) {
+function uploadEmployeePhoto(inputId) {
     const fileInput = document.getElementById(inputId);
     const selectedFile = fileInput.files[0];
 
+    console.log(selectedFile);
     if (selectedFile) {
         const formData = new FormData();
         formData.append(inputId, selectedFile);
 
+        // console.log(formData);
 
         $.ajax({
-            url: 'http://localhost:8080/admin/submitPhoto/'+employeeId,
+            url: 'http://localhost:8080/admin/submitPhoto/' + employeeId,
             type: 'POST',
             data: formData,
-            processData: false, // Prevent jQuery from automatically processing data
-            contentType: false, // Prevent jQuery from setting contentType
+            contentType: false, // Let jQuery handle the contentType
+            processData: false, // Prevent jQuery from processing the data
+
+            // // Custom XMLHttpRequest to allow handling file uploads
+            // xhr: function () {
+            //     const xhr = new window.XMLHttpRequest();
+            //     xhr.upload.addEventListener("progress", function (evt) {
+            //         if (evt.lengthComputable) {
+            //             let percentComplete = (evt.loaded / evt.total) * 100;
+            //             console.log('Upload Progress: ' + percentComplete + '%');
+            //         }
+            //     }, false);
+            //     return xhr;
+            // },
+
             success: function (data) {
                 // Handle successful response from the server
                 console.log('Upload successful:', data);
@@ -220,12 +234,6 @@ function uploadPhoto(inputId) {
         alert('Please select a file before uploading.');
     }
 }
-
-
-
-
-
-
 
 
 $(document).ready(function () {

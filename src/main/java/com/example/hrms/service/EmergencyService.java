@@ -19,4 +19,8 @@ public class EmergencyService {
     public void saveEmergencyContacts(List<Emergency> emergencyList) {
         emergencyRepository.saveAll(emergencyList);
     }
+
+    public List<Emergency> findAllById(Long empId) {
+        return emergencyRepository.findAllByEmployeeEmployeeId(empId);
+    }
 }

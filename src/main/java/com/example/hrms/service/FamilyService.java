@@ -23,4 +23,8 @@ public class FamilyService {
     public List<Family> findAllFamiliesByNominee(Long empId) {
         return familyRepository.findAllFamiliesWithNomineeAndEmployeeId(empId);
     }
+
+    public List<Family> findFamiliesById(Long empId) {
+        return familyRepository.findAllByEmployeeEmployeeId(empId);
+    }
 }

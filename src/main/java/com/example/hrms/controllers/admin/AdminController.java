@@ -3,7 +3,6 @@ package com.example.hrms.controllers.admin;
 import com.example.hrms.models.emploment_info.*;
 import com.example.hrms.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.jdbc.XADataSourceAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -11,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -33,7 +33,7 @@ public class AdminController {
     private final PhotographService photographService;
 
     @Autowired
-    public AdminController(EmployeeService employeeService, DesignationService designationService, DepartmentService departmentService, GroupService groupService, BankService bankService, BankBranchService bankBranchService, PersonalService personalService, AddressService addressService, ContactService contactService, FamilyService familyService, EmergencyService emergencyService, XADataSourceAutoConfiguration XADataSourceAutoConfiguration, PhotographService photographService) {
+    public AdminController(EmployeeService employeeService, DesignationService designationService, DepartmentService departmentService, GroupService groupService, BankService bankService, BankBranchService bankBranchService, PersonalService personalService, AddressService addressService, ContactService contactService, FamilyService familyService, EmergencyService emergencyService, PhotographService photographService) {
         this.employeeService = employeeService;
         this.designationService = designationService;
         this.departmentService = departmentService;
@@ -97,6 +97,8 @@ public class AdminController {
         model.addAttribute("banks", bankService.findAllBanks());
         model.addAttribute("bankBranches", bankBranchService.findAllBankBranches());
         model.addAttribute("familiesByNominee", familyService.findAllFamiliesByNominee(Long.valueOf(employeeId)));
+        model.addAttribute("families", familyService.findFamiliesById(Long.valueOf(employeeId)));
+        model.addAttribute("emergency", emergencyService.findAllById(Long.valueOf(employeeId)));
 //        List<Family> families = familyService.findAllFamiliesByNominee(Long.valueOf(employeeId));
 //        for (Family family : families) {
 //            System.out.println(family.getFirstName());
@@ -170,11 +172,22 @@ public class AdminController {
 
     @PostMapping("/submitPhoto/{employeeId}")
     @ResponseBody
-    public ResponseEntity<String> submitPhotos(@RequestBody Photograph photo, @PathVariable String employeeId) {
+    public ResponseEntity<String> submitPhotos(@ModelAttribute Photograph photo, @PathVariable String employeeId) {
         try {
             Optional<Employee> employee = employeeService.findEmployeeById(Long.valueOf(employeeId));
-            photo.setEmployee(employee.get());
-            photographService.savePhotograph(photo);
+            Optional<Photograph> photograph = photographService.findPhotographByEmpId(Long.valueOf(employeeId));
+            if (photograph.isPresent()) {
+                if (photo.getEmployeePhoto() != null)
+                    photograph.get().setEmployeePhotoBytes(photo.getEmployeePhoto());
+                if (photo.getEmployeeSign() != null)
+                    photograph.get().setEmployeeSignBytes(photo.getEmployeeSign());
+
+                photographService.savePhotograph(photograph.get());
+            }
+            else {
+                photo.setEmployee(employee.get());
+                photographService.savePhotograph(photo);
+            }
             return ResponseEntity.ok("Photos saved successfully");
         } catch (NumberFormatException e) {
             return new ResponseEntity<>("Error occurred while saving photo!", HttpStatus.BAD_REQUEST);

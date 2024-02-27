@@ -602,7 +602,7 @@
                 </div>
                 <div>
                     <button type="reset" class="btn btn-secondary">Reset</button>
-                    <button type="button" onclick="addNomineerecord();" class="btn btn-primary">Add Record</button>
+                    <button type="button" onclick="addNomineeRecord();" class="btn btn-primary">Add Record</button>
                     <button type="submit" class="btn btn-warning">Save & Continue</button>
                 </div>
             </form>
@@ -653,7 +653,7 @@
                             <input type="file" id="employeePhoto" class="form-control bg-white" style="display: none">
                             <input type="text" class="form-control bg-white" disabled>
                             <button id="browsePhoto" class="btn btn-secondary btn-browse" type="button" value="Browse" onclick="browseAndPreview('employeePhoto', 'browsePhoto')">Browse</button>
-                            <button id="uploadPhoto" class="btn btn-outline-warning btn-upload" type="button" onclick="uploadPhoto('employeePhoto')">Upload</button>
+                            <button id="uploadPhoto" class="btn btn-outline-warning btn-upload" type="button" value="Upload" onclick="uploadEmployeePhoto('employeePhoto')">Upload</button>
                         </div>
                         <span>only jpg/png/jpeg are allowed</span>
                     </div>
@@ -668,15 +668,12 @@
                             <input type="file" id="employeeSign" class="form-control bg-white" style="display: none">
                             <input type="text" class="form-control bg-white" disabled>
                             <button id="browseSign" class="btn btn-secondary btn-browse" type="button" value="Browse" onclick="browseAndPreview('employeeSign','browseSign')">Browse</button>
-                            <button id="uploadSign" class="btn btn-outline-warning btn-upload" type="button" value="Upload" onclick="uploadPhoto('employeeSign')">Upload</button>
+                            <button id="uploadSign" class="btn btn-outline-warning btn-upload" type="button" value="Upload" onclick="uploadEmployeePhoto('employeeSign')">Upload</button>
                         </div>
                         <span>only jpg/png/jpeg are allowed</span>
 
                     </div>
                 </div>
-
-<%--                <!-- Upload Button -->--%>
-<%--                <input type="button" value="Upload" onclick="uploadPhoto()">--%>
             </form>
         </div>
     </div>

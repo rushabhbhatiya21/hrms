@@ -12,4 +12,6 @@ import java.util.List;
 public interface FamilyRepository extends JpaRepository<Family, Long> {
     @Query("SELECT F FROM Family AS F WHERE F.isNominee = true AND F.employee.employeeId = :employeeId")
     List<Family> findAllFamiliesWithNomineeAndEmployeeId(@Param("employeeId") Long employeeId);
+
+    List<Family> findAllByEmployeeEmployeeId(Long employee_employeeId);
 }
