@@ -18,7 +18,6 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-
     private final EmployeeService employeeService;
     private final DesignationService designationService;
     private final DepartmentService departmentService;

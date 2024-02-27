@@ -13,7 +13,16 @@
 <hr>
 <div class="whitcont">
     <div class="whiteleftside">
-        menu
+        <span id="employeeInfoMenu" class="menu">Employee Information</span>
+        <hr>
+        <div class="menu-option" >Personal</div>
+        <div class="menu-option" >Contact</div>
+        <div class="menu-option" >Family</div>
+        <div class="menu-option" >Emergency</div>
+        <div class="menu-option" >Nominee</div>
+        <div class="menu-option" >Health</div>
+        <div class="menu-option" >Photo</div>
+        <div class="menu-option" >Attachment</div>
     </div>
     <div class="whiterightside">
         <span class="contlabel"> Employee</span>

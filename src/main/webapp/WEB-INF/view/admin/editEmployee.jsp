@@ -459,10 +459,9 @@
                 </div>
             </form>
 
-            <table>
-                <thead>
+            <table id="familytable" class="table table-bordered table-striped">
+                <thead class="thead-dark">
                     <tr>
-                        <th>no.</th>
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Relation</th>
@@ -470,13 +469,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="fam" items="${families}">
+                    <c:forEach var="fam" items="${families}" varStatus="loop">
                         <tr>
-                            <td>${1}</td>
                             <td>${fam.firstName}</td>
                             <td>${fam.lastName}</td>
                             <td>${fam.relation}</td>
-                            <td>${fam.dateOfBirth}</td>
+                            <td>${fam.dateOfBirth.toString().split(" ")[0]}</td>
                         </tr>
                     </c:forEach>
                 </tbody>

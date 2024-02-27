@@ -34,6 +34,10 @@ $(document).ready(function () {
 
     $('.addemployee').submit(function (event) {
         event.preventDefault();
+        if(!validateFormbyclass('addemployee')){
+            toastr.error("all * fields are require");
+            return;
+        }
         const formData = {};
         $('.addemployee input, .addemployee select').each(function () {
             let value;
@@ -44,15 +48,12 @@ $(document).ready(function () {
                     var str = id+"Id";
                     value = {}
                     value[str]=parseInt($(this).val(),10);
-                    console.log(value);
                 } else {
                     value = $(this).val();
                 }
             }
             else if ($(this).is(':checkbox')) {
                 value = !!$(this).prop('checked');
-                console.log(!!$(this).prop('checked'));
-                console.log(typeof(value));
             } else {
                 value = $(this).val();
             }

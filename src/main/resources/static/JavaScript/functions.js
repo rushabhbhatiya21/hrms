@@ -228,7 +228,7 @@ function uploadcustomphoto(inputId) {
     }
 }
 
-function validateFormbyclass(formclass) {
+function validateFormbyclass(formclass){
     let isValid = true;
 
     // Check required fields marked with *
@@ -247,6 +247,5 @@ function validateFormbyclass(formclass) {
             $(this).removeClass('is-invalid');
         }
     });
-
     return isValid;
 }
