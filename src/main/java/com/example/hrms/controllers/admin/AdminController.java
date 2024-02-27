@@ -33,9 +33,10 @@ public class AdminController {
     private final PhotographService photographService;
     private final AttachmentService attachmentService;
     private final NomineeService nomineeService;
+    private final HealthService healthService;
 
     @Autowired
-    public AdminController(EmployeeService employeeService, DesignationService designationService, DepartmentService departmentService, GroupService groupService, BankService bankService, BankBranchService bankBranchService, PersonalService personalService, AddressService addressService, ContactService contactService, FamilyService familyService, EmergencyService emergencyService, PhotographService photographService, AttachmentService attachmentService, NomineeService nomineeService) {
+    public AdminController(EmployeeService employeeService, DesignationService designationService, DepartmentService departmentService, GroupService groupService, BankService bankService, BankBranchService bankBranchService, PersonalService personalService, AddressService addressService, ContactService contactService, FamilyService familyService, EmergencyService emergencyService, PhotographService photographService, AttachmentService attachmentService, NomineeService nomineeService, HealthService healthService) {
         this.employeeService = employeeService;
         this.designationService = designationService;
         this.departmentService = departmentService;
@@ -50,6 +51,7 @@ public class AdminController {
         this.photographService = photographService;
         this.attachmentService = attachmentService;
         this.nomineeService = nomineeService;
+        this.healthService = healthService;
     }
 
     @GetMapping("")
@@ -93,6 +95,7 @@ public class AdminController {
 
     @GetMapping("/editEmployee/{employeeId}")
     public String editEmployeePage(Model model, @PathVariable String employeeId) {
+        Long empId = Long.valueOf(employeeId);
         setDate(model);
         model.addAttribute("gender", Personal.Gender.values());
         model.addAttribute("marriageStatus", Personal.MarriageStatus.values());
@@ -100,10 +103,13 @@ public class AdminController {
         model.addAttribute("vehicleType", Personal.VehicleType.values());
         model.addAttribute("banks", bankService.findAllBanks());
         model.addAttribute("bankBranches", bankBranchService.findAllBankBranches());
-        model.addAttribute("familiesByNominee", familyService.findAllFamiliesByNominee(Long.valueOf(employeeId)));
-        model.addAttribute("families", familyService.findFamiliesById(Long.valueOf(employeeId)));
-        model.addAttribute("emergency", emergencyService.findAllById(Long.valueOf(employeeId)));
-        model.addAttribute("nominees", nomineeService.findNomineesByEmpId(Long.valueOf(employeeId)));
+        model.addAttribute("familiesByNominee", familyService.findAllFamiliesByNominee(empId));
+        model.addAttribute("personal", personalService.findPersonalByEmpId(empId));
+        model.addAttribute("contact", contactService.findContactByEmpId(empId));
+        model.addAttribute("families", familyService.findFamiliesById(empId));
+        model.addAttribute("emergency", emergencyService.findAllById(empId));
+        model.addAttribute("nominees", nomineeService.findNomineesByEmpId(empId));
+        model.addAttribute("health", healthService.findHealthByEmpId(empId));
 
         return "admin/editEmployee";
     }
