@@ -122,7 +122,9 @@ public class AdminController {
             Long bankBranchId = personal.getBankDetail().getBankBranchId();
             BankBranch bankbranch = bankBranchService.findBankBranchById(bankBranchId).get();
 
-            System.out.println(bankbranch.getBankBranchName());
+            Optional<Employee> employee = employeeService.findEmployeeById(Long.valueOf(employeeId));
+            employee.ifPresent(personal::setEmployee);
+            personal.setBankDetail(bankbranch);
 
             personalService.savePersonal(personal);
             return ResponseEntity.ok("Personal details saved!");
@@ -135,8 +137,8 @@ public class AdminController {
     @ResponseBody
     public ResponseEntity<String> submitContactDetails(@RequestBody Contact contact, @PathVariable String employeeId) {
         try {
-            Optional<Contact> contactNew = contactService.findContactByEmpId(Long.valueOf(employeeId));
-            if (contactNew.isPresent()) {
+            Contact contactNew = contactService.findContactByEmpId(Long.valueOf(employeeId));
+            if (contactNew != null) {
                 return new ResponseEntity<>("Contact already exists!", HttpStatus.BAD_REQUEST);
             }
             else {

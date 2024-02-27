@@ -15,14 +15,14 @@
     <div class="whiteleftside">
         <span id="employeeInfoMenu" class="menu">Employee Information</span>
         <hr>
-        <div class="menu-option" ydata="0" xdata="personal">Personal</div>
-        <div class="menu-option" ydata="1" xdata="contact">Contact</div>
-        <div class="menu-option" ydata="2" xdata="family">Family</div>
-        <div class="menu-option" ydata="3" xdata="emergency">Emergency</div>
-        <div class="menu-option" ydata="4" xdata="nominee">Nominee</div>
-        <div class="menu-option" ydata="5" xdata="health">Health</div>
-        <div class="menu-option" ydata="6" xdata="photo">Photo</div>
-        <div class="menu-option" ydata="7" xdata="attachment">Attachment</div>
+        <div class="menu-option" id="personalMenu" ydata="0" xdata="personal">Personal</div>
+        <div class="menu-option" id="contactMenu" ydata="1" xdata="contact">Contact</div>
+        <div class="menu-option" id="familyMenu" ydata="2" xdata="family">Family</div>
+        <div class="menu-option" id="emergencyMenu" ydata="3" xdata="emergency">Emergency</div>
+        <div class="menu-option" id="nomineeMenu" ydata="4" xdata="nominee">Nominee</div>
+        <div class="menu-option" id="healthMenu" ydata="5" xdata="health">Health</div>
+        <div class="menu-option" id="photoMenu" ydata="6" xdata="photo">Photo</div>
+        <div class="menu-option" id="attachmentMenu" ydata="7" xdata="attachment">Attachment</div>
     </div>
     <div class="whiterightside">
         <div id="personal">
@@ -242,7 +242,8 @@
                 <input type="text" class="form-control" id="countryAddress">
             </div>
             <div class="col-12">
-                <button type="submit" class="btn btn-primary">Sign in</button>
+                <button type="reset" class="btn btn-secondary">Reset</button>
+                <button type="submit" class="btn btn-warning">Save</button>
             </div>
         </form>
         </div>
@@ -748,8 +749,19 @@
             </form>
         </div>
     </div>
-    <c:if test="${personal eq null}">
-        <c:set var="somevar" value="-1"></c:set>
+
+    <c:set var="somevar" value="0" />
+    <c:if test="${personal != null}">
+        <c:set var="somevar" value="1"/>
+        <c:if test="${contact != null}">
+            <c:set var="somevar" value="2"/>
+            <c:if test="${families.size()>0}">
+                <c:set var="somevar" value="3"/>
+                <c:if test="${emergency.size()>0}">
+                    <c:set var="somevar" value="4"/>
+                </c:if>
+            </c:if>
+        </c:if>
     </c:if>
-    <input id="somevalue" value="" style="display: none">
+    <input id="somevalue" value="${somevar}" type="hidden">
 </div>

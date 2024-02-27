@@ -34,7 +34,8 @@ public class ContactService {
         contactRepository.save(contact);
     }
 
-    public Optional<Contact> findContactByEmpId(Long empId) {
-        return contactRepository.findContactByEmployeeEmployeeId(empId);
+    public Contact findContactByEmpId(Long empId) {
+        Optional<Contact> c = contactRepository.findContactByEmployeeEmployeeId(empId);
+        return c.orElse(null);
     }
 }

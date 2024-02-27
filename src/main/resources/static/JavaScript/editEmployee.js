@@ -54,6 +54,10 @@ $(document).ready(function () {
 
     $('.addPersonal').submit(function (event) {
         event.preventDefault();
+        if(!validateFormbyclass('addPersonal')){
+            toastr.error("all * fields are require");
+            return;
+        }
         const formData = {};
         $('.addPersonal input, .addPersonal select').each(function () {
             let value;
@@ -70,19 +74,26 @@ $(document).ready(function () {
         });
 
         formData["bankDetail"] = {"bankBranchId":parseInt($('#bankBranch').val())};
-
+        var flag = false;
         $.ajax({
             type: 'POST',
             contentType: 'application/json',
-            url: '/admin/submitPersonal' + employeeId,
+            url: '/admin/submitPersonal/' + employeeId,
             data: JSON.stringify(formData),
             success: function (response) {
-                console.log(response);
+                toastr.success("")
             },
             error: function (error) {
                 console.error(error);
+                flag = true;
             }
         });
+        if(flag) {
+            return;
+        }
+        const somevarValue = parseInt($('#somevalue').val());
+        if(somevarValue <= 0)$('#somevalue').val(1);
+        $('#contactMenu').click();
     });
 
     $('.addEmergency').submit(function (event) {
@@ -149,7 +160,9 @@ $(document).ready(function () {
     })
 
     $('.menu-option').click(function () {
-        if($(this).attr('ydata')<=$('#somevalue').val()){
+        const somevarValue = parseInt($('#somevalue').val());
+        console.log(somevarValue);
+        if($(this).attr('ydata')<=somevarValue){
             toggleMenuOption($(this).attr('xdata'));
         }
     });
