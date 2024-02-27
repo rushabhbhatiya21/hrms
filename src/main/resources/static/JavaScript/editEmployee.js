@@ -149,6 +149,85 @@ function addNomineerecord() {
 }
 
 
+
+function browseAndPreview(inputId, browseButtonId) {
+    const fileInput = document.getElementById(inputId);
+    const browseButton = document.getElementById(browseButtonId);
+
+    // Check if elements are found
+    if (!fileInput || !browseButton) {
+        console.error('Element not found. Check the IDs.');
+        return;
+    }
+
+    const previewText = browseButton.parentElement?browseButton.previousElementSibling:browseButton.firstElementChild;
+    const previewImage = browseButton.parentElement.parentElement.parentElement.firstElementChild;
+
+
+    // Check if elements are found
+    if (!previewText || !previewImage) {
+        console.error('Preview elements not found. Check the HTML structure.');
+        return;
+    }
+
+    // Trigger file input click
+    fileInput.click();
+
+    fileInput.addEventListener('change', function () {
+        const selectedFile = fileInput.files[0];
+
+        if (selectedFile) {
+            // Display preview
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                previewImage.innerHTML = `<img src="${e.target.result}" alt="Preview" style="max-width: 100%; max-height: 100%;">`;
+                previewText.value = selectedFile.name;
+            };
+            reader.readAsDataURL(selectedFile);
+        } else {
+            // Display "No Image" if no file is selected
+            previewImage.innerHTML = '';
+            previewText.textContent = 'No Image';
+        }
+    });
+}
+
+function uploadPhoto(inputId) {
+    const fileInput = document.getElementById(inputId);
+    const selectedFile = fileInput.files[0];
+
+    if (selectedFile) {
+        const formData = new FormData();
+        formData.append(inputId, selectedFile);
+
+
+        $.ajax({
+            url: 'http://localhost:8080/admin/submitPhoto/'+employeeId,
+            type: 'POST',
+            data: formData,
+            processData: false, // Prevent jQuery from automatically processing data
+            contentType: false, // Prevent jQuery from setting contentType
+            success: function (data) {
+                // Handle successful response from the server
+                console.log('Upload successful:', data);
+            },
+            error: function (error) {
+                // Handle errors
+                console.error('Error during upload:', error);
+            }
+        });
+    } else {
+        alert('Please select a file before uploading.');
+    }
+}
+
+
+
+
+
+
+
+
 $(document).ready(function () {
     $('.address-card-container').hide();
     toggleMenuOption('personal');

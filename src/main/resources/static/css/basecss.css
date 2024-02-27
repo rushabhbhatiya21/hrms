@@ -233,6 +233,7 @@ label{
 
 .image-input {
     position: relative;
+    width: 25vw;
 }
 
 .btn-browse {
