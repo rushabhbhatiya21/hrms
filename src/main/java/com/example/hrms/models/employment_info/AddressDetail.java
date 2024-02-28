@@ -23,6 +23,8 @@ public class AddressDetail {
 
     private String city;
 
+    private String district;
+
     private String pinCode;
 
     private PropertyType propertytype;

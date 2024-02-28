@@ -1,0 +1,1 @@
+INSERT INTO public.contact (contact_id, corporate_email, extension, home_mobile, home_phone, personal_email, secondary_email, work_mobile, work_phone, employee_id) VALUES (1, 'rushabhc@gmail.com', '123', '7778889994', '1112223334', 'rushabhp@gmail.com', 'rushabhs@gmail.com', '987654321', '123456789', 1);

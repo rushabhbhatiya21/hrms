@@ -116,6 +116,45 @@ nav img{
     width: 27%;
 }
 
+.menu-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.menu-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    padding: 10px;
+    transition: background-color 0.3s, color 0.3s;
+    border-radius: 16px;
+}
+
+/*.padding-sm-top-bot {*/
+/*    padding-top: 5px;*/
+/*    padding-bottom: 5px;*/
+/*}*/
+
+.menu-card:hover {
+    background-color: #3d93fa;
+    color: white;
+}
+
+.leftSideMenu {
+    width: 80%;
+    /*min-height: 50%;*/
+    border: 4px solid #3D93FAFF;
+    border-radius: 16px;
+    /*margin: 20px;*/
+    margin-left: 20px;
+    margin-top: 30px;
+    padding: 50px;
+}
+
 .whiterightside{
     width: 73%;
     padding: 10px;

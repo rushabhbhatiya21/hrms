@@ -1,0 +1,2 @@
+INSERT INTO public.address (address_id, address, address_type, are_all_address_same, city, country, pin_code, propertytype, state, contact_id, district) VALUES (5, 'bbb', 'aaa', true, 'ahmedabad', 'india', '123456', null, 'gujarat', 1, null);
+INSERT INTO public.address (address_id, address, address_type, are_all_address_same, city, country, pin_code, propertytype, state, contact_id, district) VALUES (6, 'ccc', 'bbb', true, 'patan', 'india', '654321', null, 'gujarat', 1, null);

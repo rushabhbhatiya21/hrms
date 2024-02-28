@@ -1,4 +1,9 @@
 $(document).ready(function () {
+    // $(".menu-card").click(function(){
+    //     $(".menu-card").removeClass("active");
+    //     $(this).addClass("active");
+    // });
+
     var notificationMessage = localStorage.getItem('notificationMessage');
     if (notificationMessage) {
         toastr.success(notificationMessage);

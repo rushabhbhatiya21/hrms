@@ -1,5 +1,6 @@
 package com.example.hrms.models.employment_info;
 
+import com.example.hrms.models.RoleUser;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -56,4 +57,8 @@ public class Employee {
     private String employeeEligibleFor;
 
     private boolean isUnderGratuityAct;
+
+//    @ManyToOne
+//    @JoinColumn(referencedColumnName = "roleId", name = "roleId")
+//    private RoleUser role;
 }

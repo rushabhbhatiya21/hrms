@@ -13,16 +13,46 @@
 <hr>
 <div class="whitcont">
     <div class="whiteleftside">
-        <span id="employeeInfoMenu" class="menu">Employee Information</span>
-        <hr>
-        <div class="menu-option" id="personalMenu" ydata="0" xdata="personal">Personal</div>
-        <div class="menu-option" id="contactMenu" ydata="1" xdata="contact">Contact</div>
-        <div class="menu-option" id="familyMenu" ydata="2" xdata="family">Family</div>
-        <div class="menu-option" id="emergencyMenu" ydata="3" xdata="emergency">Emergency</div>
-        <div class="menu-option" id="nomineeMenu" ydata="4" xdata="nominee">Nominee</div>
-        <div class="menu-option" id="healthMenu" ydata="5" xdata="health">Health</div>
-        <div class="menu-option" id="photoMenu" ydata="6" xdata="photo">Photo</div>
-        <div class="menu-option" id="attachmentMenu" ydata="7" xdata="attachment">Attachment</div>
+        <div class="leftSideMenu">
+            <div class="menu-card-header" id="employeeInfoMenu">
+                <span class="menu"><strong>Employee Information</strong></span>
+                <span><strong><i class="fa-solid fa-minus"></i></strong></span>
+            </div>
+            <hr>
+            <div class="menu-card">
+                <div class="menu-option" id="personalMenu" ydata="0" xdata="personal">Personal</div>
+                <span class="menu-option"><strong>&#129138</strong></span>
+<%--                <i class="fa-solid fa-circle-arrow-right"></i>--%>
+            </div>
+            <div class="menu-card">
+                <div class="menu-option" id="contactMenu" ydata="1" xdata="contact">Contact</div>
+                <span class="menu-option"><strong>&#129138</strong></span>
+            </div>
+            <div class="menu-card">
+                <div class="menu-option" id="familyMenu" ydata="2" xdata="family">Family</div>
+                <span class="menu-option"><strong>&#129138</strong></span>
+            </div>
+            <div class="menu-card">
+                <div class="menu-option" id="emergencyMenu" ydata="3" xdata="emergency">Emergency</div>
+                <span class="menu-option"><strong>&#129138</strong></span>
+            </div>
+            <div class="menu-card">
+                <div class="menu-option" id="nomineeMenu" ydata="4" xdata="nominee">Nominee</div>
+                <span class="menu-option"><strong>&#129138</strong></span>
+            </div>
+            <div class="menu-card">
+                <div class="menu-option" id="healthMenu" ydata="5" xdata="health">Health</div>
+                <span class="menu-option"><strong>&#129138</strong></span>
+            </div>
+            <div class="menu-card">
+                <div class="menu-option" id="photoMenu" ydata="6" xdata="photo">Photo</div>
+                <span class="menu-option"><strong>&#129138</strong></span>
+            </div>
+            <div class="menu-card">
+                <div class="menu-option" id="attachmentMenu" ydata="7" xdata="attachment">Attachment</div>
+                <span class="menu-option"><strong>&#129138</strong></span>
+            </div>
+        </div>
     </div>
     <div class="whiterightside">
         <div id="personal">
