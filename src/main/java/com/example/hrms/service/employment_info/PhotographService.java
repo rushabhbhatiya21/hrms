@@ -20,7 +20,7 @@ public class PhotographService {
         photographRepository.save(photo);
     }
 
-    public Optional<Photograph> findPhotographByEmpId(Long empId) {
-        return photographRepository.findPhotographByEmployeeEmployeeId(empId);
+    public Photograph findPhotographByEmpId(Long empId) {
+        return photographRepository.findPhotographByEmployeeEmployeeId(empId).orElse(null);
     }
 }

@@ -110,6 +110,11 @@ public class AdminController {
     @GetMapping("/editEmployee/{employeeId}")
     public String editEmployeePage(Model model, @PathVariable String employeeId) {
         Long empId = Long.valueOf(employeeId);
+        Optional<Employee> employee = employeeService.findEmployeeById(empId);
+        if (employee.isEmpty()) {
+            model.addAttribute("errorMessage", "Employee not present");
+            return "admin/errorPage"; // Return the view name for the error page
+        }
         setDate(model);
         model.addAttribute("gender", Personal.Gender.values());
         model.addAttribute("marriageStatus", Personal.MarriageStatus.values());
@@ -230,14 +235,14 @@ public class AdminController {
     public ResponseEntity<String> submitPhotos(@ModelAttribute Photograph photo, @PathVariable String employeeId) {
         try {
             Optional<Employee> employee = employeeService.findEmployeeById(Long.valueOf(employeeId));
-            Optional<Photograph> photograph = photographService.findPhotographByEmpId(Long.valueOf(employeeId));
-            if (photograph.isPresent()) {
+            Photograph photograph = photographService.findPhotographByEmpId(Long.valueOf(employeeId));
+            if (photograph != null) {
                 if (photo.getEmployeePhoto() != null)
-                    photograph.get().setEmployeePhotoBytes(photo.getEmployeePhoto());
+                    photograph.setEmployeePhotoBytes(photo.getEmployeePhoto());
                 if (photo.getEmployeeSign() != null)
-                    photograph.get().setEmployeeSignBytes(photo.getEmployeeSign());
+                    photograph.setEmployeeSignBytes(photo.getEmployeeSign());
 
-                photographService.savePhotograph(photograph.get());
+                photographService.savePhotograph(photograph);
             }
             else {
                 photo.setEmployee(employee.get());

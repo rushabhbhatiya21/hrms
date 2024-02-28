@@ -22,7 +22,6 @@
             <div class="menu-card">
                 <div class="menu-option" id="personalMenu" ydata="0" xdata="personal">Personal</div>
                 <span class="menu-option"><strong>&#129138</strong></span>
-<%--                <i class="fa-solid fa-circle-arrow-right"></i>--%>
             </div>
             <div class="menu-card">
                 <div class="menu-option" id="contactMenu" ydata="1" xdata="contact">Contact</div>
@@ -484,9 +483,9 @@
                     <textarea class="form-control" id="familyaddress" rows="3"></textarea>
                 </div>
                 <div class="form-row">
-                    <button type="reset" class="btn btn-secondary">Reset</button>
+                    <button type="reset" class="btn btn-secondary" onclick="resetFamily();">Reset</button>
                     <button type="button" onclick="addFamilyRecord();" class="btn btn-primary">Add Record</button>
-                    <button type="submit" class="btn btn-warning">Continue</button>
+                    <button type="submit" class="btn btn-warning">Save & Continue</button>
                 </div>
             </form>
 
@@ -499,7 +498,7 @@
                         <th>D.O.B.</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="familyTableBody">
                     <c:forEach var="fam" items="${families}" varStatus="loop">
                         <tr>
                             <td>${fam.firstName}</td>
@@ -516,7 +515,6 @@
             <span class="contlabel">Emergency</span>
             <form class="row g-3 addEmergency mt10">
                 <div class="col-md-4">
-                    <label for="marriageStatus" class="form-label">Marriage status</label>
                     <label for="firstName" class="form-label">First Name<span class="red">*</span></label>
                     <input type="text" class="form-control" id="firstName">
                 </div>
@@ -541,7 +539,7 @@
                     <input type="number" class="form-control bg-white" id="mobileNumber">
                 </div>
                 <div class="col-md-4">
-                    <label for="relation" class="form-label">Relation</label>
+                    <label for="relation" class="form-label">Relation<span class="red">*</span></label>
                     <select class="form-control" id="relation">
                         <option value="" disabled selected>-- Select Type --</option>
                         <option value="father">Father</option>
@@ -560,12 +558,29 @@
                     <textarea class="form-control bg-white" rows="3" id="emergencyAddress"></textarea>
                 </div>
                 <div>
-                    <button type="reset" class="btn btn-secondary">Reset</button>
+                    <button type="reset" class="btn btn-secondary" onclick="emergencyReset();">Reset</button>
                     <button type="button" onclick="addEmergencyrecord();" class="btn btn-primary">Add Record</button>
                     <button type="submit" class="btn btn-warning">Save & Continue</button>
                 </div>
             </form>
-
+            <table id="EmergencyTable" class="table table-bordered table-striped">
+                <thead class="thead-dark">
+                <tr>
+                    <th>First Name</th>
+                    <th>Relation</th>
+                    <th>Mobile no.</th>
+                </tr>
+                </thead>
+                <tbody id="EmergencyTableBody">
+                <c:forEach var="emr" items="${emergency}" varStatus="loop">
+                    <tr>
+                        <td>${emr.firstName}</td>
+                        <td>${emr.relation}</td>
+                        <td>${emr.mobileNumber}</td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
         </div>
         <div id="nominee">
             <span class="contlabel">Nominee</span>
@@ -654,11 +669,32 @@
                     <textarea class="form-control bg-white" rows="3" id="nomineeInvalidCondition"></textarea>
                 </div>
                 <div>
-                    <button type="reset" class="btn btn-secondary">Reset</button>
+                    <button type="reset" onclick="nomineeReset()" class="btn btn-secondary">Reset</button>
                     <button type="button" onclick="addNomineeRecord();" class="btn btn-primary">Add Record</button>
                     <button type="submit" class="btn btn-warning">Save & Continue</button>
                 </div>
             </form>
+            <table id="NomineeTable" class="table table-bordered table-striped">
+                <thead class="thead-dark">
+                <tr>
+                    <th>Priority</th>
+                    <th>First Name</th>
+                    <th>Relation</th>
+                    <th>Gender</th>
+                    <th>D.O.B.</th>
+                </tr>
+                </thead>
+                <tbody id="NomineeTableBody">
+                <c:forEach var="nom" items="${nominees}" varStatus="loop">
+                    <tr>
+                        <td>${nom.firstName}</td>
+                        <td>${nom.relation}</td>
+                        <td>${nom.gender}</td>
+                        <td>${nom.dateOfBirth}</td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
         </div>
         <div id="health">
             <span class="contlabel">Health</span>
@@ -844,6 +880,15 @@
                 <c:set var="somevar" value="3"/>
                 <c:if test="${emergency.size()>0}">
                     <c:set var="somevar" value="4"/>
+                    <c:if test="${nominees.size()>0}">
+                        <c:set var="somevar" value="5"/>
+                        <c:if test="${health != null}">
+                            <c:set var="somevar" value="6"/>
+                            <c:if test="${photograph != null}">
+                                <c:set var="somevar" value="7"/>
+                            </c:if>
+                        </c:if>
+                    </c:if>
                 </c:if>
             </c:if>
         </c:if>

@@ -1,6 +1,8 @@
 function toggleMenuOption(menuOptionId) {
     $('.whiterightside > div').not('#' + menuOptionId).hide();
     $('#' + menuOptionId).show();
+    $('.active').removeClass('active');
+    $(`#${menuOptionId}Menu`).parent().addClass('active');
 }
 var addressList = [];
 const employeeId = window.location.href.split('/').pop();
@@ -37,7 +39,7 @@ function addAddress(e) {
     document.querySelector('.addAddress').reset();
 
 }
-const familyList =[];
+var familyList =[];
 function addFamilyRecord(){
     if(!validateFormbyclass('addFamily')){
         toastr.error("all * fields are require");
@@ -76,15 +78,18 @@ function addFamilyRecord(){
         contactDetail: formData.contectDetails,
         address: formData.familyaddress
     };
-
+    $('#familyTableBody').prepend(`<tr class="familyTempData"><td>${familyData.firstName}</td><td>${familyData.lastName}</td><td>${familyData.relation}</td><td>${formatToYYYYMMDD(familyData.dateOfBirth)}</td></tr>`);
     console.log(familyData);
     familyList.push(familyData);
-    document.querySelector('.addFamily').reset();
+    $('.addFamily')[0].reset();
 }
 
-const emergencyList = [];
+var emergencyList = [];
 function addEmergencyrecord(){
     const formData = {};
+    if(!validateFormbyclass('addEmergency')){
+        return;
+    }
     $('.addEmergency input, .addEmergency select, .addEmergency textarea').each(function () {
         const id = $(this).attr('id');
         let value;
@@ -113,7 +118,8 @@ function addEmergencyrecord(){
 
     console.log(emergencyData);
     emergencyList.push(emergencyData);
-    $('.addEmergency').reset();
+    $('#EmergencyTableBody').prepend(`<tr class="tempEmrData"><td>${formData.firstName}</td><td>${formData.relation}</td><td>${formData.mobileNumber}</td></tr>`)
+    $('.addEmergency')[0].reset();
 }
 
 function formatToYYYYMMDD(dateString) {
@@ -131,9 +137,12 @@ function populatenominee(fname,dateofbirth,relation,gender){
     $('#nomineegender').val(gender);
 }
 
-const nomineeList = [];
+var nomineeList = [];
 
 function addNomineeRecord() {
+    if(!validateFormbyclass("addNominee")){
+        return;
+    }
     var nomineeData = {
         "priority": $("#nomineepriority").val(),
         "firstName": $("#nomineefirstName").val(),
@@ -149,7 +158,8 @@ function addNomineeRecord() {
     };
     console.log(nomineeData);
     nomineeList.push(nomineeData);
-    $('.addNominee').reset();
+    $('#NomineeTableBody').prepend(`<tr class="tempNomData"><td>${nomineeData.priority}</td><td>${nomineeData.firstName}</td><td>${nomineeData.relation}</td><td>${nomineeData.gender}</td><td>${nomineeData.dateOfBirth}</td></tr>`)
+    $('.addNominee')[0].reset();
 }
 function browseAndPreview(inputId, browseButtonId) {
     const fileInput = document.getElementById(inputId);
@@ -227,6 +237,12 @@ function uploadcustomphoto(inputId) {
     }
 }
 
+function isValidEmail(email) {
+    // You can use a regular expression or any other validation logic
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
 function validateFormbyclass(formclass){
     let isValid = true;
 
@@ -239,9 +255,36 @@ function validateFormbyclass(formclass){
                 inputElement.removeClass('is-invalid');
             }, 5000);
             isValid = false;
-        } else {
-            $(this).removeClass('is-invalid');
+            toastr.error("all * fields are require");
+        }
+        else{
+            if ($(this).attr('type') === 'email' && !isValidEmail(value)) {
+                $(this).addClass('is-invalid');
+                setTimeout(function () {
+                    inputElement.removeClass('is-invalid');
+                }, 5000);
+                isValid = false;
+                toastr.error("invalid email");
+            }else{
+                $(this).removeClass('is-invalid');
+            }
         }
     });
     return isValid;
+}
+
+
+function resetFamily(){
+    familyList = [];
+    $('.familyTempData').remove();
+}
+
+function emergencyReset(){
+    emergencyList = [];
+    $('.tempEmrData').remove();
+}
+
+function nomineeReset(){
+    nomineeList = [];
+    $('.tempNomData').remove();
 }

@@ -129,9 +129,10 @@ nav img{
     align-items: center;
     justify-content: space-between;
     cursor: pointer;
-    padding: 10px;
+    padding: 5px 10px;
     transition: background-color 0.3s, color 0.3s;
     border-radius: 16px;
+    margin: 1px 0;
 }
 
 /*.padding-sm-top-bot {*/
@@ -290,4 +291,9 @@ label{
 
 .preview-next{
     width: 50%;
+}
+
+.active{
+    background-color: #3d93fa;
+    color: white;
 }

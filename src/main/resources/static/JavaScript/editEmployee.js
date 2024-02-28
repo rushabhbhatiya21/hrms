@@ -2,10 +2,18 @@ $(document).ready(function () {
     $('.address-card-container').hide();
     toggleMenuOption('personal');
     $('#employeeInfoMenu').click(function () {
-        $('.menu-option').toggle();
+        $('.menu-card').toggle();
     });
 
     $('#submitContact').click(function () {
+
+        if(!validateFormbyclass('addContact')){
+            return;
+        }
+        if(addressList.length <= 0){
+            toastr.error("add atleast one address");
+            return;
+        }
 
         const formData = {};
         $('.addContact input').each(function () {
@@ -14,8 +22,8 @@ $(document).ready(function () {
         });
         formData["addresses"] = addressList;
 
-        console.log(formData);
-
+        // console.log(formData);
+        var flag = false;
         $.ajax({
             type: "POST",
             url: "http://localhost:8080/admin/submitContact/" + employeeId,
@@ -23,11 +31,23 @@ $(document).ready(function () {
             data: JSON.stringify(formData),
             success: function (response) {
                 toastr.success(response);
+                addressList = [];
             },
             error: function (error) {
                 toastr.error(error);
+                flag = true;
             }
         });
+        if(flag) {
+            return;
+        }
+        $('.addContact')[0].reset();
+        $('#submitted').html('');
+        const somevarValue = parseInt($('#somevalue').val());
+        if(somevarValue <= 1) {
+            $('#somevalue').val(2);
+        }
+        $('#familyMenu').click();
     });
 
 
@@ -38,6 +58,7 @@ $(document).ready(function () {
             toastr.error("no records are added");
             return;
         }
+        var flag = false;
         $.ajax({
             type: 'POST',
             contentType: 'application/json',
@@ -48,14 +69,25 @@ $(document).ready(function () {
             },
             error: function (error) {
                 toastr.error(error);
+                flag = true;
             }
         });
+        if(flag) {
+            return;
+        }
+        $('.addFamily')[0].reset();
+        $('.familyTempData').removeClass("familyTempData");
+        $('#submitted').html('');
+        const somevarValue = parseInt($('#somevalue').val());
+        if(somevarValue <= 2) {
+            $('#somevalue').val(3);
+        }
+        $('#emergencyMenu').click();
     });
 
     $('.addPersonal').submit(function (event) {
         event.preventDefault();
         if(!validateFormbyclass('addPersonal')){
-            toastr.error("all * fields are require");
             return;
         }
         const formData = {};
@@ -98,6 +130,11 @@ $(document).ready(function () {
 
     $('.addEmergency').submit(function (event) {
         event.preventDefault();
+        if(emergencyList.length <= 0){
+            toastr.error("add some records.");
+            return;
+        }
+        var flag = false;
         $.ajax({
             type: 'POST',
             contentType: 'application/json',
@@ -108,13 +145,23 @@ $(document).ready(function () {
             },
             error: function (error) {
                 toastr.error(error);
+                flag= true;
             }
         });
+        if(flag){return}
+        $('.tempEmrData').removeClass('tempEmrData');
+        const somevarValue = parseInt($('#somevalue').val());
+        if(somevarValue <= 3)$('#somevalue').val(4);
+        $('#nomineeMenu').click();
     });
 
     $('.addNominee').submit(function (event) {
         event.preventDefault();
-        console.log(nomineeList);
+        if(nomineeList <= 0){
+            toastr.error("add atleast one record");
+            return;
+        }
+        var flag = false;
         $.ajax({
             type: 'POST',
             contentType: 'application/json',
@@ -125,8 +172,15 @@ $(document).ready(function () {
             },
             error: function (error) {
                 toastr.error(error);
+                flag= true;
             }
         });
+        if(flag){return}
+        nomineeList = [];
+        $('.tempNomData').removeClass('tempNomData');
+        const somevarValue = parseInt($('#somevalue').val());
+        if(somevarValue <= 4)$('#somevalue').val(5);
+        $('#healthMenu').click();
     });
 
     $('.addHealth').submit(function (event) {
@@ -183,11 +237,14 @@ $(document).ready(function () {
         });
     })
 
-    $('.menu-option').click(function () {
+    $('.menu-card').click(function () {
         const somevarValue = parseInt($('#somevalue').val());
         console.log(somevarValue);
-        if($(this).attr('ydata')<=somevarValue){
-            toggleMenuOption($(this).attr('xdata'));
+        const element = $(this).children().first();
+        if(element.attr('ydata')<=somevarValue){
+            toggleMenuOption(element.attr('xdata'));
+        }else{
+            toastr.error("add previous details first");
         }
     });
 });

@@ -16,8 +16,8 @@ public class HealthService {
         this.healthRepository = healthRepository;
     }
 
-    public Optional<Health> findHealthByEmpId(Long empId) {
-        return healthRepository.findHealthByEmployeeEmployeeId(empId);
+    public Health findHealthByEmpId(Long empId) {
+        return healthRepository.findHealthByEmployeeEmployeeId(empId).orElse(null);
     }
 
     public void saveHealth(Health health) {
