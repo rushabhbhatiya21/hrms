@@ -22,8 +22,6 @@ $(document).ready(function () {
         });
         formData["addresses"] = addressList;
 
-        // console.log(formData);
-        var flag = false;
         $.ajax({
             type: "POST",
             url: "http://localhost:8080/admin/submitContact/" + employeeId,
@@ -32,22 +30,18 @@ $(document).ready(function () {
             success: function (response) {
                 toastr.success(response);
                 addressList = [];
+                $('.addContact')[0].reset();
+                $('#submitted').html('');
+                const somevarValue = parseInt($('#somevalue').val());
+                if(somevarValue <= 1) {
+                    $('#somevalue').val(2);
+                }
+                $('#familyMenu').click();
             },
             error: function (error) {
                 toastr.error(error);
-                flag = true;
             }
         });
-        if(flag) {
-            return;
-        }
-        $('.addContact')[0].reset();
-        $('#submitted').html('');
-        const somevarValue = parseInt($('#somevalue').val());
-        if(somevarValue <= 1) {
-            $('#somevalue').val(2);
-        }
-        $('#familyMenu').click();
     });
 
 
@@ -161,7 +155,6 @@ $(document).ready(function () {
             toastr.error("add atleast one record");
             return;
         }
-        var flag = false;
         $.ajax({
             type: 'POST',
             contentType: 'application/json',
@@ -169,18 +162,16 @@ $(document).ready(function () {
             data: JSON.stringify(nomineeList),
             success: function (response) {
                 toastr.success(response);
+                nomineeList = [];
+                $('.tempNomData').removeClass('tempNomData');
+                const somevarValue = parseInt($('#somevalue').val());
+                if(somevarValue <= 4)$('#somevalue').val(5);
+                $('#healthMenu').click();
             },
-            error: function (error) {
-                toastr.error(error);
-                flag= true;
+            error: function (error){
+                toastr.error("something went wrong");
             }
         });
-        if(flag){return}
-        nomineeList = [];
-        $('.tempNomData').removeClass('tempNomData');
-        const somevarValue = parseInt($('#somevalue').val());
-        if(somevarValue <= 4)$('#somevalue').val(5);
-        $('#healthMenu').click();
     });
 
     $('.addHealth').submit(function (event) {
@@ -200,6 +191,9 @@ $(document).ready(function () {
             data: JSON.stringify(healthData),
             success: function (response) {
                 toastr.success(response);
+                const somevarValue = parseInt($('#somevalue').val());
+                if(somevarValue <= 5)$('#somevalue').val(6);
+                $('#photoMenu').click();
             },
             error: function (error) {
                 toastr.error(error);
@@ -243,8 +237,66 @@ $(document).ready(function () {
         const element = $(this).children().first();
         if(element.attr('ydata')<=somevarValue){
             toggleMenuOption(element.attr('xdata'));
-        }else{
-            toastr.error("add previous details first");
         }
     });
+
+
+
+    var employeeSignflag = parseInt($('#empsign').val()) === 1;
+    var employeePhotoflag = parseInt($('#empphoto').val()) === 1;
+
+    console.log(employeePhotoflag+","+employeeSignflag)
+
+    $('.photobutton').click(function () {
+        const inputId = $(this).attr('xdata');
+        const fileInput = document.getElementById(inputId);
+        const selectedFile = fileInput.files[0];
+
+        if (selectedFile) {
+            const formData = new FormData();
+            formData.append(inputId, selectedFile);
+
+
+            $.ajax({
+                url: 'http://localhost:8080/admin/submitPhoto/' + employeeId,
+                type: 'POST',
+                data: formData,
+                contentType: false, // Let jQuery handle the contentType
+                processData: false, // Prevent jQuery from processing the data
+
+                // // Custom XMLHttpRequest to allow handling file uploads
+                // xhr: function () {
+                //     const xhr = new window.XMLHttpRequest();
+                //     xhr.upload.addEventListener("progress", function (evt) {
+                //         if (evt.lengthComputable) {
+                //             let percentComplete = (evt.loaded / evt.total) * 100;
+                //             console.log('Upload Progress: ' + percentComplete + '%');
+                //         }
+                //     }, false);
+                //     return xhr;
+                // },
+
+                success: function (data) {
+                    toastr.success('Upload successful:', data);
+                    if(inputId == 'employeeSign') {
+                        employeeSignflag = true;
+                    }
+                    if(inputId == 'employeePhoto') {
+                        employeePhotoflag = true;
+                        console.log("here photo" + employeeSignflag);
+                    }
+                    if(employeeSignflag && employeePhotoflag){
+                        const somevarValue = parseInt($('#somevalue').val());
+                        if (somevarValue <= 6) $('#somevalue').val(7);
+                    }
+
+                },
+                error: function (error) {
+                    toastr.error('Error during upload:', error);
+                }
+            });
+        } else {
+            alert('Please select a file before uploading.');
+        }
+    })
 });

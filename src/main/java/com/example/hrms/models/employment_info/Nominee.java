@@ -29,10 +29,8 @@ public class Nominee {
 
     private Date dateOfBirth;
 
-    @Column(unique = true)
     private String uidNumber;
 
-    @Column(unique = true)
     private String panNumber;
 
     private String contactNumber;

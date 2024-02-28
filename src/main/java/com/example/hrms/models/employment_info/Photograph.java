@@ -62,9 +62,11 @@ public class Photograph {
         }
     }
     public String getEmployeePhotoString() {
+        if(employeePhoto == null)return "";
         return Base64.getEncoder().encodeToString(ImageUtils.decompressImage(employeePhoto));
     }
     public String getEmployeeSignString() {
+        if(employeeSign == null)return "";
         return Base64.getEncoder().encodeToString(ImageUtils.decompressImage(employeeSign));
     }
 }

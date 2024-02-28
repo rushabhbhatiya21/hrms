@@ -42,7 +42,6 @@ function addAddress(e) {
 var familyList =[];
 function addFamilyRecord(){
     if(!validateFormbyclass('addFamily')){
-        toastr.error("all * fields are require");
         return;
     }
     const formData = {};
@@ -55,7 +54,6 @@ function addFamilyRecord(){
         } else {
             value = $(this).val();
         }
-
         formData[id] = value;
     });
 
@@ -197,45 +195,7 @@ function browseAndPreview(inputId, browseButtonId) {
     });
 }
 
-function uploadcustomphoto(inputId) {
-    const fileInput = document.getElementById(inputId);
-    const selectedFile = fileInput.files[0];
 
-    if (selectedFile) {
-        const formData = new FormData();
-        formData.append(inputId, selectedFile);
-
-
-        $.ajax({
-            url: 'http://localhost:8080/admin/submitPhoto/' + employeeId,
-            type: 'POST',
-            data: formData,
-            contentType: false, // Let jQuery handle the contentType
-            processData: false, // Prevent jQuery from processing the data
-
-            // // Custom XMLHttpRequest to allow handling file uploads
-            // xhr: function () {
-            //     const xhr = new window.XMLHttpRequest();
-            //     xhr.upload.addEventListener("progress", function (evt) {
-            //         if (evt.lengthComputable) {
-            //             let percentComplete = (evt.loaded / evt.total) * 100;
-            //             console.log('Upload Progress: ' + percentComplete + '%');
-            //         }
-            //     }, false);
-            //     return xhr;
-            // },
-
-            success: function (data) {
-                toastr.success('Upload successful:', data);
-            },
-            error: function (error) {
-                toastr.error('Error during upload:', error);
-            }
-        });
-    } else {
-        alert('Please select a file before uploading.');
-    }
-}
 
 function isValidEmail(email) {
     // You can use a regular expression or any other validation logic
@@ -249,22 +209,26 @@ function validateFormbyclass(formclass){
     $(`.${formclass} .red`).closest('div').find('input, select').each(function () {
         const value = $(this).val();
         const inputElement = $(this);
+        const errorSpan = $('<span class="error-message">This field is required</span>');
+        const emailerror = $('<span class="error-message">Invalid email</span>');
         if (!value || value.trim() === '') {
             $(this).addClass('is-invalid');
+            inputElement.after(errorSpan);
             setTimeout(function () {
                 inputElement.removeClass('is-invalid');
+                errorSpan.remove();
             }, 5000);
             isValid = false;
-            toastr.error("all * fields are require");
         }
         else{
             if ($(this).attr('type') === 'email' && !isValidEmail(value)) {
                 $(this).addClass('is-invalid');
+                inputElement.after(emailerror);
                 setTimeout(function () {
                     inputElement.removeClass('is-invalid');
+                    emailerror.remove();
                 }, 5000);
                 isValid = false;
-                toastr.error("invalid email");
             }else{
                 $(this).removeClass('is-invalid');
             }

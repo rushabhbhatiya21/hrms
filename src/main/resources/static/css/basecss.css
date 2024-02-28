@@ -83,10 +83,10 @@ nav img{
 }
 
 .sidebar{
-    /*position: fixed;*/
-    /*margin-top: 9%;*/
     width: 9%;
-    /*height: 100%;*/
+    display: flex;
+    flex-direction: column;
+    padding-top: 5vh;
     border-top-right-radius: 50px;
     background-color: #3d93fa;
 }
@@ -153,6 +153,7 @@ nav img{
     /*margin: 20px;*/
     margin-left: 20px;
     margin-top: 30px;
+    margin-bottom: 30px;
     padding: 50px;
 }
 
@@ -296,4 +297,42 @@ label{
 .active{
     background-color: #3d93fa;
     color: white;
+}
+
+.error-message{
+    color: red;
+}
+
+.sidebarElement{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    height: 6vh;
+    text-decoration: none;
+}
+
+.sidebarElement:hover{
+    background-color: #67acfd;
+    color: white;
+}
+
+.image-uploaded {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.photo-container,
+.sign-container {
+    text-align: center;
+}
+
+.header {
+    font-weight: bold;
+}
+
+.addEmployeeButton{
+    display: flex;
+    justify-content: right;
 }

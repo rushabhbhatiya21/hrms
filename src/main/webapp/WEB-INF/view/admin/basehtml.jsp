@@ -70,7 +70,9 @@
 <div class="maincontent">
 
     <div class="sidebar">
-        hello
+        <a class="sidebarElement" href="/admin/deshboard">
+            Deshboard
+        </a>
     </div>
 
     <div class="dynamiccont">

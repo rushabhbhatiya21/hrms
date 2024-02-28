@@ -307,4 +307,12 @@ public class AdminController {
         model.addAttribute("month", date.getMonth());
         model.addAttribute("year", date.getYear());
     }
+
+    @GetMapping("/deshboard")
+    public String deshboard(Model model){
+        List<Employee> employees = employeeService.findAllEmployees();
+        setDate(model);
+        model.addAttribute("employees",employees);
+        return "admin/deshboard";
+    }
 }

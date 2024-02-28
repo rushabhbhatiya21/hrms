@@ -687,10 +687,11 @@
                 <tbody id="NomineeTableBody">
                 <c:forEach var="nom" items="${nominees}" varStatus="loop">
                     <tr>
+                        <td>${nom.priority}</td>
                         <td>${nom.firstName}</td>
                         <td>${nom.relation}</td>
                         <td>${nom.gender}</td>
-                        <td>${nom.dateOfBirth}</td>
+                        <td>${nom.dateOfBirth.toString().split(" ")[0]}</td>
                     </tr>
                 </c:forEach>
                 </tbody>
@@ -701,7 +702,7 @@
             <form class="row g-3 addHealth mt10">
                 <div class="col-md-4">
                     <label for="height" class="form-label">Height(cms)<span class="red">*</span></label>
-                    <input type="number" class="form-control" id="height">
+                    <input type="number" class="form-control" <c:if test="${health != null}">value="${health.height}"</c:if> id="height">
                 </div>
                 <div class="col-md-4">
                     <label for="weight" class="form-label">Weight(kgs)</label>
@@ -746,12 +747,12 @@
                         <span>only jpg/png/jpeg are allowed</span>
                     </div>
                     <div class="btn-upload">
-                        <button id="uploadPhoto" class="btn btn-outline-warning" type="button" onclick="uploadcustomphoto('employeePhoto')">Upload</button>
+                        <button id="uploadPhoto" class="btn btn-outline-warning photobutton" type="button" xdata="employeePhoto">Upload</button>
                     </div>
                 </div>
                 <div class="image-card">
                     <div class="outside-preview">
-                        <span class="preview-text">No Image</span>
+                         <span class="preview-text">No Image</span>
                     </div>
                     <div class="preview-next">
                         <div class="image-input">
@@ -763,10 +764,27 @@
                         <span>only jpg/png/jpeg are allowed</span>
                     </div>
                     <div class="btn-upload">
-                        <button id="uploadSign" class="btn btn-outline-warning" type="button" value="Upload" onclick="uploadcustomphoto('employeeSign')">Upload</button>
+                        <button id="uploadSign" class="btn btn-outline-warning photobutton" type="button" value="Upload" xdata="employeeSign" >Upload</button>
                     </div>
                 </div>
             </form>
+            <c:if test="${photograph != null}">
+            <div class="image-uploaded">
+                <div class="photo-container">
+                    <div class="header">Photo:</div>
+                    <div class="outside-preview">
+                        <img src="data:image/png;base64,${photograph.employeePhotoString}" alt="No stored image" style="max-width: 100%; max-height: 100%;">
+                    </div>
+                </div>
+
+                <div class="sign-container">
+                    <div class="header">Sign:</div>
+                    <div class="outside-preview">
+                        <img src="data:image/png;base64,${photograph.employeeSignString}" alt="No stored image" style="max-width: 100%; max-height: 100%;">
+                    </div>
+                </div>
+            </div>
+            </c:if>
         </div>
         <div id="attachment">
             <span class="contlabel">Attachment</span>
@@ -884,7 +902,7 @@
                         <c:set var="somevar" value="5"/>
                         <c:if test="${health != null}">
                             <c:set var="somevar" value="6"/>
-                            <c:if test="${photograph != null}">
+                            <c:if test="${photograph.employeePhoto != null && photograph.employeeSign != null}">
                                 <c:set var="somevar" value="7"/>
                             </c:if>
                         </c:if>
@@ -894,4 +912,7 @@
         </c:if>
     </c:if>
     <input id="somevalue" value="${somevar}" type="hidden">
+    <input id="empphoto" value="${(photograph.employeePhoto != null)?1:0}" type="hidden">
+    <input id="empsign" value="${(photograph.employeeSign != null)?1:0}" type="hidden">
 </div>
+
